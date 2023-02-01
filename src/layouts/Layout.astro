@@ -28,10 +28,10 @@ const { title } = Astro.props;
           <img src={logo} class="h-6 mr-3 sm:h-16" alt="Website Logo" />
         </a>
         <button
-          data-collapse-toggle="navbar-default"
           type="button"
+          id="navbar-burger"
           class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-          aria-controls="navbar-default"
+          aria-controls="navbar-items"
           aria-expanded="false"
         >
           <span class="sr-only">Open main menu</span>
@@ -47,7 +47,7 @@ const { title } = Astro.props;
               clip-rule="evenodd"></path></svg
           >
         </button>
-        <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+        <div class="hidden w-full md:block md:w-auto" id="navbar-items">
           <ul
             class="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700"
           >
@@ -86,6 +86,18 @@ const { title } = Astro.props;
     <img src={banner} />
     <slot />
   </body>
+
+  <script>
+    // Add burger menu support
+    document.addEventListener("DOMContentLoaded", function () {
+      const burger = document.getElementById("navbar-burger");
+      const menu = document.getElementById("navbar-items");
+
+      burger?.addEventListener("click", () => {
+        menu?.classList.toggle("hidden");
+      });
+    });
+  </script>
 </html>
 <style is:global>
   :root {
