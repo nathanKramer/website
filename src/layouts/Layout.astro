@@ -1,4 +1,6 @@
 ---
+import banner from "../../public/banner-tight.jpg";
+import logo from "../../public/logo.svg";
 export interface Props {
   title: string;
 }
@@ -23,7 +25,7 @@ const { title } = Astro.props;
         class="container flex flex-wrap items-center justify-between mx-auto"
       >
         <a href="/" class="flex items-center">
-          <img src="./logo.svg" class="h-6 mr-3 sm:h-16" alt="Website Logo" />
+          <img src={logo} class="h-6 mr-3 sm:h-16" alt="Website Logo" />
         </a>
         <button
           data-collapse-toggle="navbar-default"
@@ -81,7 +83,7 @@ const { title } = Astro.props;
         </div>
       </div>
     </nav>
-    <img src="./banner-tight.jpg" />
+    <img src={banner} />
     <slot />
   </body>
 </html>
