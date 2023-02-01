@@ -1,0 +1,125 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Contact">
+  <main>
+    <article>
+      <h1>Contact me</h1>
+      <form name="contact" method="POST" action="/success" data-netlify="true">
+        <label for="email">Email</label>
+        <input type="email" name="email" />
+
+        <label for="message">Message</label>
+        <textarea name="message"></textarea>
+        <input type="submit" value="Send" />
+      </form>
+    </article>
+  </main>
+</Layout>
+
+<style>
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+  }
+
+  ul li {
+    padding-left: 20px;
+    position: relative;
+  }
+
+  ul li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
+  main {
+    margin: auto;
+    padding: 1.5rem;
+    max-width: 90ch;
+    color: #aaaaaa;
+  }
+
+  main article {
+    font-family: "Open Sans", sans-serif;
+    font-size: 18px;
+    line-height: 1.5;
+  }
+
+  main article h1,
+  main article h2,
+  main article h3 {
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+
+  main article h1 {
+    color: #eeeeee;
+    font-size: 36px;
+  }
+
+  main article h2 {
+    color: #eeeeee;
+    font-size: 20px;
+  }
+
+  main article h3 {
+    color: #eeeeee;
+    font-size: 16px;
+  }
+
+  a {
+    color: #f15125;
+  }
+
+  h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin: 0;
+  }
+
+  input[type="email"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: rgb(17 24 39);
+  }
+
+  input:focus,
+  textarea:focus {
+    outline-style: solid;
+    outline-color: hsl(19, 88%, 54%);
+  }
+
+  input[type="submit"] {
+    width: 100%;
+    background-color: hsl(19, 88%, 54%);
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  input[type="submit"]:hover {
+    background-color: #f15125;
+  }
+
+  div {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+  }
+</style>
