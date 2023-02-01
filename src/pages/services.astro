@@ -1,0 +1,131 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Services">
+  <main>
+    <article>
+      <h1>Services</h1>
+      <h2>How I Work</h2>
+      <p>
+        For software gigs, I try to work in 4 hour chunks, and invoice that way.<br
+        />
+      </p>
+
+      <p>
+        <a href="/contact">Contact me</a> if you would like to hire me, and we'll
+        talk about how I can help.
+      </p>
+
+      <br />
+      <hr />
+
+      <h2>Software Engineering</h2>
+      <p>
+        I have 10 years experience and have worked on over 80 client projects.
+      </p>
+      <p>I am more of a generalist than a specialist.</p>
+      <p>
+        I normally work as an individual contributor or force multiplier (i.e
+        pairing / writing / knowledge production)
+      </p>
+
+      <h3>Areas of Experience</h3>
+      <ul>
+        <li>Fullstack web</li>
+        <li>Identity (bespoke/Auth0)</li>
+        <li>CRM (Salesforce)</li>
+        <li>Integration</li>
+        <li>APIs</li>
+      </ul>
+
+      <h3>Languages</h3>
+      <ul>
+        <li>TypeScript/JS</li>
+        <li>Ruby/Rails</li>
+        <li>React/Next</li>
+        <li>Elm</li>
+        <li>Go</li>
+        <li>Apex (Salesforce)</li>
+      </ul>
+
+      <h3>Infrastructure</h3>
+      <ul>
+        <li>AWS</li>
+        <li>GCP</li>
+        <li>Heroku</li>
+      </ul>
+
+      <hr />
+
+      <h2>Music Production / Guitar Lessons</h2>
+      I can help you learn guitar, or produce your music.
+    </article>
+  </main>
+
+  <style>
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 20px 0;
+    }
+
+    ul li {
+      padding-left: 20px;
+      position: relative;
+    }
+
+    ul li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    main {
+      margin: auto;
+      padding: 1.5rem;
+      max-width: 90ch;
+      color: #aaaaaa;
+    }
+
+    main article {
+      font-family: "Open Sans", sans-serif;
+      font-size: 18px;
+      line-height: 1.5;
+    }
+
+    main article h1,
+    main article h2,
+    main article h3 {
+      font-weight: bold;
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+
+    main article h1 {
+      color: #eeeeee;
+      font-size: 36px;
+    }
+
+    main article h2 {
+      color: #eeeeee;
+      font-size: 20px;
+    }
+
+    main article h3 {
+      color: #eeeeee;
+      font-size: 16px;
+    }
+
+    a {
+      color: #f15125;
+    }
+
+    h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      margin: 0;
+    }
+  </style>
+</Layout>

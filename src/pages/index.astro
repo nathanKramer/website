@@ -1,0 +1,106 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Card from "../components/Card.astro";
+---
+
+<Layout title="Nathan Kramer">
+  <main>
+    <article>
+      <h1>Nathan Kramer</h1>
+
+      <img src="./face.jpg" class="profile-photo" />
+
+      <br />
+      <div>
+        <p>I'm a software engineer, musician, and a bit of a hippy.</p>
+        <p>
+          I want to live a grounded, wholesome life, in a compassionate world.
+        </p>
+      </div>
+
+      <h2>Interests</h2>
+
+      <ul>
+        <li>music</li>
+        <li>consciousness</li>
+        <li>epistemology</li>
+        <li>writing & reading</li>
+        <li>alexander technique</li>
+        <li>meditation / breathwork / yoga</li>
+        <li>humane technology</li>
+        <li>positive-sum games</li>
+      </ul>
+    </article>
+  </main>
+</Layout>
+
+<style>
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+  }
+
+  ul li {
+    padding-left: 20px;
+    position: relative;
+  }
+
+  ul li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
+  a {
+    color: #f15125;
+  }
+
+  .profile-photo {
+    width: 150px;
+    border-radius: 50%;
+  }
+
+  main {
+    margin: auto;
+    padding: 1.5rem;
+    max-width: 90ch;
+    color: #aaaaaa;
+  }
+
+  main article {
+    font-family: "Open Sans", sans-serif;
+    font-size: 18px;
+    line-height: 1.5;
+  }
+
+  main article h1,
+  main article h2,
+  main article h3 {
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+
+  main article h1 {
+    color: #eeeeee;
+    font-size: 36px;
+  }
+
+  main article h2 {
+    color: #eeeeee;
+    font-size: 20px;
+  }
+
+  main article h3 {
+    color: #eeeeee;
+    font-size: 24px;
+  }
+
+  h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin: 0;
+  }
+</style>
