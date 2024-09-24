@@ -1,0 +1,57 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="High Score">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>High Score</h2>
+    <p>Solutions to high-score in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#elixir">Elixir</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="elixir">Elixir</a></h3>
+            <a href="/languages/elixir">Other Elixir solutions.</a>
+            <pre><code class="language-elixir">{`defmodule HighScore do
+  @initial_score 0
+
+  def new(), do: %{}
+
+  def add_player(scores, name, score \\\\ @initial_score) do
+    Map.put(scores, name, score)
+  end
+
+  def remove_player(scores, name) do
+    Map.delete(scores, name)
+  end
+
+  def reset_score(scores, name) do
+    Map.put(scores, name, @initial_score)
+  end
+
+  def update_score(scores, name, score) do
+    Map.update(scores, name, score, fn val -> val + score end)
+  end
+
+  def get_players(scores) do
+    Map.keys(scores)
+  end
+end
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

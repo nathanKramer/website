@@ -1,0 +1,122 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Space Age">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Space Age</h2>
+    <p>Solutions to space-age in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#elm">Elm</a></li><li><a href="#haskell">Haskell</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="elm">Elm</a></h3>
+            <a href="/languages/elm">Other Elm solutions.</a>
+            <pre><code class="language-elm">{`module SpaceAge exposing (Planet(..), ageOn)
+
+
+type Planet
+    = Mercury
+    | Venus
+    | Earth
+    | Mars
+    | Jupiter
+    | Saturn
+    | Uranus
+    | Neptune
+
+
+orbitalPeriod : Planet -> Float
+orbitalPeriod planet =
+    case planet of
+        Mercury ->
+            0.2408467
+
+        Venus ->
+            0.61519726
+
+        Earth ->
+            1.0
+
+        Mars ->
+            1.8808158
+
+        Jupiter ->
+            11.862615
+
+        Saturn ->
+            29.447498
+
+        Uranus ->
+            84.016846
+
+        Neptune ->
+            164.79132
+
+
+earthYearInSeconds : Float
+earthYearInSeconds =
+    31557600
+
+
+ageOn : Planet -> Float -> Float
+ageOn planet seconds =
+    seconds
+        / (orbitalPeriod planet
+            * earthYearInSeconds
+          )
+`}</code></pre>
+        
+
+            <h3><a name="haskell">Haskell</a></h3>
+            <a href="/languages/haskell">Other Haskell solutions.</a>
+            <pre><code class="language-haskell">{`module SpaceAge
+  ( Planet(..)
+  , ageOn
+  ) where
+
+data Planet
+  = Mercury
+  | Venus
+  | Earth
+  | Mars
+  | Jupiter
+  | Saturn
+  | Uranus
+  | Neptune
+
+earthAgeSeconds :: Float
+earthAgeSeconds = 31557600
+
+relativeOrbit :: Planet -> Float
+relativeOrbit planet =
+  case planet of
+    Mercury -> 0.2408467
+    Venus   -> 0.61519726
+    Earth   -> 1.0
+    Mars    -> 1.8808158
+    Jupiter -> 11.862615
+    Saturn  -> 29.447498
+    Uranus  -> 84.016846
+    Neptune -> 164.79132
+
+ageOn :: Planet -> Float -> Float
+ageOn planet seconds = seconds / earthAgeSeconds / relativeOrbit planet
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

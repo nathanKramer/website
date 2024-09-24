@@ -1,0 +1,87 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Nim">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Nim</h2>
+    <p>Problems solved in nim.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#hello-world">Hello World</a></li><li><a href="#isogram">Isogram</a></li><li><a href="#leap">Leap</a></li><li><a href="#pangram">Pangram</a></li><li><a href="#reverse-string">Reverse String</a></li><li><a href="#two-fer">Two Fer</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="hello-world">Hello World</a></h3>
+            <a href="/problems/hello-world">Other "Hello World" solutions.</a>
+            <pre><code class="language-nim">{`proc hello*: string =
+  "Hello, World!"
+`}</code></pre>
+        
+
+            <h3><a name="isogram">Isogram</a></h3>
+            <a href="/problems/isogram">Other "Isogram" solutions.</a>
+            <pre><code class="language-nim">{`import sets, unicode, sequtils, sugar
+
+proc isIsogram*(str: string): bool =
+  var seen: HashSet[Rune] = initHashSet[Rune]()
+  for c in toLower(str).toRunes.filter(c => c.isAlpha):
+    if seen.containsOrIncl(c):
+      return false
+  return true
+`}</code></pre>
+        
+
+            <h3><a name="leap">Leap</a></h3>
+            <a href="/problems/leap">Other "Leap" solutions.</a>
+            <pre><code class="language-nim">{`func isLeapYear*(year: int): bool =
+  year mod 4 == 0 and (
+    year mod 100 != 0 or year mod 400 == 0
+  )
+`}</code></pre>
+        
+
+            <h3><a name="pangram">Pangram</a></h3>
+            <a href="/problems/pangram">Other "Pangram" solutions.</a>
+            <pre><code class="language-nim">{`import sequtils, strutils
+
+func isPangram*(phrase: string): bool =
+  {'a'..'z'}.allIt it.in(phrase.toLower)
+`}</code></pre>
+        
+
+            <h3><a name="reverse-string">Reverse String</a></h3>
+            <a href="/problems/reverse-string">Other "Reverse String" solutions.</a>
+            <pre><code class="language-nim">{`proc reverse*(s: string): string =
+  if s == "":
+    return s
+
+  var aux = s
+  for i in 0 .. high(s) div 2:
+    swap(aux[i], aux[high(aux) - i])
+  aux
+`}</code></pre>
+        
+
+            <h3><a name="two-fer">Two Fer</a></h3>
+            <a href="/problems/two-fer">Other "Two Fer" solutions.</a>
+            <pre><code class="language-nim">{`import strformat
+
+proc twoFer*(name = "you"): string =
+  &"One for {name}, one for me."
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

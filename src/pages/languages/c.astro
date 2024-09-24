@@ -1,0 +1,157 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="C">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>C</h2>
+    <p>Problems solved in c.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#armstrong-numbers">Armstrong Numbers</a></li><li><a href="#darts">Darts</a></li><li><a href="#hello-world">Hello World</a></li><li><a href="#linked-list">Linked List</a></li><li><a href="#resistor-color">Resistor Color</a></li><li><a href="#resistor-color-duo">Resistor Color Duo</a></li><li><a href="#resistor-color-trio">Resistor Color Trio</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="armstrong-numbers">Armstrong Numbers</a></h3>
+            <a href="/problems/armstrong-numbers">Other "Armstrong Numbers" solutions.</a>
+            <pre><code class="language-c">{`#include "armstrong_numbers.h"
+#include <stdio.h>
+#include <math.h>
+#include <string.h>
+
+int char_to_int(char c)
+{
+   return c - '0';
+}
+
+int is_armstrong_number(int candidate)
+{
+   char s[16] = {'\\0'};
+   sprintf(s, "%d", candidate);
+
+   int len = strlen(s);
+   int sum = 0;
+   for (int i = 0; i < len; i++)
+      sum += pow(char_to_int(s[i]), len);
+
+   return candidate == sum;
+}
+`}</code></pre>
+        
+
+            <h3><a name="darts">Darts</a></h3>
+            <a href="/problems/darts">Other "Darts" solutions.</a>
+            <pre><code class="language-c">{`#include "darts.h"
+#include <math.h>
+
+uint8_t score(coordinate_t coord)
+{
+   float hyp = sqrt(pow(coord.x, 2) + pow(coord.y, 2));
+   int score = 0;
+
+   if (hyp <= 1.0F)
+   {
+      score = 10;
+   }
+   else if (hyp <= 5.0F)
+   {
+      score = 5;
+   }
+   else if (hyp <= 10.0F)
+   {
+      score = 1;
+   }
+
+   return score;
+}
+`}</code></pre>
+        
+
+            <h3><a name="hello-world">Hello World</a></h3>
+            <a href="/problems/hello-world">Other "Hello World" solutions.</a>
+            <pre><code class="language-c">{`#include "hello_world.h"
+
+const char *hello(void)
+{
+   return "Hello, World!";
+}
+`}</code></pre>
+        
+
+            <h3><a name="linked-list">Linked List</a></h3>
+            <a href="/problems/linked-list">Other "Linked List" solutions.</a>
+            <pre><code class="language-c">{`#include "linked_list.h"
+
+typedef struct list_item
+{
+   struct list_item *next;
+   struct list_item *previous;
+   ll_data_t data;
+} list_item_t;
+
+list_item_t **new_list()
+{
+   list_item_t *list =
+       &(list_item_t){.next = 0, .previous = 0, .data = 0};
+   return list;
+}
+
+bool is_list_empty(struct list_item **list)
+{
+   return !(list && *list);
+}
+`}</code></pre>
+        
+
+            <h3><a name="resistor-color">Resistor Color</a></h3>
+            <a href="/problems/resistor-color">Other "Resistor Color" solutions.</a>
+            <pre><code class="language-c">{`#include "resistor_color.h"
+
+resistor_band_t *colors()
+{
+   static resistor_band_t band[resistor_band_length];
+   for (resistor_band_t c = 0; c < resistor_band_length; c += 1)
+      band[(int)c] = c;
+
+   return band;
+}
+
+int color_code(resistor_band_t c)
+{
+   return (int)c;
+}
+`}</code></pre>
+        
+
+            <h3><a name="resistor-color-duo">Resistor Color Duo</a></h3>
+            <a href="/problems/resistor-color-duo">Other "Resistor Color Duo" solutions.</a>
+            <pre><code class="language-c">{`#include "resistor_color_duo.h"
+#include <stdio.h>
+#define MAX_DIGITS 2;
+
+int color_code(resistor_band_t colors[])
+{
+   return colors[0] * 10 + colors[1];
+}
+`}</code></pre>
+        
+
+            <h3><a name="resistor-color-trio">Resistor Color Trio</a></h3>
+            <a href="/problems/resistor-color-trio">Other "Resistor Color Trio" solutions.</a>
+            <pre><code class="language-c">{`#include "resistor_color_trio.h"
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

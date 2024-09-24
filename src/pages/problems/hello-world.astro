@@ -1,0 +1,139 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Hello World">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Hello World</h2>
+    <p>Solutions to hello-world in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#ocaml">Ocaml</a></li><li><a href="#prolog">Prolog</a></li><li><a href="#racket">Racket</a></li><li><a href="#nim">Nim</a></li><li><a href="#python">Python</a></li><li><a href="#clojure">Clojure</a></li><li><a href="#elixir">Elixir</a></li><li><a href="#rust">Rust</a></li><li><a href="#elm">Elm</a></li><li><a href="#haskell">Haskell</a></li><li><a href="#c">C</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="ocaml">Ocaml</a></h3>
+            <a href="/languages/ocaml">Other Ocaml solutions.</a>
+            <pre><code class="language-ocaml">{`let positive_sum a b =
+  let a = max a 0 and b = max b 0 in
+  a + b
+`}</code></pre>
+        
+
+            <h3><a name="prolog">Prolog</a></h3>
+            <a href="/languages/prolog">Other Prolog solutions.</a>
+            <pre><code class="language-prolog">{`% Please visit https://exercism.io/tracks/prolog/installation
+% for instructions on setting up prolog.
+% Visit https://exercism.io/tracks/prolog/tests
+% for help running the tests for prolog exercises.
+
+% Replace the goal below with
+% your implementation.
+
+hello_world('Hello World!').
+`}</code></pre>
+        
+
+            <h3><a name="racket">Racket</a></h3>
+            <a href="/languages/racket">Other Racket solutions.</a>
+            <pre><code class="language-racket">{`#lang racket
+
+(define (hello) "Hello, World!")
+
+
+(provide hello)
+`}</code></pre>
+        
+
+            <h3><a name="nim">Nim</a></h3>
+            <a href="/languages/nim">Other Nim solutions.</a>
+            <pre><code class="language-nim">{`proc hello*: string =
+  "Hello, World!"
+`}</code></pre>
+        
+
+            <h3><a name="python">Python</a></h3>
+            <a href="/languages/python">Other Python solutions.</a>
+            <pre><code class="language-python">{`def hello():
+    return "Hello, World!"
+`}</code></pre>
+        
+
+            <h3><a name="clojure">Clojure</a></h3>
+            <a href="/languages/clojure">Other Clojure solutions.</a>
+            <pre><code class="language-clojure">{`(ns hello-world)
+
+(defn hello [] "Hello, World!")
+`}</code></pre>
+        
+
+            <h3><a name="elixir">Elixir</a></h3>
+            <a href="/languages/elixir">Other Elixir solutions.</a>
+            <pre><code class="language-elixir">{`defmodule HelloWorld do
+  @doc """
+  Simply returns "Hello, World!"
+  """
+  @spec hello :: String.t()
+  def hello do
+    "Hello, World!"
+  end
+end
+`}</code></pre>
+        
+
+            <h3><a name="rust">Rust</a></h3>
+            <a href="/languages/rust">Other Rust solutions.</a>
+            <pre><code class="language-rust">{`// The &'static here means the return type has a static lifetime.
+// This is a Rust feature that you don't need to worry about now.
+pub fn hello() -> &'static str {
+    "Hello, World!"
+}
+`}</code></pre>
+        
+
+            <h3><a name="elm">Elm</a></h3>
+            <a href="/languages/elm">Other Elm solutions.</a>
+            <pre><code class="language-elm">{`module HelloWorld exposing (helloWorld)
+
+
+helloWorld : String
+helloWorld =
+    "Hello, World!"
+`}</code></pre>
+        
+
+            <h3><a name="haskell">Haskell</a></h3>
+            <a href="/languages/haskell">Other Haskell solutions.</a>
+            <pre><code class="language-haskell">{`module HelloWorld
+  ( hello
+  ) where
+
+hello :: String
+hello = "Hello, World!"
+`}</code></pre>
+        
+
+            <h3><a name="c">C</a></h3>
+            <a href="/languages/c">Other C solutions.</a>
+            <pre><code class="language-c">{`#include "hello_world.h"
+
+const char *hello(void)
+{
+   return "Hello, World!";
+}
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

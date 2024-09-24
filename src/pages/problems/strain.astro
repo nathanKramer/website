@@ -1,0 +1,60 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Strain">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Strain</h2>
+    <p>Solutions to strain in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#elm">Elm</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="elm">Elm</a></h3>
+            <a href="/languages/elm">Other Elm solutions.</a>
+            <pre><code class="language-elm">{`module Strain exposing (discard, keep)
+
+
+keep : (a -> Bool) -> List a -> List a
+keep predicate items =
+    case items of
+        [] ->
+            []
+
+        x :: xs ->
+            let
+                rest =
+                    keep predicate xs
+
+                result =
+                    if predicate x then
+                        x :: rest
+
+                    else
+                        rest
+            in
+            result
+
+
+discard : (a -> Bool) -> List a -> List a
+discard predicate list =
+    keep (predicate >> not)
+        list
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

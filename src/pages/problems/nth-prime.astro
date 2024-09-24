@@ -1,0 +1,35 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Nth Prime">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Nth Prime</h2>
+    <p>Solutions to nth-prime in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#rust">Rust</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="rust">Rust</a></h3>
+            <a href="/languages/rust">Other Rust solutions.</a>
+            <pre><code class="language-rust">{`pub fn nth(n: u32) -> u32 {
+    unimplemented!("What is the 0-indexed {}th prime number?", n)
+}
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

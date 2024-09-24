@@ -1,0 +1,46 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Anagram">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Anagram</h2>
+    <p>Solutions to anagram in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#clojure">Clojure</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="clojure">Clojure</a></h3>
+            <a href="/languages/clojure">Other Clojure solutions.</a>
+            <pre><code class="language-clojure">{`(ns anagram
+  (:require [clojure.string :refer [lower-case]]))
+
+(defn is-anagram? [word1 word2]
+  (let [w1 (lower-case word1)
+        w2 (lower-case word2)
+        different-words? (not= w1 w2)
+        anagrams? (= (sort w1) (sort w2))]
+    (and
+     different-words?
+     anagrams?)))
+
+(defn anagrams-for [word prospect-list]
+  (filter #(is-anagram? word %) prospect-list))
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

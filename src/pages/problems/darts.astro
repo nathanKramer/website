@@ -1,0 +1,78 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Darts">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Darts</h2>
+    <p>Solutions to darts in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#elixir">Elixir</a></li><li><a href="#c">C</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="elixir">Elixir</a></h3>
+            <a href="/languages/elixir">Other Elixir solutions.</a>
+            <pre><code class="language-elixir">{`defmodule Darts do
+  @type position :: {number, number}
+
+  @doc """
+  Calculate the score of a single dart hitting a target
+  """
+  @spec score(position) :: integer
+  def score({x, y}) do
+    r = (x ** 2 + y ** 2) ** 0.5
+
+    cond do
+      r <= 1 -> 10
+      r <= 5 -> 5
+      r <= 10 -> 1
+      true -> 0
+    end
+  end
+end
+`}</code></pre>
+        
+
+            <h3><a name="c">C</a></h3>
+            <a href="/languages/c">Other C solutions.</a>
+            <pre><code class="language-c">{`#include "darts.h"
+#include <math.h>
+
+uint8_t score(coordinate_t coord)
+{
+   float hyp = sqrt(pow(coord.x, 2) + pow(coord.y, 2));
+   int score = 0;
+
+   if (hyp <= 1.0F)
+   {
+      score = 10;
+   }
+   else if (hyp <= 5.0F)
+   {
+      score = 5;
+   }
+   else if (hyp <= 10.0F)
+   {
+      score = 1;
+   }
+
+   return score;
+}
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

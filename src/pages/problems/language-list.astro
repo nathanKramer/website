@@ -1,0 +1,57 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Language List">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Language List</h2>
+    <p>Solutions to language-list in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#elixir">Elixir</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="elixir">Elixir</a></h3>
+            <a href="/languages/elixir">Other Elixir solutions.</a>
+            <pre><code class="language-elixir">{`defmodule LanguageList do
+  def new() do
+    []
+  end
+
+  def add(list, language) do
+    [language | list]
+  end
+
+  def remove([_ | tail]) do
+    tail
+  end
+
+  def first([head | _]) do
+    head
+  end
+
+  def count(list) do
+    length(list)
+  end
+
+  def functional_list?(list) do
+    "Elixir" in list
+  end
+end
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

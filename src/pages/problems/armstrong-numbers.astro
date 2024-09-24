@@ -1,0 +1,96 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Armstrong Numbers">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Armstrong Numbers</h2>
+    <p>Solutions to armstrong-numbers in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#clojure">Clojure</a></li><li><a href="#elm">Elm</a></li><li><a href="#c">C</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="clojure">Clojure</a></h3>
+            <a href="/languages/clojure">Other Clojure solutions.</a>
+            <pre><code class="language-clojure">{`(ns armstrong-numbers)
+
+(defn digits [num]
+  (map #(Character/digit % 10) (str num)))
+
+(defn expt [x n]
+  (reduce * (repeat n x)))
+
+(defn armstrong? [n]
+  (= n
+    (reduce +
+      (map
+        (fn [x] (expt x (count (str n))))
+        (digits n)))))
+`}</code></pre>
+        
+
+            <h3><a name="elm">Elm</a></h3>
+            <a href="/languages/elm">Other Elm solutions.</a>
+            <pre><code class="language-elm">{`module ArmstrongNumbers exposing (isArmstrongNumber)
+
+
+isArmstrongNumber : Int -> Bool
+isArmstrongNumber num =
+    let
+        digits =
+            String.fromInt num
+    in
+    digits
+        |> String.split ""
+        |> List.map
+            (String.toInt
+                >> Maybe.withDefault 0
+                >> (\\i -> i ^ String.length digits)
+            )
+        |> List.foldl (+) 0
+        |> (==) num
+`}</code></pre>
+        
+
+            <h3><a name="c">C</a></h3>
+            <a href="/languages/c">Other C solutions.</a>
+            <pre><code class="language-c">{`#include "armstrong_numbers.h"
+#include <stdio.h>
+#include <math.h>
+#include <string.h>
+
+int char_to_int(char c)
+{
+   return c - '0';
+}
+
+int is_armstrong_number(int candidate)
+{
+   char s[16] = {'\\0'};
+   sprintf(s, "%d", candidate);
+
+   int len = strlen(s);
+   int sum = 0;
+   for (int i = 0; i < len; i++)
+      sum += pow(char_to_int(s[i]), len);
+
+   return candidate == sum;
+}
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

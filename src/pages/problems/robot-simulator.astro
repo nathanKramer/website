@@ -1,0 +1,225 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Robot Simulator">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Robot Simulator</h2>
+    <p>Solutions to robot-simulator in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#elixir">Elixir</a></li><li><a href="#elm">Elm</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="elixir">Elixir</a></h3>
+            <a href="/languages/elixir">Other Elixir solutions.</a>
+            <pre><code class="language-elixir">{`defmodule RobotSimulator do
+  @doc """
+  Create a Robot Simulator given an initial direction and position.
+
+  Valid directions are: \`:north\`, \`:east\`, \`:south\`, \`:west\`
+  """
+  @spec create(direction :: atom, position :: {integer, integer}) :: any
+  def create(direction \\\\ :north, position \\\\ {0, 0}) do
+    %{
+      :direction => direction,
+      :position => position
+    }
+  end
+
+  @doc """
+  Simulate the robot's movement given a string of instructions.
+
+  Valid instructions are: "R" (turn right), "L", (turn left), and "A" (advance)
+  """
+  @spec simulate(robot :: Map, instructions :: String.t()) :: any
+  def simulate(robot, instructions) do
+    case instructions do
+      "L" -> turn(robot, instructions)
+      "R" -> turn(robot, instructions)
+      "A" -> advance(robot)
+    end
+  end
+
+  @doc """
+  Return the robot's direction.
+
+  Valid directions are: \`:north\`, \`:east\`, \`:south\`, \`:west\`
+  """
+  @spec direction(robot :: Map) :: atom
+  def direction(robot) do
+    robot[:direction]
+  end
+
+  @doc """
+  Return the robot's position.
+  """
+  @spec position(robot :: Map) :: {integer, integer}
+  def position(robot) do
+    robot[:position]
+  end
+
+  defp turn(robot, turn_direction) do
+    compass = [:north, :east, :south, :west]
+    heading = Enum.find_index(compass, fn d -> d == robot[:direction] end)
+
+    heading =
+      case turn_direction do
+        "L" -> Integer.mod(4, heading - 1)
+        "R" -> Integer.mod(4, heading + 1)
+      end
+
+    Map.put(robot, :direction, compass[heading])
+  end
+
+  @spec advance(robot :: Map) :: Map
+  defp advance(robot) do
+    new_pos =
+      case robot[:direction] do
+        :north -> add(robot[:position], {0, 1})
+        :east -> add(robot[:position], {1, 0})
+        :south -> add(robot[:position], {0, -1})
+        :west -> add(robot[:position], {-1, 0})
+      end
+
+    Map.put(robot, :position, new_pos)
+  end
+
+  defp add({a, b}, {a2, b2}) do
+    {a + a2, b + b2}
+  end
+end
+`}</code></pre>
+        
+
+            <h3><a name="elm">Elm</a></h3>
+            <a href="/languages/elm">Other Elm solutions.</a>
+            <pre><code class="language-elm">{`module RobotSimulator exposing
+    ( Bearing(..)
+    , Robot
+    , advance
+    , defaultRobot
+    , simulate
+    , turnLeft
+    , turnRight
+    )
+
+
+type Bearing
+    = North
+    | East
+    | South
+    | West
+
+
+type alias Robot =
+    { bearing : Bearing
+    , coordinates :
+        { x : Int
+        , y : Int
+        }
+    }
+
+
+defaultRobot : Robot
+defaultRobot =
+    { bearing = North
+    , coordinates = { x = 0, y = 0 }
+    }
+
+
+turnRight : Robot -> Robot
+turnRight robot =
+    case robot.bearing of
+        North ->
+            { robot | bearing = East }
+
+        East ->
+            { robot | bearing = South }
+
+        South ->
+            { robot | bearing = West }
+
+        West ->
+            { robot | bearing = North }
+
+
+turnLeft : Robot -> Robot
+turnLeft robot =
+    case robot.bearing of
+        North ->
+            { robot | bearing = West }
+
+        East ->
+            { robot | bearing = North }
+
+        South ->
+            { robot | bearing = East }
+
+        West ->
+            { robot | bearing = South }
+
+
+advance : Robot -> Robot
+advance robot =
+    let
+        bearingVector =
+            case robot.bearing of
+                North ->
+                    { x = 0, y = 1 }
+
+                East ->
+                    { x = 1, y = 0 }
+
+                South ->
+                    { x = 0, y = -1 }
+
+                West ->
+                    { x = -1, y = 0 }
+
+        newCoords =
+            { x = robot.coordinates.x + bearingVector.x, y = robot.coordinates.y + bearingVector.y }
+    in
+    { robot | coordinates = newCoords }
+
+
+simulate : String -> Robot -> Robot
+simulate directions robot =
+    let
+        translate c =
+            case c of
+                'R' ->
+                    turnRight
+
+                'L' ->
+                    turnLeft
+
+                'A' ->
+                    advance
+
+                _ ->
+                    identity
+
+        transformations =
+            List.map translate (String.toList directions)
+    in
+    List.foldl (\\fn bot -> fn bot)
+        robot
+        transformations
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

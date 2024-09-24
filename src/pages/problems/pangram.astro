@@ -1,0 +1,73 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Pangram">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Pangram</h2>
+    <p>Solutions to pangram in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#nim">Nim</a></li><li><a href="#elm">Elm</a></li><li><a href="#haskell">Haskell</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="nim">Nim</a></h3>
+            <a href="/languages/nim">Other Nim solutions.</a>
+            <pre><code class="language-nim">{`import sequtils, strutils
+
+func isPangram*(phrase: string): bool =
+  {'a'..'z'}.allIt it.in(phrase.toLower)
+`}</code></pre>
+        
+
+            <h3><a name="elm">Elm</a></h3>
+            <a href="/languages/elm">Other Elm solutions.</a>
+            <pre><code class="language-elm">{`module Pangram exposing (isPangram)
+
+
+alphabet : List String
+alphabet =
+    [ "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" ]
+
+
+isPangram : String -> Bool
+isPangram sentence =
+    let
+        sanitized =
+            String.toLower sentence
+
+        sentenceContainsLetter letter =
+            String.contains letter sanitized
+    in
+    List.all sentenceContainsLetter alphabet
+`}</code></pre>
+        
+
+            <h3><a name="haskell">Haskell</a></h3>
+            <a href="/languages/haskell">Other Haskell solutions.</a>
+            <pre><code class="language-haskell">{`module Pangram
+  ( isPangram
+  ) where
+
+import qualified Data.Char as Char
+import           Data.List
+
+isPangram :: String -> Bool
+isPangram = null . (['a' .. 'z'] \\\\) . map Char.toLower
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

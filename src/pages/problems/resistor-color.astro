@@ -1,0 +1,47 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Resistor Color">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Resistor Color</h2>
+    <p>Solutions to resistor-color in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#c">C</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="c">C</a></h3>
+            <a href="/languages/c">Other C solutions.</a>
+            <pre><code class="language-c">{`#include "resistor_color.h"
+
+resistor_band_t *colors()
+{
+   static resistor_band_t band[resistor_band_length];
+   for (resistor_band_t c = 0; c < resistor_band_length; c += 1)
+      band[(int)c] = c;
+
+   return band;
+}
+
+int color_code(resistor_band_t c)
+{
+   return (int)c;
+}
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

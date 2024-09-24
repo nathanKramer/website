@@ -1,0 +1,41 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Series">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Series</h2>
+    <p>Solutions to series in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#clojure">Clojure</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="clojure">Clojure</a></h3>
+            <a href="/languages/clojure">Other Clojure solutions.</a>
+            <pre><code class="language-clojure">{`(ns series)
+
+(defn slices [s slice-length]
+  (let [sliceable (> slice-length 0)
+        sliced (map
+                #(apply str %)
+                (partition slice-length 1 s))]
+    (if sliceable sliced [""])))
+
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

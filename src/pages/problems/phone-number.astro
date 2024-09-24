@@ -1,0 +1,92 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Phone Number">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Phone Number</h2>
+    <p>Solutions to phone-number in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#elm">Elm</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="elm">Elm</a></h3>
+            <a href="/languages/elm">Other Elm solutions.</a>
+            <pre><code class="language-elm">{`module PhoneNumber exposing (getNumber)
+
+
+subscriberNumber : Int -> Bool
+subscriberNumber n =
+    List.member n <| List.range 2 9
+
+
+parse10Digits : List Int -> Maybe String
+parse10Digits digits =
+    let
+        subscriberN : List Int -> Bool
+        subscriberN ns =
+            case ns of
+                h :: _ ->
+                    subscriberNumber h
+
+                [] ->
+                    False
+
+        validArea =
+            subscriberN digits
+
+        validLocal =
+            subscriberN <| List.drop 3 digits
+
+        toStr digitL =
+            String.concat <| List.map String.fromInt digitL
+    in
+    if validArea && validLocal then
+        Just <| toStr digits
+
+    else
+        Nothing
+
+
+getNumber : String -> Maybe String
+getNumber phoneNumber =
+    let
+        parseChar c =
+            String.toInt <| String.fromList [ c ]
+
+        digits =
+            phoneNumber
+                |> String.toList
+                |> List.filterMap parseChar
+    in
+    if List.length digits == 11 then
+        case digits of
+            1 :: remaining ->
+                parse10Digits remaining
+
+            _ ->
+                Nothing
+
+    else if List.length digits == 10 then
+        parse10Digits digits
+
+    else
+        Nothing
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

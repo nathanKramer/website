@@ -1,0 +1,70 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Prolog">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Prolog</h2>
+    <p>Problems solved in prolog.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#hello-world">Hello World</a></li><li><a href="#queen-attack">Queen Attack</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="hello-world">Hello World</a></h3>
+            <a href="/problems/hello-world">Other "Hello World" solutions.</a>
+            <pre><code class="language-prolog">{`% Please visit https://exercism.io/tracks/prolog/installation
+% for instructions on setting up prolog.
+% Visit https://exercism.io/tracks/prolog/tests
+% for help running the tests for prolog exercises.
+
+% Replace the goal below with
+% your implementation.
+
+hello_world('Hello World!').
+`}</code></pre>
+        
+
+            <h3><a name="queen-attack">Queen Attack</a></h3>
+            <a href="/problems/queen-attack">Other "Queen Attack" solutions.</a>
+            <pre><code class="language-prolog">{`% Please visit https://exercism.io/tracks/prolog/installation
+% for instructions on setting up prolog.
+% Visit https://exercism.io/tracks/prolog/tests
+% for help running the tests for prolog exercises.
+
+% Replace the goal below with
+% your implementation.
+
+on_board(Coord) :-
+  Coord >= 0, Coord < 8.
+
+can_attack((X1, Y1), (X2, Y2)) :-
+  X1 == X2;
+  Y1 == Y2;
+  abs(X2 - X1) =:= abs(Y2 - Y1).
+
+create((X, Y)) :-
+  on_board(X),
+  on_board(Y).
+
+attack(A, B) :-
+  create(A),
+  create(B),
+  can_attack(A, B).
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

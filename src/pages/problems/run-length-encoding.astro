@@ -1,0 +1,87 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Run Length Encoding">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Run Length Encoding</h2>
+    <p>Solutions to run-length-encoding in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#python">Python</a></li><li><a href="#clojure">Clojure</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="python">Python</a></h3>
+            <a href="/languages/python">Other Python solutions.</a>
+            <pre><code class="language-python">{`from itertools import groupby
+
+
+def decode(string):
+    digits = ""
+    acc = ""
+    for c in string:
+        if not c.isdigit():
+            count = int(digits or 1)
+            digits = ""
+            acc += (c * count)
+        else:
+            digits += c
+    return acc
+
+
+def encode(string):
+    def encode_group(k, g):
+        count = len(list(g))
+        if count == 1:
+            return k
+        return f"{count}{k}"
+
+    return "".join([encode_group(k, g) for k, g in groupby(string)])
+`}</code></pre>
+        
+
+            <h3><a name="clojure">Clojure</a></h3>
+            <a href="/languages/clojure">Other Clojure solutions.</a>
+            <pre><code class="language-clojure">{`(ns run-length-encoding)
+
+(defn run-length-encode
+  "encodes a string with run-length-encoding"
+  [plain-text]
+  (apply str (map (fn [chars]
+                    (if (= (count chars) 1)
+                      (apply str chars)
+                      (str (count chars) (first chars))))
+                  (partition-by identity plain-text))))
+
+(defn run-length-decode
+  "decodes a run-length-encoded string"
+  [cipher-text]
+  (let [grouped (partition-by #(Character/isDigit %) cipher-text)
+        digit-char-pairs (partition 2 grouped)
+        encoded? (< 2 (count digit-char-pairs))
+        decode (apply str
+                      (map (fn [[digits [c & cs]]]
+                             (let [n (Integer/parseInt (apply str digits))]
+                               (apply str
+                                      (flatten (cons (repeat n c) cs)))))
+                           digit-char-pairs))]
+    (if encoded?
+      decode
+      cipher-text)))
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

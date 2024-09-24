@@ -1,0 +1,64 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Two Fer">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Two Fer</h2>
+    <p>Solutions to two-fer in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#nim">Nim</a></li><li><a href="#python">Python</a></li><li><a href="#clojure">Clojure</a></li><li><a href="#elm">Elm</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="nim">Nim</a></h3>
+            <a href="/languages/nim">Other Nim solutions.</a>
+            <pre><code class="language-nim">{`import strformat
+
+proc twoFer*(name = "you"): string =
+  &"One for {name}, one for me."
+`}</code></pre>
+        
+
+            <h3><a name="python">Python</a></h3>
+            <a href="/languages/python">Other Python solutions.</a>
+            <pre><code class="language-python">{`def two_fer(name="you"):
+    return f"One for {name}, one for me."
+`}</code></pre>
+        
+
+            <h3><a name="clojure">Clojure</a></h3>
+            <a href="/languages/clojure">Other Clojure solutions.</a>
+            <pre><code class="language-clojure">{`(ns two-fer)
+
+(defn two-fer
+  ([] (two-fer "you"))
+  ([name] (format "One for %s, one for me." (or name "you"))))
+`}</code></pre>
+        
+
+            <h3><a name="elm">Elm</a></h3>
+            <a href="/languages/elm">Other Elm solutions.</a>
+            <pre><code class="language-elm">{`module TwoFer exposing (twoFer)
+
+
+twoFer : Maybe String -> String
+twoFer name =
+    "One for " ++ Maybe.withDefault "you" name ++ ", one for me."
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

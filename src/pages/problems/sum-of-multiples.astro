@@ -1,0 +1,47 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Sum Of Multiples">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Sum Of Multiples</h2>
+    <p>Solutions to sum-of-multiples in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#elm">Elm</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="elm">Elm</a></h3>
+            <a href="/languages/elm">Other Elm solutions.</a>
+            <pre><code class="language-elm">{`module SumOfMultiples exposing (sumOfMultiples)
+
+
+sumOfMultiples : List Int -> Int -> Int
+sumOfMultiples divisors limit =
+    let
+        nums =
+            List.range 1 (limit - 1)
+
+        isDivisibleBy divs i =
+            List.any (\\d -> modBy d i == 0) divs
+    in
+    nums
+        |> List.filter (isDivisibleBy divisors)
+        |> List.foldl (+) 0
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

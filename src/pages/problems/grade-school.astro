@@ -1,0 +1,84 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Grade School">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Grade School</h2>
+    <p>Solutions to grade-school in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#elm">Elm</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="elm">Elm</a></h3>
+            <a href="/languages/elm">Other Elm solutions.</a>
+            <pre><code class="language-elm">{`module GradeSchool exposing (addStudent, allStudents, empty, studentsInGrade)
+
+import Dict exposing (Dict)
+
+
+type alias Grade =
+    Int
+
+
+type alias Student =
+    String
+
+
+type alias School =
+    Dict Grade (List Student)
+
+
+empty : School
+empty =
+    Dict.empty
+
+
+addStudent : Grade -> Student -> School -> School
+addStudent grade student school =
+    let
+        updateStudents : Maybe (List Student) -> Maybe (List Student)
+        updateStudents v =
+            case v of
+                Just students ->
+                    Just (List.sort (student :: students))
+
+                Nothing ->
+                    Just [ student ]
+    in
+    Dict.update grade updateStudents school
+
+
+studentsInGrade : Grade -> School -> List Student
+studentsInGrade grade school =
+    case
+        Dict.get grade school
+    of
+        Just students ->
+            students
+
+        Nothing ->
+            []
+
+
+allStudents : School -> List ( Grade, List Student )
+allStudents school =
+    Dict.toList school
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

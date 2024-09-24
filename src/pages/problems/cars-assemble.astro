@@ -1,0 +1,52 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Cars Assemble">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Cars Assemble</h2>
+    <p>Solutions to cars-assemble in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#clojure">Clojure</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="clojure">Clojure</a></h3>
+            <a href="/languages/clojure">Other Clojure solutions.</a>
+            <pre><code class="language-clojure">{`(ns cars-assemble)
+
+(def cars-per-hr 221)
+
+(defn production-rate
+  "Returns the assembly line's production rate per hour,
+   taking into account its success rate"
+  [speed]
+  (let [success-rate (cond (= speed 10) 0.77
+                           (= speed 9) 0.8
+                           (>= speed 5) 0.9
+                           :else 1.0)
+        base-rate (* speed cars-per-hr)]
+    (* base-rate success-rate)))
+
+(defn working-items
+  "Calculates how many working cars are produced per minute"
+  [speed]
+  (let [minute-rate (/ (production-rate speed) 60)]
+    (int minute-rate)))
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

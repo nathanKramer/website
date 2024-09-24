@@ -1,0 +1,93 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Nucleotide Count">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Nucleotide Count</h2>
+    <p>Solutions to nucleotide-count in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#elm">Elm</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="elm">Elm</a></h3>
+            <a href="/languages/elm">Other Elm solutions.</a>
+            <pre><code class="language-elm">{`module NucleotideCount exposing (nucleotideCounts)
+
+
+type alias NucleotideCounts =
+    { a : Int
+    , t : Int
+    , c : Int
+    , g : Int
+    }
+
+
+nucleotideCounts : String -> NucleotideCounts
+nucleotideCounts sequence =
+    sequence
+        |> String.toLower
+        |> String.toList
+        |> group
+        |> List.foldl aggregateGroups
+            (NucleotideCounts 0 0 0 0)
+
+
+aggregateGroups : ( Char, List Char ) -> NucleotideCounts -> NucleotideCounts
+aggregateGroups ( k, instances ) acc =
+    let
+        count =
+            List.length instances
+    in
+    case k of
+        'a' ->
+            { acc | a = acc.a }
+
+        't' ->
+            { acc | t = acc.t }
+
+        'c' ->
+            { acc | c = acc.c }
+
+        'g' ->
+            { acc | g = acc.g }
+
+        _ ->
+            acc
+
+
+group : List a -> List ( a, List a )
+group list =
+    let
+        helper : List a -> List ( a, List a ) -> List ( a, List a )
+        helper scattered gathered =
+            case scattered of
+                [] ->
+                    List.reverse gathered
+
+                toGather :: population ->
+                    let
+                        ( gathering, remaining ) =
+                            List.partition ((==) toGather) population
+                    in
+                    helper remaining <| ( toGather, gathering ) :: gathered
+    in
+    helper list []
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

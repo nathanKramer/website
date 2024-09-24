@@ -1,0 +1,74 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="High School Sweetheart">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>High School Sweetheart</h2>
+    <p>Solutions to high-school-sweetheart in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#elixir">Elixir</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="elixir">Elixir</a></h3>
+            <a href="/languages/elixir">Other Elixir solutions.</a>
+            <pre><code class="language-elixir">{`defmodule HighSchoolSweetheart do
+  def first_letter(name) do
+    name
+    |> String.trim()
+    |> String.first()
+  end
+
+  def initial(name) do
+    name
+    |> first_letter
+    |> String.upcase
+    |> Kernel.<>(".")
+  end
+
+  def initials(full_name) do
+    full_name
+    |> String.split(" ")
+    |> Enum.map(&initial/1)
+    |> Enum.join(" ")
+  end
+
+  def pair(full_name1, full_name2) do
+    i1 = initials(full_name1)
+    i2 = initials(full_name2)
+    """
+         ******       ******
+       **      **   **      **
+     **         ** **         **
+    **            *            **
+    **                         **
+    **     #{i1}  +  #{i2}     **
+     **                       **
+       **                   **
+         **               **
+           **           **
+             **       **
+               **   **
+                 ***
+                  *
+    """
+  end
+end
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

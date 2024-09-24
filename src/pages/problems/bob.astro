@@ -1,0 +1,204 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Bob">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Bob</h2>
+    <p>Solutions to bob in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#clojure">Clojure</a></li><li><a href="#elixir">Elixir</a></li><li><a href="#elm">Elm</a></li><li><a href="#haskell">Haskell</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="clojure">Clojure</a></h3>
+            <a href="/languages/clojure">Other Clojure solutions.</a>
+            <pre><code class="language-clojure">{`(ns bob
+  (:require [clojure.string :refer [blank? ends-with? trim]]))
+
+(defn is-question [s]
+  (ends-with? s "?"))
+
+(defn is-yelling [s]
+  (let [alphas (filter #(Character/isLetter %) s)]
+    (and
+     (not-empty alphas)
+     (every?
+      #(Character/isUpperCase %)
+      alphas))))
+
+(defn response-for
+  [input]
+  (let [s (trim input)]
+    (cond
+      (blank? s) "Fine. Be that way!"
+      (and (is-yelling s) (is-question s)) "Calm down, I know what I'm doing!"
+      (is-question s) "Sure."
+      (is-yelling s) "Whoa, chill out!"
+      :else "Whatever.")))
+`}</code></pre>
+        
+
+            <h3><a name="elixir">Elixir</a></h3>
+            <a href="/languages/elixir">Other Elixir solutions.</a>
+            <pre><code class="language-elixir">{`defmodule Bob do
+  def hey(input) do
+    input |> String.trim() |> highly_sophisticated_nlp
+  end
+
+  defp highly_sophisticated_nlp(input) do
+    cond do
+      blank?(input) ->
+        "Fine. Be that way!"
+
+      question?(input) && yelling?(input) ->
+        "Calm down, I know what I'm doing!"
+
+      question?(input) ->
+        "Sure."
+
+      yelling?(input) ->
+        "Whoa, chill out!"
+
+      true ->
+        "Whatever."
+    end
+  end
+
+  defp alphabetical?(s) do
+    String.downcase(s) != String.upcase(s)
+  end
+
+  defp blank?(input) do
+    String.trim(input) == ""
+  end
+
+  defp yelling?(input) do
+    yellable = input |> String.split() |> Enum.filter(&alphabetical?(&1))
+    Enum.count(yellable) > 0 && Enum.all?(yellable, &all_caps?(&1))
+  end
+
+  defp question?(input) do
+    String.ends_with?(input, "?")
+  end
+
+  defp all_caps?(word) do
+    String.upcase(word) == word
+  end
+end
+`}</code></pre>
+        
+
+            <h3><a name="elm">Elm</a></h3>
+            <a href="/languages/elm">Other Elm solutions.</a>
+            <pre><code class="language-elm">{`module Bob exposing (hey)
+
+
+hey : String -> String
+hey =
+    String.trim >> response
+
+
+response : String -> String
+response remark =
+    if remark |> String.isEmpty then
+        "Fine. Be that way!"
+
+    else if (remark |> isQuestion) && (remark |> isYelling) then
+        "Calm down, I know what I'm doing!"
+
+    else if remark |> isQuestion then
+        "Sure."
+
+    else if remark |> isYelling then
+        "Whoa, chill out!"
+
+    else
+        "Whatever."
+
+
+isQuestion : String -> Bool
+isQuestion =
+    String.endsWith "?"
+
+
+isYelling : String -> Bool
+isYelling =
+    extractSpeech >> anyAndAll isYell
+
+
+extractSpeech =
+    String.words >> filterMapBoolean (String.filter Char.isAlpha)
+
+
+isYell =
+    String.all Char.isUpper
+
+
+filterMapBoolean f =
+    List.filterMap (nonEmpty << f)
+
+
+anyAndAll =
+    predicates
+        List.any
+        List.all
+
+
+predicates f g p x =
+    f p x && g p x
+
+
+
+-- String.Extra
+
+
+nonEmpty : String -> Maybe String
+nonEmpty string =
+    if String.isEmpty string then
+        Nothing
+
+    else
+        Just string
+`}</code></pre>
+        
+
+            <h3><a name="haskell">Haskell</a></h3>
+            <a href="/languages/haskell">Other Haskell solutions.</a>
+            <pre><code class="language-haskell">{`module Bob (responseFor) where
+
+import qualified Data.Char as C
+import qualified Data.List as L
+
+responseFor :: String -> String
+responseFor str
+  | question && yelling = "Calm down, I know what I'm doing!"
+  | silent = "Fine. Be that way!"
+  | question = "Sure."
+  | yelling = "Whoa, chill out!"
+  | otherwise = "Whatever."
+  where
+    trim = L.dropWhileEnd C.isSpace . L.dropWhile C.isSpace
+    sanitized = trim str
+    alphas = filter C.isAlpha $ sanitized
+    silent = null $ sanitized
+    question = not silent && last sanitized == '?'
+    speaking = not silent && not (null alphas)
+    yelling = speaking && all C.isUpper alphas
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

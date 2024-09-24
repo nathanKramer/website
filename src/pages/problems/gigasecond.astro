@@ -1,0 +1,57 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Gigasecond">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Gigasecond</h2>
+    <p>Solutions to gigasecond in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#go">Go</a></li><li><a href="#elm">Elm</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="go">Go</a></h3>
+            <a href="/languages/go">Other Go solutions.</a>
+            <pre><code class="language-go">{`package gigasecond
+
+// import path for the time package from the standard library
+import "time"
+
+const gigasecond = time.Second * 1_000_000_000
+
+// AddGigasecond should have a comment documenting it.
+func AddGigasecond(t time.Time) time.Time {
+	return t.Add(gigasecond)
+}
+`}</code></pre>
+        
+
+            <h3><a name="elm">Elm</a></h3>
+            <a href="/languages/elm">Other Elm solutions.</a>
+            <pre><code class="language-elm">{`module Gigasecond exposing (add)
+
+import Time exposing (millisToPosix, posixToMillis)
+
+
+add : Time.Posix -> Time.Posix
+add timestamp =
+    (posixToMillis timestamp + 10 ^ 12)
+        |> millisToPosix
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

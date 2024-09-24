@@ -1,0 +1,67 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Rust">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Rust</h2>
+    <p>Problems solved in rust.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#hello-world">Hello World</a></li><li><a href="#leap">Leap</a></li><li><a href="#nth-prime">Nth Prime</a></li><li><a href="#raindrops">Raindrops</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="hello-world">Hello World</a></h3>
+            <a href="/problems/hello-world">Other "Hello World" solutions.</a>
+            <pre><code class="language-rust">{`// The &'static here means the return type has a static lifetime.
+// This is a Rust feature that you don't need to worry about now.
+pub fn hello() -> &'static str {
+    "Hello, World!"
+}
+`}</code></pre>
+        
+
+            <h3><a name="leap">Leap</a></h3>
+            <a href="/problems/leap">Other "Leap" solutions.</a>
+            <pre><code class="language-rust">{`pub fn is_leap_year(year: u64) -> bool {
+    return year % 400 == 0 || (year % 4 == 0 && year % 100 != 0);
+}
+`}</code></pre>
+        
+
+            <h3><a name="nth-prime">Nth Prime</a></h3>
+            <a href="/problems/nth-prime">Other "Nth Prime" solutions.</a>
+            <pre><code class="language-rust">{`pub fn nth(n: u32) -> u32 {
+    unimplemented!("What is the 0-indexed {}th prime number?", n)
+}
+`}</code></pre>
+        
+
+            <h3><a name="raindrops">Raindrops</a></h3>
+            <a href="/problems/raindrops">Other "Raindrops" solutions.</a>
+            <pre><code class="language-rust">{`pub fn raindrops(n: u32) -> String {
+    let rain = [(3, "Pling"), (5, "Plang"), (7, "Plong")]
+        .into_iter()
+        .filter(|&(number, _)| n % number == 0)
+        .map(|&(_, sound)| sound)
+        .collect::<Vec<&str>>()
+        .join("");
+    return if rain.is_empty() { n.to_string() } else { rain };
+}
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

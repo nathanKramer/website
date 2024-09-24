@@ -1,0 +1,56 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Guessing Game">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Guessing Game</h2>
+    <p>Solutions to guessing-game in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#elixir">Elixir</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="elixir">Elixir</a></h3>
+            <a href="/languages/elixir">Other Elixir solutions.</a>
+            <pre><code class="language-elixir">{`defmodule GuessingGame do
+  def compare(_, guess \\\\ :no_guess)
+
+  def compare(secret_number, guess) when guess == secret_number do
+    "Correct"
+  end
+
+  def compare(_, :no_guess) do
+    "Make a guess"
+  end
+
+  def compare(secret_number, guess)
+      when abs(guess - secret_number) == 1 do
+    "So close"
+  end
+
+  def compare(secret_number, guess) when guess > secret_number do
+    "Too high"
+  end
+
+  def compare(secret_number, guess) when guess < secret_number do
+    "Too low"
+  end
+end
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

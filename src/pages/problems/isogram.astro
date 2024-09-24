@@ -1,0 +1,60 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Isogram">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Isogram</h2>
+    <p>Solutions to isogram in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#nim">Nim</a></li><li><a href="#elm">Elm</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="nim">Nim</a></h3>
+            <a href="/languages/nim">Other Nim solutions.</a>
+            <pre><code class="language-nim">{`import sets, unicode, sequtils, sugar
+
+proc isIsogram*(str: string): bool =
+  var seen: HashSet[Rune] = initHashSet[Rune]()
+  for c in toLower(str).toRunes.filter(c => c.isAlpha):
+    if seen.containsOrIncl(c):
+      return false
+  return true
+`}</code></pre>
+        
+
+            <h3><a name="elm">Elm</a></h3>
+            <a href="/languages/elm">Other Elm solutions.</a>
+            <pre><code class="language-elm">{`module Isogram exposing (isIsogram)
+
+import Set
+
+
+isIsogram : String -> Bool
+isIsogram sentence =
+    let
+        letters =
+            sentence
+                |> String.toList
+                |> List.map Char.toLower
+                |> List.filter Char.isAlpha
+    in
+    List.length letters == Set.size (Set.fromList letters)
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

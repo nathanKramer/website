@@ -1,0 +1,56 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Ocaml">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Ocaml</h2>
+    <p>Problems solved in ocaml.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#hamming">Hamming</a></li><li><a href="#hello-world">Hello World</a></li><li><a href="#leap">Leap</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="hamming">Hamming</a></h3>
+            <a href="/problems/hamming">Other "Hamming" solutions.</a>
+            <pre><code class="language-ocaml">{`open Base
+
+type nucleotide = A | C | G | T
+
+let hamming_distance a b =
+  match List.zip a b with
+  | [] -> 0
+  | [ ([ (x :: xs) ] :: rest) ] -> 1 + hamming_distance rest
+`}</code></pre>
+        
+
+            <h3><a name="hello-world">Hello World</a></h3>
+            <a href="/problems/hello-world">Other "Hello World" solutions.</a>
+            <pre><code class="language-ocaml">{`let positive_sum a b =
+  let a = max a 0 and b = max b 0 in
+  a + b
+`}</code></pre>
+        
+
+            <h3><a name="leap">Leap</a></h3>
+            <a href="/problems/leap">Other "Leap" solutions.</a>
+            <pre><code class="language-ocaml">{`let leap_year year = 
+    year mod 4 = 0 && 
+        (year mod 100 <> 0 || year mod 400 = 0)
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

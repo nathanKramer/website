@@ -1,0 +1,86 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Binary Search">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Binary Search</h2>
+    <p>Solutions to binary-search in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#clojure">Clojure</a></li><li><a href="#elm">Elm</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="clojure">Clojure</a></h3>
+            <a href="/languages/clojure">Other Clojure solutions.</a>
+            <pre><code class="language-clojure">{`(ns binary-search)
+
+(defn middle [coll]
+  (quot (count coll) 2))
+
+(defn search-for [item coll]
+  (let [idx (middle coll)
+        middle-value (nth coll idx)
+        not-found-error (Exception. "not found")]
+    (cond
+      (= item middle-value) idx
+      (= 1 (count coll)) (throw not-found-error)
+      (< item middle-value) (search-for item (take idx coll))
+      :else (+ idx (search-for item (drop idx coll))))))
+`}</code></pre>
+        
+
+            <h3><a name="elm">Elm</a></h3>
+            <a href="/languages/elm">Other Elm solutions.</a>
+            <pre><code class="language-elm">{`module BinarySearch exposing (find)
+
+import Array exposing (Array)
+
+
+find : Int -> Array Int -> Maybe Int
+find target xs =
+    let
+        len =
+            Array.length xs
+
+        index =
+            len // 2
+
+        val =
+            Array.get index xs
+    in
+    Maybe.andThen
+        (\\n ->
+            if n == target then
+                Just index
+
+            else if len == 1 then
+                Nothing
+
+            else if target < n then
+                find target (Array.slice 0 index xs)
+
+            else
+                Maybe.map ((+) index) <|
+                    find
+                        target
+                        (Array.slice index len xs)
+        )
+        val
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

@@ -1,0 +1,49 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="German Sysadmin">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>German Sysadmin</h2>
+    <p>Solutions to german-sysadmin in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#elixir">Elixir</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="elixir">Elixir</a></h3>
+            <a href="/languages/elixir">Other Elixir solutions.</a>
+            <pre><code class="language-elixir">{`defmodule Username do
+
+  def sanitize([]), do: []
+  def sanitize([head | tail]), do: sanitize_char(head) ++ sanitize(tail)
+
+  defp sanitize_char(char) do
+    case char do
+      ?ä -> ~c"ae"
+      ?ö -> ~c"oe"
+      ?ü -> ~c"ue"
+      ?ß -> ~c"ss"
+      char when char >= ?a and char <= ?z -> [char]
+      ?_ -> ~c"_"
+      _ -> ~c""
+    end
+  end
+end
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

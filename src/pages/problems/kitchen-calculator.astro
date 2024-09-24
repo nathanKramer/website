@@ -1,0 +1,52 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Kitchen Calculator">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Kitchen Calculator</h2>
+    <p>Solutions to kitchen-calculator in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#elixir">Elixir</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="elixir">Elixir</a></h3>
+            <a href="/languages/elixir">Other Elixir solutions.</a>
+            <pre><code class="language-elixir">{`defmodule KitchenCalculator do
+  def get_volume({_, numeric}), do: numeric
+
+  def to_milliliter({:milliliter, numeric}), do: {:milliliter, numeric}
+  def to_milliliter({:cup, numeric}), do: {:milliliter, numeric * 240}
+  def to_milliliter({:fluid_ounce, numeric}), do: {:milliliter, numeric * 30}
+  def to_milliliter({:teaspoon, numeric}), do: {:milliliter, numeric * 5}
+  def to_milliliter({:tablespoon, numeric}), do: {:milliliter, numeric * 15}
+  def to_milliliter(volume_pair), do: volume_pair
+
+  def from_milliliter({_, num}, :cup), do: {:cup, num / 240}
+  def from_milliliter({_, num}, :fluid_ounce), do: {:fluid_ounce, num / 30}
+  def from_milliliter({_, num}, :teaspoon), do: {:teaspoon, num / 5}
+  def from_milliliter({_, num}, :tablespoon), do: {:tablespoon, num / 15}
+  def from_milliliter(volume_pair, :milliliter), do: volume_pair
+
+  def convert(volume_pair, unit) do
+    volume_pair |> to_milliliter |> from_milliliter(unit)
+  end
+end
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

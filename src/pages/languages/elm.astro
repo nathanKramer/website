@@ -1,0 +1,1108 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Elm">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Elm</h2>
+    <p>Problems solved in elm.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#accumulate">Accumulate</a></li><li><a href="#acronym">Acronym</a></li><li><a href="#all-your-base">All Your Base</a></li><li><a href="#allergies">Allergies</a></li><li><a href="#armstrong-numbers">Armstrong Numbers</a></li><li><a href="#binary-search">Binary Search</a></li><li><a href="#bob">Bob</a></li><li><a href="#collatz-conjecture">Collatz Conjecture</a></li><li><a href="#difference-of-squares">Difference Of Squares</a></li><li><a href="#etl">Etl</a></li><li><a href="#gigasecond">Gigasecond</a></li><li><a href="#grade-school">Grade School</a></li><li><a href="#grains">Grains</a></li><li><a href="#hamming">Hamming</a></li><li><a href="#hello-world">Hello World</a></li><li><a href="#isogram">Isogram</a></li><li><a href="#leap">Leap</a></li><li><a href="#nucleotide-count">Nucleotide Count</a></li><li><a href="#pangram">Pangram</a></li><li><a href="#phone-number">Phone Number</a></li><li><a href="#raindrops">Raindrops</a></li><li><a href="#rna-transcription">Rna Transcription</a></li><li><a href="#robot-simulator">Robot Simulator</a></li><li><a href="#scrabble-score">Scrabble Score</a></li><li><a href="#space-age">Space Age</a></li><li><a href="#strain">Strain</a></li><li><a href="#sum-of-multiples">Sum Of Multiples</a></li><li><a href="#triangle">Triangle</a></li><li><a href="#two-fer">Two Fer</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="accumulate">Accumulate</a></h3>
+            <a href="/problems/accumulate">Other "Accumulate" solutions.</a>
+            <pre><code class="language-elm">{`module Accumulate exposing (accumulate)
+
+
+accumulate : (a -> b) -> List a -> List b
+accumulate =
+    List.map
+`}</code></pre>
+        
+
+            <h3><a name="acronym">Acronym</a></h3>
+            <a href="/problems/acronym">Other "Acronym" solutions.</a>
+            <pre><code class="language-elm">{`module Acronym exposing (abbreviate)
+
+
+abbreviate : String -> String
+abbreviate =
+    String.replace "-" " "
+        >> String.words
+        >> List.map (String.slice 0 1)
+        >> String.concat
+        >> String.toUpper
+`}</code></pre>
+        
+
+            <h3><a name="all-your-base">All Your Base</a></h3>
+            <a href="/problems/all-your-base">Other "All Your Base" solutions.</a>
+            <pre><code class="language-elm">{`module AllYourBase exposing (rebase)
+
+
+rebase : Int -> List Int -> Int -> Maybe (List Int)
+rebase inBase digits outBase =
+    Debug.todo "Please implement this function"
+`}</code></pre>
+        
+
+            <h3><a name="allergies">Allergies</a></h3>
+            <a href="/problems/allergies">Other "Allergies" solutions.</a>
+            <pre><code class="language-elm">{`module Allergies exposing (Allergy(..), isAllergicTo, toList)
+
+import Bitwise as B
+
+
+type Allergy
+    = Eggs
+    | Peanuts
+    | Shellfish
+    | Strawberries
+    | Tomatoes
+    | Chocolate
+    | Pollen
+    | Cats
+
+
+allergies : List Allergy
+allergies =
+    [ Eggs
+    , Peanuts
+    , Shellfish
+    , Strawberries
+    , Tomatoes
+    , Chocolate
+    , Pollen
+    , Cats
+    ]
+
+
+allergyValue : Allergy -> Int
+allergyValue allergy =
+    case allergy of
+        Eggs ->
+            1
+
+        Peanuts ->
+            2
+
+        Shellfish ->
+            4
+
+        Strawberries ->
+            8
+
+        Tomatoes ->
+            16
+
+        Chocolate ->
+            32
+
+        Pollen ->
+            64
+
+        Cats ->
+            128
+
+
+isAllergicTo : Allergy -> Int -> Bool
+isAllergicTo allergy score =
+    let
+        allergyTest =
+            B.and (allergyValue allergy) score
+    in
+    case allergyTest of
+        0 ->
+            False
+
+        _ ->
+            True
+
+
+toList : Int -> List Allergy
+toList score =
+    List.filter (\\allergy -> isAllergicTo allergy score) allergies
+`}</code></pre>
+        
+
+            <h3><a name="armstrong-numbers">Armstrong Numbers</a></h3>
+            <a href="/problems/armstrong-numbers">Other "Armstrong Numbers" solutions.</a>
+            <pre><code class="language-elm">{`module ArmstrongNumbers exposing (isArmstrongNumber)
+
+
+isArmstrongNumber : Int -> Bool
+isArmstrongNumber num =
+    let
+        digits =
+            String.fromInt num
+    in
+    digits
+        |> String.split ""
+        |> List.map
+            (String.toInt
+                >> Maybe.withDefault 0
+                >> (\\i -> i ^ String.length digits)
+            )
+        |> List.foldl (+) 0
+        |> (==) num
+`}</code></pre>
+        
+
+            <h3><a name="binary-search">Binary Search</a></h3>
+            <a href="/problems/binary-search">Other "Binary Search" solutions.</a>
+            <pre><code class="language-elm">{`module BinarySearch exposing (find)
+
+import Array exposing (Array)
+
+
+find : Int -> Array Int -> Maybe Int
+find target xs =
+    let
+        len =
+            Array.length xs
+
+        index =
+            len // 2
+
+        val =
+            Array.get index xs
+    in
+    Maybe.andThen
+        (\\n ->
+            if n == target then
+                Just index
+
+            else if len == 1 then
+                Nothing
+
+            else if target < n then
+                find target (Array.slice 0 index xs)
+
+            else
+                Maybe.map ((+) index) <|
+                    find
+                        target
+                        (Array.slice index len xs)
+        )
+        val
+`}</code></pre>
+        
+
+            <h3><a name="bob">Bob</a></h3>
+            <a href="/problems/bob">Other "Bob" solutions.</a>
+            <pre><code class="language-elm">{`module Bob exposing (hey)
+
+
+hey : String -> String
+hey =
+    String.trim >> response
+
+
+response : String -> String
+response remark =
+    if remark |> String.isEmpty then
+        "Fine. Be that way!"
+
+    else if (remark |> isQuestion) && (remark |> isYelling) then
+        "Calm down, I know what I'm doing!"
+
+    else if remark |> isQuestion then
+        "Sure."
+
+    else if remark |> isYelling then
+        "Whoa, chill out!"
+
+    else
+        "Whatever."
+
+
+isQuestion : String -> Bool
+isQuestion =
+    String.endsWith "?"
+
+
+isYelling : String -> Bool
+isYelling =
+    extractSpeech >> anyAndAll isYell
+
+
+extractSpeech =
+    String.words >> filterMapBoolean (String.filter Char.isAlpha)
+
+
+isYell =
+    String.all Char.isUpper
+
+
+filterMapBoolean f =
+    List.filterMap (nonEmpty << f)
+
+
+anyAndAll =
+    predicates
+        List.any
+        List.all
+
+
+predicates f g p x =
+    f p x && g p x
+
+
+
+-- String.Extra
+
+
+nonEmpty : String -> Maybe String
+nonEmpty string =
+    if String.isEmpty string then
+        Nothing
+
+    else
+        Just string
+`}</code></pre>
+        
+
+            <h3><a name="collatz-conjecture">Collatz Conjecture</a></h3>
+            <a href="/problems/collatz-conjecture">Other "Collatz Conjecture" solutions.</a>
+            <pre><code class="language-elm">{`module CollatzConjecture exposing (collatz)
+
+
+countCollatzSteps : Int -> Int -> Int
+countCollatzSteps steps n =
+    let
+        val =
+            if modBy 2 n == 0 then
+                n // 2
+
+            else
+                (3 * n) + 1
+    in
+    if n == 1 then
+        steps
+
+    else
+        countCollatzSteps (steps + 1) val
+
+
+collatz : Int -> Result String Int
+collatz start =
+    if start <= 0 then
+        Result.Err "Only positive numbers are allowed"
+
+    else
+        Result.Ok <| countCollatzSteps 0 start
+`}</code></pre>
+        
+
+            <h3><a name="difference-of-squares">Difference Of Squares</a></h3>
+            <a href="/problems/difference-of-squares">Other "Difference Of Squares" solutions.</a>
+            <pre><code class="language-elm">{`module DifferenceOfSquares exposing (difference, squareOfSum, sumOfSquares)
+
+import List exposing (foldl, map, range)
+
+
+sum : List Int -> Int
+sum =
+    foldl (+) 0
+
+
+squared : Int -> Int
+squared x =
+    x ^ 2
+
+
+squareOfSum : Int -> Int
+squareOfSum n =
+    sum (range 1 n) ^ 2
+
+
+sumOfSquares : Int -> Int
+sumOfSquares n =
+    range 1 n
+        |> map squared
+        |> sum
+
+
+difference : Int -> Int
+difference n =
+    squareOfSum n - sumOfSquares n
+`}</code></pre>
+        
+
+            <h3><a name="etl">Etl</a></h3>
+            <a href="/problems/etl">Other "Etl" solutions.</a>
+            <pre><code class="language-elm">{`module Etl exposing (transform)
+
+import Dict exposing (Dict)
+
+
+transform : Dict Int (List String) -> Dict String Int
+transform input =
+    let
+        convertScoreEntry ( score, letters ) =
+            letters
+                |> List.map (\\l -> ( String.toLower l, score ))
+    in
+    Dict.toList input
+        |> List.concatMap convertScoreEntry
+        |> Dict.fromList
+`}</code></pre>
+        
+
+            <h3><a name="gigasecond">Gigasecond</a></h3>
+            <a href="/problems/gigasecond">Other "Gigasecond" solutions.</a>
+            <pre><code class="language-elm">{`module Gigasecond exposing (add)
+
+import Time exposing (millisToPosix, posixToMillis)
+
+
+add : Time.Posix -> Time.Posix
+add timestamp =
+    (posixToMillis timestamp + 10 ^ 12)
+        |> millisToPosix
+`}</code></pre>
+        
+
+            <h3><a name="grade-school">Grade School</a></h3>
+            <a href="/problems/grade-school">Other "Grade School" solutions.</a>
+            <pre><code class="language-elm">{`module GradeSchool exposing (addStudent, allStudents, empty, studentsInGrade)
+
+import Dict exposing (Dict)
+
+
+type alias Grade =
+    Int
+
+
+type alias Student =
+    String
+
+
+type alias School =
+    Dict Grade (List Student)
+
+
+empty : School
+empty =
+    Dict.empty
+
+
+addStudent : Grade -> Student -> School -> School
+addStudent grade student school =
+    let
+        updateStudents : Maybe (List Student) -> Maybe (List Student)
+        updateStudents v =
+            case v of
+                Just students ->
+                    Just (List.sort (student :: students))
+
+                Nothing ->
+                    Just [ student ]
+    in
+    Dict.update grade updateStudents school
+
+
+studentsInGrade : Grade -> School -> List Student
+studentsInGrade grade school =
+    case
+        Dict.get grade school
+    of
+        Just students ->
+            students
+
+        Nothing ->
+            []
+
+
+allStudents : School -> List ( Grade, List Student )
+allStudents school =
+    Dict.toList school
+`}</code></pre>
+        
+
+            <h3><a name="grains">Grains</a></h3>
+            <a href="/problems/grains">Other "Grains" solutions.</a>
+            <pre><code class="language-elm">{`module Grains exposing (square)
+
+
+square : Int -> Maybe Int
+square n =
+    if n <= 0 then
+        Nothing
+
+    else
+        Just (2 ^ (n - 1))
+`}</code></pre>
+        
+
+            <h3><a name="hamming">Hamming</a></h3>
+            <a href="/problems/hamming">Other "Hamming" solutions.</a>
+            <pre><code class="language-elm">{`module Hamming exposing (distance)
+
+
+distance : String -> String -> Result String Int
+distance left right =
+    if String.length left == String.length right then
+        Ok <| calculateDistance left right
+
+    else
+        Err "left and right strands must be of equal length"
+
+
+calculateDistance : String -> String -> Int
+calculateDistance left right =
+    List.map2 Tuple.pair (String.toList left) (String.toList right)
+        |> List.filter (\\( a, b ) -> a /= b)
+        |> List.length
+`}</code></pre>
+        
+
+            <h3><a name="hello-world">Hello World</a></h3>
+            <a href="/problems/hello-world">Other "Hello World" solutions.</a>
+            <pre><code class="language-elm">{`module HelloWorld exposing (helloWorld)
+
+
+helloWorld : String
+helloWorld =
+    "Hello, World!"
+`}</code></pre>
+        
+
+            <h3><a name="isogram">Isogram</a></h3>
+            <a href="/problems/isogram">Other "Isogram" solutions.</a>
+            <pre><code class="language-elm">{`module Isogram exposing (isIsogram)
+
+import Set
+
+
+isIsogram : String -> Bool
+isIsogram sentence =
+    let
+        letters =
+            sentence
+                |> String.toList
+                |> List.map Char.toLower
+                |> List.filter Char.isAlpha
+    in
+    List.length letters == Set.size (Set.fromList letters)
+`}</code></pre>
+        
+
+            <h3><a name="leap">Leap</a></h3>
+            <a href="/problems/leap">Other "Leap" solutions.</a>
+            <pre><code class="language-elm">{`module Leap exposing (isLeapYear)
+
+
+divisbleBy : Int -> Int -> Bool
+divisbleBy div x =
+    modBy div x == 0
+
+
+isLeapYear : Int -> Bool
+isLeapYear year =
+    List.all
+        (\\fn -> fn year)
+        [ divisbleBy 4
+        , fOr (divisbleBy 100 >> not) (divisbleBy 400)
+        ]
+
+
+fOr f g x =
+    f x || g x
+`}</code></pre>
+        
+
+            <h3><a name="nucleotide-count">Nucleotide Count</a></h3>
+            <a href="/problems/nucleotide-count">Other "Nucleotide Count" solutions.</a>
+            <pre><code class="language-elm">{`module NucleotideCount exposing (nucleotideCounts)
+
+
+type alias NucleotideCounts =
+    { a : Int
+    , t : Int
+    , c : Int
+    , g : Int
+    }
+
+
+nucleotideCounts : String -> NucleotideCounts
+nucleotideCounts sequence =
+    sequence
+        |> String.toLower
+        |> String.toList
+        |> group
+        |> List.foldl aggregateGroups
+            (NucleotideCounts 0 0 0 0)
+
+
+aggregateGroups : ( Char, List Char ) -> NucleotideCounts -> NucleotideCounts
+aggregateGroups ( k, instances ) acc =
+    let
+        count =
+            List.length instances
+    in
+    case k of
+        'a' ->
+            { acc | a = acc.a }
+
+        't' ->
+            { acc | t = acc.t }
+
+        'c' ->
+            { acc | c = acc.c }
+
+        'g' ->
+            { acc | g = acc.g }
+
+        _ ->
+            acc
+
+
+group : List a -> List ( a, List a )
+group list =
+    let
+        helper : List a -> List ( a, List a ) -> List ( a, List a )
+        helper scattered gathered =
+            case scattered of
+                [] ->
+                    List.reverse gathered
+
+                toGather :: population ->
+                    let
+                        ( gathering, remaining ) =
+                            List.partition ((==) toGather) population
+                    in
+                    helper remaining <| ( toGather, gathering ) :: gathered
+    in
+    helper list []
+`}</code></pre>
+        
+
+            <h3><a name="pangram">Pangram</a></h3>
+            <a href="/problems/pangram">Other "Pangram" solutions.</a>
+            <pre><code class="language-elm">{`module Pangram exposing (isPangram)
+
+
+alphabet : List String
+alphabet =
+    [ "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" ]
+
+
+isPangram : String -> Bool
+isPangram sentence =
+    let
+        sanitized =
+            String.toLower sentence
+
+        sentenceContainsLetter letter =
+            String.contains letter sanitized
+    in
+    List.all sentenceContainsLetter alphabet
+`}</code></pre>
+        
+
+            <h3><a name="phone-number">Phone Number</a></h3>
+            <a href="/problems/phone-number">Other "Phone Number" solutions.</a>
+            <pre><code class="language-elm">{`module PhoneNumber exposing (getNumber)
+
+
+subscriberNumber : Int -> Bool
+subscriberNumber n =
+    List.member n <| List.range 2 9
+
+
+parse10Digits : List Int -> Maybe String
+parse10Digits digits =
+    let
+        subscriberN : List Int -> Bool
+        subscriberN ns =
+            case ns of
+                h :: _ ->
+                    subscriberNumber h
+
+                [] ->
+                    False
+
+        validArea =
+            subscriberN digits
+
+        validLocal =
+            subscriberN <| List.drop 3 digits
+
+        toStr digitL =
+            String.concat <| List.map String.fromInt digitL
+    in
+    if validArea && validLocal then
+        Just <| toStr digits
+
+    else
+        Nothing
+
+
+getNumber : String -> Maybe String
+getNumber phoneNumber =
+    let
+        parseChar c =
+            String.toInt <| String.fromList [ c ]
+
+        digits =
+            phoneNumber
+                |> String.toList
+                |> List.filterMap parseChar
+    in
+    if List.length digits == 11 then
+        case digits of
+            1 :: remaining ->
+                parse10Digits remaining
+
+            _ ->
+                Nothing
+
+    else if List.length digits == 10 then
+        parse10Digits digits
+
+    else
+        Nothing
+`}</code></pre>
+        
+
+            <h3><a name="raindrops">Raindrops</a></h3>
+            <a href="/problems/raindrops">Other "Raindrops" solutions.</a>
+            <pre><code class="language-elm">{`module Raindrops exposing (raindrops)
+
+
+raindrops : Int -> String
+raindrops number =
+    let
+        labelledRaindrops =
+            labelFactors number
+                [ ( 3, "Pling" )
+                , ( 5, "Plang" )
+                , ( 7, "Plong" )
+                ]
+    in
+    stringWithDefault (String.fromInt number) labelledRaindrops
+
+
+labelFactors : Int -> List ( Int, String ) -> String
+labelFactors number =
+    List.filterMap (labelFactor number) >> String.concat
+
+
+labelFactor : Int -> ( Int, String ) -> Maybe String
+labelFactor num ( factor, label ) =
+    if modBy factor num == 0 then
+        Just label
+
+    else
+        Nothing
+
+
+
+-- String.Extra
+
+
+{-| It would be nice if we had String.withDefault,
+The behaviour is the same as Maybe.withDefault, except it uses the default value in the case of the empty string
+
+stringWithDefault "It looks like we have no fruit :(" (String.join ", " fruit)
+
+-}
+stringWithDefault : String -> String -> String
+stringWithDefault default value =
+    Maybe.withDefault default (nonEmpty value)
+
+
+nonEmpty : String -> Maybe String
+nonEmpty string =
+    if String.isEmpty string then
+        Nothing
+
+    else
+        Just string
+`}</code></pre>
+        
+
+            <h3><a name="rna-transcription">Rna Transcription</a></h3>
+            <a href="/problems/rna-transcription">Other "Rna Transcription" solutions.</a>
+            <pre><code class="language-elm">{`module RNATranscription exposing (toRNA)
+
+
+nucleotideComplement : Char -> Char
+nucleotideComplement n =
+    case n of
+        'A' ->
+            'U'
+
+        'C' ->
+            'G'
+
+        'T' ->
+            'A'
+
+        'G' ->
+            'C'
+
+        _ ->
+            ' '
+
+
+toRNA : String -> Result Char String
+toRNA dna =
+    Ok
+        (String.toList dna
+            |> List.map nucleotideComplement
+            |> String.fromList
+        )
+`}</code></pre>
+        
+
+            <h3><a name="robot-simulator">Robot Simulator</a></h3>
+            <a href="/problems/robot-simulator">Other "Robot Simulator" solutions.</a>
+            <pre><code class="language-elm">{`module RobotSimulator exposing
+    ( Bearing(..)
+    , Robot
+    , advance
+    , defaultRobot
+    , simulate
+    , turnLeft
+    , turnRight
+    )
+
+
+type Bearing
+    = North
+    | East
+    | South
+    | West
+
+
+type alias Robot =
+    { bearing : Bearing
+    , coordinates :
+        { x : Int
+        , y : Int
+        }
+    }
+
+
+defaultRobot : Robot
+defaultRobot =
+    { bearing = North
+    , coordinates = { x = 0, y = 0 }
+    }
+
+
+turnRight : Robot -> Robot
+turnRight robot =
+    case robot.bearing of
+        North ->
+            { robot | bearing = East }
+
+        East ->
+            { robot | bearing = South }
+
+        South ->
+            { robot | bearing = West }
+
+        West ->
+            { robot | bearing = North }
+
+
+turnLeft : Robot -> Robot
+turnLeft robot =
+    case robot.bearing of
+        North ->
+            { robot | bearing = West }
+
+        East ->
+            { robot | bearing = North }
+
+        South ->
+            { robot | bearing = East }
+
+        West ->
+            { robot | bearing = South }
+
+
+advance : Robot -> Robot
+advance robot =
+    let
+        bearingVector =
+            case robot.bearing of
+                North ->
+                    { x = 0, y = 1 }
+
+                East ->
+                    { x = 1, y = 0 }
+
+                South ->
+                    { x = 0, y = -1 }
+
+                West ->
+                    { x = -1, y = 0 }
+
+        newCoords =
+            { x = robot.coordinates.x + bearingVector.x, y = robot.coordinates.y + bearingVector.y }
+    in
+    { robot | coordinates = newCoords }
+
+
+simulate : String -> Robot -> Robot
+simulate directions robot =
+    let
+        translate c =
+            case c of
+                'R' ->
+                    turnRight
+
+                'L' ->
+                    turnLeft
+
+                'A' ->
+                    advance
+
+                _ ->
+                    identity
+
+        transformations =
+            List.map translate (String.toList directions)
+    in
+    List.foldl (\\fn bot -> fn bot)
+        robot
+        transformations
+`}</code></pre>
+        
+
+            <h3><a name="scrabble-score">Scrabble Score</a></h3>
+            <a href="/problems/scrabble-score">Other "Scrabble Score" solutions.</a>
+            <pre><code class="language-elm">{`module ScrabbleScore exposing (scoreWord)
+
+import Dict exposing (Dict)
+
+
+scores : Dict Char Int
+scores =
+    Dict.fromList
+        [ ( 'A', 1 )
+        , ( 'E', 1 )
+        , ( 'I', 1 )
+        , ( 'O', 1 )
+        , ( 'U', 1 )
+        , ( 'L', 1 )
+        , ( 'N', 1 )
+        , ( 'R', 1 )
+        , ( 'S', 1 )
+        , ( 'T', 1 )
+        , ( 'D', 2 )
+        , ( 'G', 2 )
+        , ( 'B', 3 )
+        , ( 'C', 3 )
+        , ( 'M', 3 )
+        , ( 'P', 3 )
+        , ( 'F', 4 )
+        , ( 'H', 4 )
+        , ( 'V', 4 )
+        , ( 'W', 4 )
+        , ( 'Y', 4 )
+        , ( 'K', 5 )
+        , ( 'J', 8 )
+        , ( 'X', 8 )
+        , ( 'Q', 10 )
+        , ( 'Z', 10 )
+        ]
+
+
+scoreWord : String -> Int
+scoreWord =
+    String.toUpper
+        >> String.toList
+        >> List.filterMap (\\c -> Dict.get c scores)
+        >> List.foldl (+) 0
+`}</code></pre>
+        
+
+            <h3><a name="space-age">Space Age</a></h3>
+            <a href="/problems/space-age">Other "Space Age" solutions.</a>
+            <pre><code class="language-elm">{`module SpaceAge exposing (Planet(..), ageOn)
+
+
+type Planet
+    = Mercury
+    | Venus
+    | Earth
+    | Mars
+    | Jupiter
+    | Saturn
+    | Uranus
+    | Neptune
+
+
+orbitalPeriod : Planet -> Float
+orbitalPeriod planet =
+    case planet of
+        Mercury ->
+            0.2408467
+
+        Venus ->
+            0.61519726
+
+        Earth ->
+            1.0
+
+        Mars ->
+            1.8808158
+
+        Jupiter ->
+            11.862615
+
+        Saturn ->
+            29.447498
+
+        Uranus ->
+            84.016846
+
+        Neptune ->
+            164.79132
+
+
+earthYearInSeconds : Float
+earthYearInSeconds =
+    31557600
+
+
+ageOn : Planet -> Float -> Float
+ageOn planet seconds =
+    seconds
+        / (orbitalPeriod planet
+            * earthYearInSeconds
+          )
+`}</code></pre>
+        
+
+            <h3><a name="strain">Strain</a></h3>
+            <a href="/problems/strain">Other "Strain" solutions.</a>
+            <pre><code class="language-elm">{`module Strain exposing (discard, keep)
+
+
+keep : (a -> Bool) -> List a -> List a
+keep predicate items =
+    case items of
+        [] ->
+            []
+
+        x :: xs ->
+            let
+                rest =
+                    keep predicate xs
+
+                result =
+                    if predicate x then
+                        x :: rest
+
+                    else
+                        rest
+            in
+            result
+
+
+discard : (a -> Bool) -> List a -> List a
+discard predicate list =
+    keep (predicate >> not)
+        list
+`}</code></pre>
+        
+
+            <h3><a name="sum-of-multiples">Sum Of Multiples</a></h3>
+            <a href="/problems/sum-of-multiples">Other "Sum Of Multiples" solutions.</a>
+            <pre><code class="language-elm">{`module SumOfMultiples exposing (sumOfMultiples)
+
+
+sumOfMultiples : List Int -> Int -> Int
+sumOfMultiples divisors limit =
+    let
+        nums =
+            List.range 1 (limit - 1)
+
+        isDivisibleBy divs i =
+            List.any (\\d -> modBy d i == 0) divs
+    in
+    nums
+        |> List.filter (isDivisibleBy divisors)
+        |> List.foldl (+) 0
+`}</code></pre>
+        
+
+            <h3><a name="triangle">Triangle</a></h3>
+            <a href="/problems/triangle">Other "Triangle" solutions.</a>
+            <pre><code class="language-elm">{`module Triangle exposing (Triangle(..), triangleKind)
+
+
+type Triangle
+    = Equilateral
+    | Isosceles
+    | Scalene
+
+
+triangleKind : number -> number -> number -> Result String Triangle
+triangleKind x y z =
+    let
+        validLength n =
+            n > 0
+
+        validLengths =
+            List.all validLength [ x, y, z ]
+
+        triangleInequality =
+            (x + y > z)
+                && (y + z > x)
+                && (z + x > y)
+
+        classification =
+            if x == y && x == z && y == z then
+                Ok Equilateral
+
+            else if x == y || x == z || y == z then
+                Ok Isosceles
+
+            else
+                Ok Scalene
+    in
+    if not validLengths then
+        Err "Invalid lengths"
+
+    else if not triangleInequality then
+        Err "Violates inequality"
+
+    else
+        classification
+`}</code></pre>
+        
+
+            <h3><a name="two-fer">Two Fer</a></h3>
+            <a href="/problems/two-fer">Other "Two Fer" solutions.</a>
+            <pre><code class="language-elm">{`module TwoFer exposing (twoFer)
+
+
+twoFer : Maybe String -> String
+twoFer name =
+    "One for " ++ Maybe.withDefault "you" name ++ ", one for me."
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

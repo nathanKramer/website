@@ -1,0 +1,52 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Linked List">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Linked List</h2>
+    <p>Solutions to linked-list in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#c">C</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="c">C</a></h3>
+            <a href="/languages/c">Other C solutions.</a>
+            <pre><code class="language-c">{`#include "linked_list.h"
+
+typedef struct list_item
+{
+   struct list_item *next;
+   struct list_item *previous;
+   ll_data_t data;
+} list_item_t;
+
+list_item_t **new_list()
+{
+   list_item_t *list =
+       &(list_item_t){.next = 0, .previous = 0, .data = 0};
+   return list;
+}
+
+bool is_list_empty(struct list_item **list)
+{
+   return !(list && *list);
+}
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

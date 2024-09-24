@@ -1,0 +1,58 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Take A Number">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Take A Number</h2>
+    <p>Solutions to take-a-number in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#elixir">Elixir</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="elixir">Elixir</a></h3>
+            <a href="/languages/elixir">Other Elixir solutions.</a>
+            <pre><code class="language-elixir">{`defmodule TakeANumber do
+  def start() do
+    spawn(&loop/0)
+  end
+
+  defp loop(state \\\\ 0) do
+    new_state = state
+
+    receive do
+      {:report_state, sender_pid} ->
+        send(sender_pid, state)
+        loop(state)
+
+      {:take_a_number, sender_pid} ->
+        new_state = new_state + 1
+        send(sender_pid, new_state)
+        loop(new_state)
+
+      :stop ->
+        nil
+
+      _ ->
+        loop(state)
+    end
+  end
+end
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

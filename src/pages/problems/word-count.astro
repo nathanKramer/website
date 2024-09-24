@@ -1,0 +1,75 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Word Count">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Word Count</h2>
+    <p>Solutions to word-count in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#clojure">Clojure</a></li><li><a href="#elixir">Elixir</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="clojure">Clojure</a></h3>
+            <a href="/languages/clojure">Other Clojure solutions.</a>
+            <pre><code class="language-clojure">{`(ns word-count
+  (:require [clojure.string :refer [split lower-case]]))
+
+(defn word-count [s]
+  (let [words (split (lower-case s) #" ")
+        grouped-words (group-by identity words)]
+    (zipmap
+     (keys grouped-words)
+     (map count (vals grouped-words)))))
+`}</code></pre>
+        
+
+            <h3><a name="elixir">Elixir</a></h3>
+            <a href="/languages/elixir">Other Elixir solutions.</a>
+            <pre><code class="language-elixir">{`defmodule WordCount do
+  @doc """
+  Count the number of words in the sentence.
+
+  Words are compared case-insensitively.
+  """
+  @spec count(String.t()) :: map
+  def count(sentence) do
+    sentence
+    |> String.downcase()
+    |> String.split([" ", "_"])
+    |> Enum.map(&sanitize(&1))
+    |> Enum.filter(fn a -> String.length(a) > 0 end)
+    |> group_as_map
+  end
+
+  defp sanitize(str) do
+    str
+    |> String.trim()
+    |> String.replace(~r/[^-\\w]/iu, "")
+  end
+
+  defp group_as_map(list_str) do
+    list_str
+    |> Enum.group_by(fn a -> a end)
+    |> Enum.map(fn {k, v} -> {k, length(v)} end)
+    |> Enum.into(%{})
+  end
+end
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

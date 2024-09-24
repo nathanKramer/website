@@ -1,0 +1,47 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Etl">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Etl</h2>
+    <p>Solutions to etl in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#elm">Elm</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="elm">Elm</a></h3>
+            <a href="/languages/elm">Other Elm solutions.</a>
+            <pre><code class="language-elm">{`module Etl exposing (transform)
+
+import Dict exposing (Dict)
+
+
+transform : Dict Int (List String) -> Dict String Int
+transform input =
+    let
+        convertScoreEntry ( score, letters ) =
+            letters
+                |> List.map (\\l -> ( String.toLower l, score ))
+    in
+    Dict.toList input
+        |> List.concatMap convertScoreEntry
+        |> Dict.fromList
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

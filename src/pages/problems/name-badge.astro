@@ -1,0 +1,42 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Name Badge">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Name Badge</h2>
+    <p>Solutions to name-badge in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#elixir">Elixir</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="elixir">Elixir</a></h3>
+            <a href="/languages/elixir">Other Elixir solutions.</a>
+            <pre><code class="language-elixir">{`defmodule NameBadge do
+  def print(id, name, department) do
+    d = if department, do: String.upcase(department), else: "OWNER"
+    if id do
+      "[#{id}] - #{name} - #{d}"
+    else
+      "#{name} - #{d}"
+    end
+  end
+end
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

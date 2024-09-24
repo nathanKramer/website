@@ -1,0 +1,55 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Freelancer Rates">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Freelancer Rates</h2>
+    <p>Solutions to freelancer-rates in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#elixir">Elixir</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="elixir">Elixir</a></h3>
+            <a href="/languages/elixir">Other Elixir solutions.</a>
+            <pre><code class="language-elixir">{`defmodule FreelancerRates do
+  @hours_per_day 8.0
+  @billable_days_per_month 22.0
+
+  def daily_rate(hourly_rate) do
+    @hours_per_day * hourly_rate
+  end
+
+  def apply_discount(before_discount, discount) do
+    before_discount - before_discount * (discount / 100)
+  end
+
+  def monthly_rate(hourly_rate, discount) do
+    before_discount = @billable_days_per_month * daily_rate(hourly_rate)
+    ceil(apply_discount(before_discount, discount))
+  end
+
+  def days_in_budget(budget, hourly_rate, discount) do
+    rate = apply_discount(daily_rate(hourly_rate), discount)
+
+    Float.floor(budget / rate, 1)
+  end
+end
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

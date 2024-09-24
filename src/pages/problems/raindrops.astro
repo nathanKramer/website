@@ -1,0 +1,138 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Raindrops">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Raindrops</h2>
+    <p>Solutions to raindrops in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#python">Python</a></li><li><a href="#clojure">Clojure</a></li><li><a href="#rust">Rust</a></li><li><a href="#elm">Elm</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="python">Python</a></h3>
+            <a href="/languages/python">Other Python solutions.</a>
+            <pre><code class="language-python">{`def convert(number):
+    result = ""
+    if (number % 3) == 0:
+        result += "Pling"
+    if (number % 5) == 0:
+        result += "Plang"
+    if (number % 7) == 0:
+        result += "Plong"
+    if result == "":
+        result = str(number)
+    return result
+`}</code></pre>
+        
+
+            <h3><a name="clojure">Clojure</a></h3>
+            <a href="/languages/clojure">Other Clojure solutions.</a>
+            <pre><code class="language-clojure">{`(ns raindrops)
+
+(defn- substitute-factors-with [n substitutions]
+  (let [factors (sort (keys substitutions))
+        converted (map
+                   (fn [factor]
+                     (if (= 0 (mod n factor))
+                       (get substitutions factor)
+                       ""))
+                   factors)
+        s (apply str converted)]
+    (if (empty? s)
+      (str n)
+      s)))
+
+(defn convert [n]
+  (substitute-factors-with n {3 "Pling"
+                              5 "Plang"
+                              7 "Plong"}))
+`}</code></pre>
+        
+
+            <h3><a name="rust">Rust</a></h3>
+            <a href="/languages/rust">Other Rust solutions.</a>
+            <pre><code class="language-rust">{`pub fn raindrops(n: u32) -> String {
+    let rain = [(3, "Pling"), (5, "Plang"), (7, "Plong")]
+        .into_iter()
+        .filter(|&(number, _)| n % number == 0)
+        .map(|&(_, sound)| sound)
+        .collect::<Vec<&str>>()
+        .join("");
+    return if rain.is_empty() { n.to_string() } else { rain };
+}
+`}</code></pre>
+        
+
+            <h3><a name="elm">Elm</a></h3>
+            <a href="/languages/elm">Other Elm solutions.</a>
+            <pre><code class="language-elm">{`module Raindrops exposing (raindrops)
+
+
+raindrops : Int -> String
+raindrops number =
+    let
+        labelledRaindrops =
+            labelFactors number
+                [ ( 3, "Pling" )
+                , ( 5, "Plang" )
+                , ( 7, "Plong" )
+                ]
+    in
+    stringWithDefault (String.fromInt number) labelledRaindrops
+
+
+labelFactors : Int -> List ( Int, String ) -> String
+labelFactors number =
+    List.filterMap (labelFactor number) >> String.concat
+
+
+labelFactor : Int -> ( Int, String ) -> Maybe String
+labelFactor num ( factor, label ) =
+    if modBy factor num == 0 then
+        Just label
+
+    else
+        Nothing
+
+
+
+-- String.Extra
+
+
+{-| It would be nice if we had String.withDefault,
+The behaviour is the same as Maybe.withDefault, except it uses the default value in the case of the empty string
+
+stringWithDefault "It looks like we have no fruit :(" (String.join ", " fruit)
+
+-}
+stringWithDefault : String -> String -> String
+stringWithDefault default value =
+    Maybe.withDefault default (nonEmpty value)
+
+
+nonEmpty : String -> Maybe String
+nonEmpty string =
+    if String.isEmpty string then
+        Nothing
+
+    else
+        Just string
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

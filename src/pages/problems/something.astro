@@ -1,0 +1,34 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Something">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Something</h2>
+    <p>Solutions to something in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#python">Python</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="python">Python</a></h3>
+            <a href="/languages/python">Other Python solutions.</a>
+            <pre><code class="language-python">{`def aFunction(number):
+    return str(number)
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

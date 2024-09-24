@@ -1,0 +1,136 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Rna Transcription">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Rna Transcription</h2>
+    <p>Solutions to rna-transcription in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#clojure">Clojure</a></li><li><a href="#elixir">Elixir</a></li><li><a href="#elm">Elm</a></li><li><a href="#haskell">Haskell</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="clojure">Clojure</a></h3>
+            <a href="/languages/clojure">Other Clojure solutions.</a>
+            <pre><code class="language-clojure">{`;; Given a DNA strand, return its RNA complement (per RNA transcription) .
+
+;; Both DNA and RNA strands are a sequence of nucleotides.
+
+;; The four nucleotides found in DNA are adenine (A), cytosine (C), guanine (G) and thymine (T).
+;; The four nucleotides found in RNA are adenine (A), cytosine (C), guanine (G) and uracil (U).
+(ns rna-transcription)
+
+(defn to-rna [dna]
+  (let [dna-to-rna (fn [n] (condp = n
+                             \\G \\C
+                             \\C \\G
+                             \\T \\A
+                             \\A \\U
+                             (assert false (format "%s is not a valid nucleotide" n))))]
+    (apply str (map dna-to-rna dna))))
+`}</code></pre>
+        
+
+            <h3><a name="elixir">Elixir</a></h3>
+            <a href="/languages/elixir">Other Elixir solutions.</a>
+            <pre><code class="language-elixir">{`defmodule RnaTranscription do
+  @transcription %{
+    ?G => ?C,
+    ?C => ?G,
+    ?T => ?A,
+    ?A => ?U
+  }
+
+  @doc """
+  Transcribes a character list representing DNA nucleotides to RNA
+
+  ## Examples
+
+  iex> RnaTranscription.to_rna('ACTG')
+  'UGAC'
+  """
+  @spec to_rna([char]) :: [char]
+  def to_rna(dna) do
+    Enum.map(
+      dna,
+      fn c -> Map.fetch!(@transcription, c) end
+    )
+  end
+end
+`}</code></pre>
+        
+
+            <h3><a name="elm">Elm</a></h3>
+            <a href="/languages/elm">Other Elm solutions.</a>
+            <pre><code class="language-elm">{`module RNATranscription exposing (toRNA)
+
+
+nucleotideComplement : Char -> Char
+nucleotideComplement n =
+    case n of
+        'A' ->
+            'U'
+
+        'C' ->
+            'G'
+
+        'T' ->
+            'A'
+
+        'G' ->
+            'C'
+
+        _ ->
+            ' '
+
+
+toRNA : String -> Result Char String
+toRNA dna =
+    Ok
+        (String.toList dna
+            |> List.map nucleotideComplement
+            |> String.fromList
+        )
+`}</code></pre>
+        
+
+            <h3><a name="haskell">Haskell</a></h3>
+            <a href="/languages/haskell">Other Haskell solutions.</a>
+            <pre><code class="language-haskell">{`module DNA (toRNA) where
+
+import qualified Data.Map as M
+
+translation :: M.Map Char Char
+translation =
+  M.fromList
+    [ ('G', 'C'),
+      ('C', 'G'),
+      ('T', 'A'),
+      ('A', 'U')
+    ]
+
+toRNA :: String -> Either Char String
+toRNA =
+  mapM translate
+  where
+    translate dna = case M.lookup dna translation of
+      Just rna -> Right rna
+      Nothing -> Left dna
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

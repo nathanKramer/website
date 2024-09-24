@@ -1,0 +1,52 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Bird Count">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Bird Count</h2>
+    <p>Solutions to bird-count in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#elixir">Elixir</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="elixir">Elixir</a></h3>
+            <a href="/languages/elixir">Other Elixir solutions.</a>
+            <pre><code class="language-elixir">{`defmodule BirdCount do
+  @busy_day_threshold 5
+
+  def today([]), do: nil
+  def today([today | _]), do: today
+
+  def increment_day_count([]), do: [1]
+  def increment_day_count([today | rest]), do: [today + 1 | rest]
+
+  def has_day_without_birds?([]), do: false
+  def has_day_without_birds?([0 | _]), do: true
+  def has_day_without_birds?([_ | rest]), do: has_day_without_birds?(rest)
+
+  def total([]), do: 0
+  def total([head | rest]), do: head + total(rest)
+
+  def busy_days([]), do: 0
+  def busy_days([head | rest]) when head >= @busy_day_threshold, do: 1 + busy_days(rest)
+  def busy_days([_ | rest]), do: busy_days(rest)
+end
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

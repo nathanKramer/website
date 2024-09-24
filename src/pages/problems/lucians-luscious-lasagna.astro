@@ -1,0 +1,59 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Lucians Luscious Lasagna">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Lucians Luscious Lasagna</h2>
+    <p>Solutions to lucians-luscious-lasagna in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#clojure">Clojure</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="clojure">Clojure</a></h3>
+            <a href="/languages/clojure">Other Clojure solutions.</a>
+            <pre><code class="language-clojure">{`;; 👋🏽 Hi there! Welcome to the Clojure Track.
+;; The online test-runner is powered by babashka and the Small Clojure Interpreter (SCI).
+;; Almost all language features are supported, with the exception of low-level constructs
+;; like \`deftype\`, and certain Java classes. For more info, see:
+;; https://github.com/babashka/babashka#differences-with-clojure
+
+(ns lucians-luscious-lasagna)
+
+(def expected-time 40)
+
+(defn remaining-time
+  "Takes the actual time in minutes the lasagna has been in the oven,
+   and returns how many minutes the lasagna still has to remain in the oven."
+  [actual-time]
+  (- expected-time actual-time))
+
+(defn prep-time
+  "Takes the number of layers added to the lasagna,
+   and returns how many minutes you spent preparing the lasagna"
+  [num-layers]
+  (* 2 num-layers))
+
+(defn total-time
+  "Takes the number of layers of lasagna and the actual time in minutes it has been in the oven.
+   Returns how many minutes in total you've worked on cooking the lasagna"
+  [num-layers actual-time]
+  (+ (prep-time num-layers) actual-time))
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

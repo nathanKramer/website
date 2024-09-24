@@ -1,0 +1,182 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Haskell">
+<link rel="stylesheet" href="/public/css/prism.css" />
+<link rel="stylesheet" href="/public/css/style.css" />
+    <div class="side-bar">
+    <h2>Haskell</h2>
+    <p>Problems solved in haskell.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#bob">Bob</a></li><li><a href="#collatz-conjecture">Collatz Conjecture</a></li><li><a href="#hello-world">Hello World</a></li><li><a href="#leap">Leap</a></li><li><a href="#pangram">Pangram</a></li><li><a href="#rna-transcription">Rna Transcription</a></li><li><a href="#space-age">Space Age</a></li></ul>
+    </div>
+    <div class="main">
+    
+            <h3><a name="bob">Bob</a></h3>
+            <a href="/problems/bob">Other "Bob" solutions.</a>
+            <pre><code class="language-haskell">{`module Bob (responseFor) where
+
+import qualified Data.Char as C
+import qualified Data.List as L
+
+responseFor :: String -> String
+responseFor str
+  | question && yelling = "Calm down, I know what I'm doing!"
+  | silent = "Fine. Be that way!"
+  | question = "Sure."
+  | yelling = "Whoa, chill out!"
+  | otherwise = "Whatever."
+  where
+    trim = L.dropWhileEnd C.isSpace . L.dropWhile C.isSpace
+    sanitized = trim str
+    alphas = filter C.isAlpha $ sanitized
+    silent = null $ sanitized
+    question = not silent && last sanitized == '?'
+    speaking = not silent && not (null alphas)
+    yelling = speaking && all C.isUpper alphas
+`}</code></pre>
+        
+
+            <h3><a name="collatz-conjecture">Collatz Conjecture</a></h3>
+            <a href="/problems/collatz-conjecture">Other "Collatz Conjecture" solutions.</a>
+            <pre><code class="language-haskell">{`module CollatzConjecture (collatz) where
+
+collatz' :: Integer -> Integer
+collatz' 1 = 0
+collatz' n =
+  let next = if even n then quot n 2 else 3 * n + 1
+   in succ $ collatz' next
+
+collatz :: Integer -> Maybe Integer
+collatz n
+  | n <= 0 = Nothing
+  | otherwise = Just $ collatz' n
+`}</code></pre>
+        
+
+            <h3><a name="hello-world">Hello World</a></h3>
+            <a href="/problems/hello-world">Other "Hello World" solutions.</a>
+            <pre><code class="language-haskell">{`module HelloWorld
+  ( hello
+  ) where
+
+hello :: String
+hello = "Hello, World!"
+`}</code></pre>
+        
+
+            <h3><a name="leap">Leap</a></h3>
+            <a href="/problems/leap">Other "Leap" solutions.</a>
+            <pre><code class="language-haskell">{`module LeapYear
+  ( isLeapYear
+  ) where
+
+bind :: (b -> b -> b) -> (a -> b) -> (a -> b) -> a -> b
+bind f a b x = f (a x) (b x)
+
+infixl 5 &&$
+
+(&&$) :: (a -> Bool) -> (a -> Bool) -> a -> Bool
+(&&$) = bind (&&)
+
+infixl 5 ||$
+
+(||$) :: (a -> Bool) -> (a -> Bool) -> a -> Bool
+(||$) = bind (||)
+
+isLeapYear :: Integer -> Bool
+isLeapYear = isDivisibleBy 400 ||$ (isDivisibleBy 4 &&$ not . isDivisibleBy 100)
+  where
+    isDivisibleBy = (\\divisor x -> mod x divisor == 0)
+`}</code></pre>
+        
+
+            <h3><a name="pangram">Pangram</a></h3>
+            <a href="/problems/pangram">Other "Pangram" solutions.</a>
+            <pre><code class="language-haskell">{`module Pangram
+  ( isPangram
+  ) where
+
+import qualified Data.Char as Char
+import           Data.List
+
+isPangram :: String -> Bool
+isPangram = null . (['a' .. 'z'] \\\\) . map Char.toLower
+`}</code></pre>
+        
+
+            <h3><a name="rna-transcription">Rna Transcription</a></h3>
+            <a href="/problems/rna-transcription">Other "Rna Transcription" solutions.</a>
+            <pre><code class="language-haskell">{`module DNA (toRNA) where
+
+import qualified Data.Map as M
+
+translation :: M.Map Char Char
+translation =
+  M.fromList
+    [ ('G', 'C'),
+      ('C', 'G'),
+      ('T', 'A'),
+      ('A', 'U')
+    ]
+
+toRNA :: String -> Either Char String
+toRNA =
+  mapM translate
+  where
+    translate dna = case M.lookup dna translation of
+      Just rna -> Right rna
+      Nothing -> Left dna
+`}</code></pre>
+        
+
+            <h3><a name="space-age">Space Age</a></h3>
+            <a href="/problems/space-age">Other "Space Age" solutions.</a>
+            <pre><code class="language-haskell">{`module SpaceAge
+  ( Planet(..)
+  , ageOn
+  ) where
+
+data Planet
+  = Mercury
+  | Venus
+  | Earth
+  | Mars
+  | Jupiter
+  | Saturn
+  | Uranus
+  | Neptune
+
+earthAgeSeconds :: Float
+earthAgeSeconds = 31557600
+
+relativeOrbit :: Planet -> Float
+relativeOrbit planet =
+  case planet of
+    Mercury -> 0.2408467
+    Venus   -> 0.61519726
+    Earth   -> 1.0
+    Mars    -> 1.8808158
+    Jupiter -> 11.862615
+    Saturn  -> 29.447498
+    Uranus  -> 84.016846
+    Neptune -> 164.79132
+
+ageOn :: Planet -> Float -> Float
+ageOn planet seconds = seconds / earthAgeSeconds / relativeOrbit planet
+`}</code></pre>
+        
+    </div>
+
+    <script src="/public/js/prism.js" isinline></script>
+
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>
