@@ -148,8 +148,8 @@ import Layout from "../../layouts/Layout.astro";
 ---
 
 <Layout title="{title}">
-<link rel="stylesheet" href="/public/css/prism.css" />
-<link rel="stylesheet" href="/public/css/style.css" />
+<link rel="stylesheet" href="/css/prism.css" />
+<link rel="stylesheet" href="/css/style.css" />
     <div class="side-bar">
     <h2>{title}</h2>
     <p>{summary}</p>
@@ -162,7 +162,7 @@ import Layout from "../../layouts/Layout.astro";
     {markup}
     </div>
 
-    <script src="/public/js/prism.js" isinline></script>
+    <script src="/js/prism.js" isinline></script>
 
 <style>
 a[href] {{
@@ -233,8 +233,8 @@ import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout title="Nathan Kramer">
-<link rel="stylesheet" href="/public/css/prism.css" />
-<link rel="stylesheet" href="/public/css/style.css" />
+<link rel="stylesheet" href="/css/prism.css" />
+<link rel="stylesheet" href="/css/style.css" />
     <main>
         <article>
             <h2>Exercism Portfolio</h2>
