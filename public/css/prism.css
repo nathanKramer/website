@@ -49,8 +49,7 @@
  /* Code blocks */
  pre[class*="language-"] {
 	 padding: 1em;
-	 margin: 0.5em 0;
-	 margin-right: 4rem;
+	 margin: 0.5em 0.5em;
 	 overflow: auto;
  }
 

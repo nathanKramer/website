@@ -150,7 +150,7 @@ import Layout from "../../layouts/Layout.astro";
 <Layout title="{title}">
 <link rel="stylesheet" href="/css/prism.css" />
 <link rel="stylesheet" href="/css/style.css" />
-    <div class="side-bar">
+    <div class="side-bar hidden md:block">
     <h2>{title}</h2>
     <p>{summary}</p>
     <ul>
@@ -158,7 +158,7 @@ import Layout from "../../layouts/Layout.astro";
     </ul>
     <ul>{"".join([ f'<li><a href="#{item}">{titlize(item)}</a></li>' for item in items])}</ul>
     </div>
-    <div class="main">
+    <div class="main md:ml-[300px] px-2">
     {markup}
     </div>
 
