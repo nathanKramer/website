@@ -1,0 +1,3 @@
+#!/bin/sh
+
+EXERCISM_DIR=/Users/nathankramer/Projects/exercism python3 ./generate.py
