@@ -12,7 +12,7 @@ import Layout from "../../layouts/Layout.astro";
     <ul>
       <li><a href="/exercism.html">Index</a></li>
     </ul>
-    <ul><li><a href="#ocaml">Ocaml</a></li><li><a href="#nim">Nim</a></li><li><a href="#rust">Rust</a></li><li><a href="#elm">Elm</a></li><li><a href="#haskell">Haskell</a></li></ul>
+    <ul><li><a href="#ocaml">Ocaml</a></li><li><a href="#nim">Nim</a></li><li><a href="#rust">Rust</a></li><li><a href="#elm">Elm</a></li><li><a href="#haskell">Haskell</a></li><li><a href="#roc">Roc</a></li></ul>
     </div>
     <div class="main md:ml-[300px] px-2">
     
@@ -88,6 +88,17 @@ isLeapYear :: Integer -> Bool
 isLeapYear = isDivisibleBy 400 ||$ (isDivisibleBy 4 &&$ not . isDivisibleBy 100)
   where
     isDivisibleBy = (\\divisor x -> mod x divisor == 0)
+`}</code></pre>
+        
+
+            <h3><a name="roc">Roc</a></h3>
+            <a href="/languages/roc">Other Roc solutions.</a>
+            <pre><code class="language-roc">{`module [isLeapYear]
+
+isLeapYear : I64 -> Bool
+isLeapYear = \\year ->
+    year % 4 == 0 &&
+    year % 100 != 0 || year % 400 == 0
 `}</code></pre>
         
     </div>
