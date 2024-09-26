@@ -64,6 +64,10 @@ LANGUAGE_METADATA = {
         'source': 'src',
         'extension': 'rs',
         'filename': 'lib'
+    },
+    'roc': {
+        'source': '',
+        'extension': 'roc'
     }
 }
 
