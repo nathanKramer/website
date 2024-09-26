@@ -40,6 +40,10 @@ LANGUAGE_METADATA = {
             'leap': 'LeapYear'
         }
     },
+    'javascript': {
+      'source': '',
+      'extension': 'js'
+    },
     'nim': {
         'source': '',
         'extension': 'nim'
@@ -271,7 +275,7 @@ def writePortfolioToFile(root, portfolio):
             writePortfolioToFile(workingDir, child)
         else:
             with open(f'{workingDir}.astro', 'w+') as solutionPage:
-                print(f'Writing: {workingDir}.astro')
+                # print(f'Writing: {workingDir}.astro')
                 solutionPage.write(child)
 
 
@@ -310,7 +314,7 @@ def main():
     os.makedirs(f"{out_dir}/languages", exist_ok=True)
 
     with open(f'{out_dir}/exercism.astro', 'w+') as indexPage:
-        print(f'Writing: exercism.astro')
+        # print(f'Writing: exercism.astro')
         indexPage.write(renderIndexPage(os.getcwd(), portfolio))
 
     writePortfolioToFile(
