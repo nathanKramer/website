@@ -12,7 +12,7 @@ import Layout from "../../layouts/Layout.astro";
     <ul>
       <li><a href="/exercism.html">Index</a></li>
     </ul>
-    <ul><li><a href="#nim">Nim</a></li><li><a href="#python">Python</a></li><li><a href="#clojure">Clojure</a></li><li><a href="#elm">Elm</a></li></ul>
+    <ul><li><a href="#nim">Nim</a></li><li><a href="#python">Python</a></li><li><a href="#clojure">Clojure</a></li><li><a href="#elm">Elm</a></li><li><a href="#roc">Roc</a></li></ul>
     </div>
     <div class="main md:ml-[300px] px-2">
     
@@ -50,6 +50,20 @@ proc twoFer*(name = "you"): string =
 twoFer : Maybe String -> String
 twoFer name =
     "One for " ++ Maybe.withDefault "you" name ++ ", one for me."
+`}</code></pre>
+        
+
+            <h3><a name="roc">Roc</a></h3>
+            <a href="/languages/roc">Other Roc solutions.</a>
+            <pre><code class="language-roc">{`module [twoFer]
+
+twoFer : [Name Str, Anonymous] -> Str
+twoFer = \\name ->
+  word =
+    when name is
+      Anonymous -> "you"
+      Name n -> n
+  "One for $(word), one for me."
 `}</code></pre>
         
     </div>

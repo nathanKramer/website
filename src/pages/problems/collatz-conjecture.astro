@@ -12,7 +12,7 @@ import Layout from "../../layouts/Layout.astro";
     <ul>
       <li><a href="/exercism.html">Index</a></li>
     </ul>
-    <ul><li><a href="#clojure">Clojure</a></li><li><a href="#elm">Elm</a></li><li><a href="#haskell">Haskell</a></li></ul>
+    <ul><li><a href="#clojure">Clojure</a></li><li><a href="#elm">Elm</a></li><li><a href="#haskell">Haskell</a></li><li><a href="#roc">Roc</a></li></ul>
     </div>
     <div class="main md:ml-[300px] px-2">
     
@@ -84,6 +84,32 @@ collatz :: Integer -> Maybe Integer
 collatz n
   | n <= 0 = Nothing
   | otherwise = Just $ collatz' n
+`}</code></pre>
+        
+
+            <h3><a name="roc">Roc</a></h3>
+            <a href="/languages/roc">Other Roc solutions.</a>
+            <pre><code class="language-roc">{`module [steps]
+
+steps : U64 -> Result U64 [InvalidInput]
+steps = \\n ->
+    if n < 1 then
+        Err InvalidInput
+    else
+        Ok (collatzCount 0 n)
+
+collatzCount : U64, U64 -> U64
+collatzCount = \\stepCount, n ->
+    val =
+        if n % 2 == 0 then
+            (n // 2)
+        else
+            (3 * n + 1)
+
+    if n == 1 then
+        stepCount
+    else
+        collatzCount (stepCount + 1) val
 `}</code></pre>
         
     </div>

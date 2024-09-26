@@ -12,10 +12,36 @@ import Layout from "../../layouts/Layout.astro";
     <ul>
       <li><a href="/exercism.html">Index</a></li>
     </ul>
-    <ul><li><a href="#hello-world">Hello World</a></li><li><a href="#leap">Leap</a></li><li><a href="#raindrops">Raindrops</a></li></ul>
+    <ul><li><a href="#collatz-conjecture">Collatz Conjecture</a></li><li><a href="#hello-world">Hello World</a></li><li><a href="#leap">Leap</a></li><li><a href="#raindrops">Raindrops</a></li><li><a href="#resistor-color">Resistor Color</a></li><li><a href="#two-fer">Two Fer</a></li></ul>
     </div>
     <div class="main md:ml-[300px] px-2">
     
+            <h3><a name="collatz-conjecture">Collatz Conjecture</a></h3>
+            <a href="/problems/collatz-conjecture">Other "Collatz Conjecture" solutions.</a>
+            <pre><code class="language-roc">{`module [steps]
+
+steps : U64 -> Result U64 [InvalidInput]
+steps = \\n ->
+    if n < 1 then
+        Err InvalidInput
+    else
+        Ok (collatzCount 0 n)
+
+collatzCount : U64, U64 -> U64
+collatzCount = \\stepCount, n ->
+    val =
+        if n % 2 == 0 then
+            (n // 2)
+        else
+            (3 * n + 1)
+
+    if n == 1 then
+        stepCount
+    else
+        collatzCount (stepCount + 1) val
+`}</code></pre>
+        
+
             <h3><a name="hello-world">Hello World</a></h3>
             <a href="/problems/hello-world">Other "Hello World" solutions.</a>
             <pre><code class="language-roc">{`module [hello]
@@ -51,6 +77,47 @@ convert = \\number ->
         Num.toStr number
     else
         result
+`}</code></pre>
+        
+
+            <h3><a name="resistor-color">Resistor Color</a></h3>
+            <a href="/problems/resistor-color">Other "Resistor Color" solutions.</a>
+            <pre><code class="language-roc">{`module [colorCode, colors]
+
+colorMap =
+    Dict.fromList [
+        ("black", 0),
+        ("brown", 1),
+        ("red", 2),
+        ("orange", 3),
+        ("yellow", 4),
+        ("green", 5),
+        ("blue", 6),
+        ("violet", 7),
+        ("grey", 8),
+        ("white", 9),
+    ]
+
+colorCode : Str -> Result U64 _
+colorCode = \\color ->
+    Dict.get colorMap color
+
+colors : List Str
+colors = Dict.keys colorMap
+`}</code></pre>
+        
+
+            <h3><a name="two-fer">Two Fer</a></h3>
+            <a href="/problems/two-fer">Other "Two Fer" solutions.</a>
+            <pre><code class="language-roc">{`module [twoFer]
+
+twoFer : [Name Str, Anonymous] -> Str
+twoFer = \\name ->
+  word =
+    when name is
+      Anonymous -> "you"
+      Name n -> n
+  "One for $(word), one for me."
 `}</code></pre>
         
     </div>
