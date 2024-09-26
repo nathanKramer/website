@@ -59,17 +59,19 @@ twoFer name =
 
 twoFer : [Name Str, Anonymous] -> Str
 twoFer = \\name ->
-  word =
-    when name is
-      Anonymous -> "you"
-      Name n -> n
-  "One for $(word), one for me."
+    word =
+        when name is
+            Anonymous -> "you"
+            Name n -> n
+    "One for $(word), one for me."
 `}</code></pre>
         
     </div>
 
     <script src="/js/prism.js" isinline></script>
-
+    <script>
+        Prism.languages['roc'] = Prism.languages['elm']
+    </script>
 <style>
 a[href] {
   color: #f15125;

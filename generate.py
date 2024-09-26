@@ -171,7 +171,9 @@ import Layout from "../../layouts/Layout.astro";
     </div>
 
     <script src="/js/prism.js" isinline></script>
-
+    <script>
+        Prism.languages['roc'] = Prism.languages['elm']
+    </script>
 <style>
 a[href] {{
   color: #f15125;
@@ -198,6 +200,10 @@ def languagePage(rootDir, language, problems):
         solutions.append(solution_markup)
     solutions_markup = "\n".join(solutions)
     problems = [problem for problem in problems if solution(language, problem)]
+
+    if len(problems) == 0:
+        return
+
     return renderPage(
         rootDir,
         titlize(language),
@@ -225,6 +231,10 @@ def problemPage(rootDir, problem, languages):
     solutions_markup = "\n".join(solutions)
     languages = [
         language for language in languages if solution(language, problem)]
+
+    if len(languages) == 0:
+        return
+
     return renderPage(
         rootDir,
         titlize(problem),
