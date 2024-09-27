@@ -12,7 +12,7 @@ import Layout from "../../layouts/Layout.astro";
     <ul>
       <li><a href="/exercism.html">Index</a></li>
     </ul>
-    <ul><li><a href="#accumulate">Accumulate</a></li><li><a href="#collatz-conjecture">Collatz Conjecture</a></li><li><a href="#hello-world">Hello World</a></li><li><a href="#leap">Leap</a></li><li><a href="#raindrops">Raindrops</a></li><li><a href="#resistor-color">Resistor Color</a></li><li><a href="#two-fer">Two Fer</a></li></ul>
+    <ul><li><a href="#accumulate">Accumulate</a></li><li><a href="#binary">Binary</a></li><li><a href="#clock">Clock</a></li><li><a href="#collatz-conjecture">Collatz Conjecture</a></li><li><a href="#hello-world">Hello World</a></li><li><a href="#leap">Leap</a></li><li><a href="#raindrops">Raindrops</a></li><li><a href="#resistor-color">Resistor Color</a></li><li><a href="#two-fer">Two Fer</a></li></ul>
     </div>
     <div class="main md:ml-[300px] px-2">
     
@@ -31,6 +31,84 @@ helper = \\list, fn, acc ->
         [x, .. as rest] ->
             newAcc = List.append acc (fn x)
             helper rest fn newAcc
+`}</code></pre>
+        
+
+            <h3><a name="binary">Binary</a></h3>
+            <a href="/problems/binary">Other "Binary" solutions.</a>
+            <pre><code class="language-roc">{`module [decimal]
+
+b0 = 48
+b1 = 49
+
+decimal : Str -> Result U64 _
+decimal = \\binaryStr ->
+    isBinary = List.all (Str.toUtf8 binaryStr) (\\c -> c == b0 || c == b1)
+    if isBinary then
+        Ok (countBinary binaryStr)
+    else
+        Err "Must provide a binary string"
+
+countBinary : Str -> U64
+countBinary = \\binaryStr ->
+    binaryStr
+    |> Str.toUtf8
+    |> List.reverse
+    |> List.mapWithIndex
+        (\\byte, i ->
+            if byte == b1 then
+                Num.powInt 2 i
+            else
+                0
+        )
+    |> List.sum
+`}</code></pre>
+        
+
+            <h3><a name="clock">Clock</a></h3>
+            <a href="/problems/clock">Other "Clock" solutions.</a>
+            <pre><code class="language-roc">{`module [create, toStr, add, subtract]
+
+Clock : { hour : U8, minute : U8 }
+
+create : { hours ? I64, minutes ? I64 }* -> Clock
+create = \\{ hours ? 0, minutes ? 0 } ->
+    totalMinutes = (hours * 60 + minutes) % (24 * 60)
+    normalizedMinutes =
+        if totalMinutes < 0 then
+            totalMinutes + 24 * 60
+        else
+            totalMinutes
+    {
+        hour: Num.intCast ((normalizedMinutes // 60) % 24),
+        minute: Num.intCast (normalizedMinutes % 60),
+    }
+
+toStr : Clock -> Str
+toStr = \\{ hour, minute } ->
+    hours = clockDigitToStr hour
+    minutes = clockDigitToStr minute
+    "$(hours):$(minutes)"
+
+add : Clock, { hours ? I64, minutes ? I64 }* -> Clock
+add = \\clock, { hours ? 0, minutes ? 0 } ->
+    create {
+        hours: Num.toI64 clock.hour + hours,
+        minutes: Num.toI64 clock.minute + minutes,
+    }
+
+subtract : Clock, { hours ? I64, minutes ? I64 }* -> Clock
+subtract = \\clock, { hours ? 0, minutes ? 0 } ->
+    add clock { hours: -hours, minutes: -minutes }
+
+### Private
+
+clockDigitToStr : U8 -> Str
+clockDigitToStr = \\digit ->
+    if digit < 10 then
+        "0$(Num.toStr digit)"
+    else
+        Num.toStr digit
 `}</code></pre>
         
 

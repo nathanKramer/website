@@ -1,0 +1,76 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Clock">
+<link rel="stylesheet" href="/css/prism.css" />
+<link rel="stylesheet" href="/css/style.css" />
+    <div class="side-bar hidden md:block">
+    <h2>Clock</h2>
+    <p>Solutions to clock in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#roc">Roc</a></li></ul>
+    </div>
+    <div class="main md:ml-[300px] px-2">
+    
+            <h3><a name="roc">Roc</a></h3>
+            <a href="/languages/roc">Other Roc solutions.</a>
+            <pre><code class="language-roc">{`module [create, toStr, add, subtract]
+
+Clock : { hour : U8, minute : U8 }
+
+create : { hours ? I64, minutes ? I64 }* -> Clock
+create = \\{ hours ? 0, minutes ? 0 } ->
+    totalMinutes = (hours * 60 + minutes) % (24 * 60)
+    normalizedMinutes =
+        if totalMinutes < 0 then
+            totalMinutes + 24 * 60
+        else
+            totalMinutes
+    {
+        hour: Num.intCast ((normalizedMinutes // 60) % 24),
+        minute: Num.intCast (normalizedMinutes % 60),
+    }
+
+toStr : Clock -> Str
+toStr = \\{ hour, minute } ->
+    hours = clockDigitToStr hour
+    minutes = clockDigitToStr minute
+    "$(hours):$(minutes)"
+
+add : Clock, { hours ? I64, minutes ? I64 }* -> Clock
+add = \\clock, { hours ? 0, minutes ? 0 } ->
+    create {
+        hours: Num.toI64 clock.hour + hours,
+        minutes: Num.toI64 clock.minute + minutes,
+    }
+
+subtract : Clock, { hours ? I64, minutes ? I64 }* -> Clock
+subtract = \\clock, { hours ? 0, minutes ? 0 } ->
+    add clock { hours: -hours, minutes: -minutes }
+
+### Private
+
+clockDigitToStr : U8 -> Str
+clockDigitToStr = \\digit ->
+    if digit < 10 then
+        "0$(Num.toStr digit)"
+    else
+        Num.toStr digit
+`}</code></pre>
+        
+    </div>
+
+    <script src="/js/prism.js" isinline></script>
+    <script>
+        Prism.languages['roc'] = Prism.languages['elm']
+    </script>
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

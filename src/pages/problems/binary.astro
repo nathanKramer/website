@@ -1,0 +1,60 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Binary">
+<link rel="stylesheet" href="/css/prism.css" />
+<link rel="stylesheet" href="/css/style.css" />
+    <div class="side-bar hidden md:block">
+    <h2>Binary</h2>
+    <p>Solutions to binary in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#roc">Roc</a></li></ul>
+    </div>
+    <div class="main md:ml-[300px] px-2">
+    
+            <h3><a name="roc">Roc</a></h3>
+            <a href="/languages/roc">Other Roc solutions.</a>
+            <pre><code class="language-roc">{`module [decimal]
+
+b0 = 48
+b1 = 49
+
+decimal : Str -> Result U64 _
+decimal = \\binaryStr ->
+    isBinary = List.all (Str.toUtf8 binaryStr) (\\c -> c == b0 || c == b1)
+    if isBinary then
+        Ok (countBinary binaryStr)
+    else
+        Err "Must provide a binary string"
+
+countBinary : Str -> U64
+countBinary = \\binaryStr ->
+    binaryStr
+    |> Str.toUtf8
+    |> List.reverse
+    |> List.mapWithIndex
+        (\\byte, i ->
+            if byte == b1 then
+                Num.powInt 2 i
+            else
+                0
+        )
+    |> List.sum
+`}</code></pre>
+        
+    </div>
+
+    <script src="/js/prism.js" isinline></script>
+    <script>
+        Prism.languages['roc'] = Prism.languages['elm']
+    </script>
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>
