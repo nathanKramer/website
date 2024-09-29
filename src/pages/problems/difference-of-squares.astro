@@ -12,7 +12,7 @@ import Layout from "../../layouts/Layout.astro";
     <ul>
       <li><a href="/exercism.html">Index</a></li>
     </ul>
-    <ul><li><a href="#elm">Elm</a></li></ul>
+    <ul><li><a href="#elm">Elm</a></li><li><a href="#roc">Roc</a></li></ul>
     </div>
     <div class="main md:ml-[300px] px-2">
     
@@ -48,6 +48,38 @@ sumOfSquares n =
 difference : Int -> Int
 difference n =
     squareOfSum n - sumOfSquares n
+`}</code></pre>
+        
+
+            <h3><a name="roc">Roc</a></h3>
+            <a href="/languages/roc">Other Roc solutions.</a>
+            <pre><code class="language-roc">{`module [squareOfSum, sumOfSquares, differenceOfSquares]
+
+# squareOfSum : U64 -> U64
+# squareOfSum = \\number ->
+#     loop =
+#         \\sum ->
+#             if sum == number then
+#                 sum
+#             else
+#                 sum + loop (sum + 1)
+#     summation = loop 1
+#     Num.powInt summation 2
+
+squareOfSum : U64 -> U64
+squareOfSum = \\number ->
+    List.sum (List.range { start: At 1, end: At number }) |> Num.powInt 2
+
+sumOfSquares : U64 -> U64
+sumOfSquares = \\number ->
+    List.map
+        (List.range { start: At 1, end: At number })
+        \\n -> n * n
+    |> List.sum
+
+differenceOfSquares : U64 -> U64
+differenceOfSquares = \\number ->
+    squareOfSum number - sumOfSquares number
 `}</code></pre>
         
     </div>
