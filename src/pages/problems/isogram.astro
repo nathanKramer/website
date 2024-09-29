@@ -12,7 +12,7 @@ import Layout from "../../layouts/Layout.astro";
     <ul>
       <li><a href="/exercism.html">Index</a></li>
     </ul>
-    <ul><li><a href="#nim">Nim</a></li><li><a href="#elm">Elm</a></li></ul>
+    <ul><li><a href="#nim">Nim</a></li><li><a href="#elm">Elm</a></li><li><a href="#roc">Roc</a></li></ul>
     </div>
     <div class="main md:ml-[300px] px-2">
     
@@ -46,6 +46,30 @@ isIsogram sentence =
                 |> List.filter Char.isAlpha
     in
     List.length letters == Set.size (Set.fromList letters)
+`}</code></pre>
+        
+
+            <h3><a name="roc">Roc</a></h3>
+            <a href="/languages/roc">Other Roc solutions.</a>
+            <pre><code class="language-roc">{`module [isIsogram]
+
+isIsogram : Str -> Bool
+isIsogram = \\phrase ->
+    sanitized =
+        phrase
+        |> Str.toUtf8
+        |> List.map toLowerCase
+        |> List.keepIf isAlpha
+    List.len sanitized == Set.fromList sanitized |> Set.len
+
+isAlpha = \\char ->
+    lower = toLowerCase char
+    lower >= 'a' && lower <= 'z'
+
+toLowerCase = \\char ->
+    when char is
+        _ if char >= 'A' && char <= 'Z' -> char + 32
+        _ -> char
 `}</code></pre>
         
     </div>
