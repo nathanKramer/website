@@ -12,7 +12,7 @@ import Layout from "../../layouts/Layout.astro";
     <ul>
       <li><a href="/exercism.html">Index</a></li>
     </ul>
-    <ul><li><a href="#accumulate">Accumulate</a></li><li><a href="#armstrong-numbers">Armstrong Numbers</a></li><li><a href="#binary">Binary</a></li><li><a href="#binary-search">Binary Search</a></li><li><a href="#clock">Clock</a></li><li><a href="#collatz-conjecture">Collatz Conjecture</a></li><li><a href="#darts">Darts</a></li><li><a href="#difference-of-squares">Difference Of Squares</a></li><li><a href="#hello-world">Hello World</a></li><li><a href="#isogram">Isogram</a></li><li><a href="#leap">Leap</a></li><li><a href="#micro-blog">Micro Blog</a></li><li><a href="#raindrops">Raindrops</a></li><li><a href="#resistor-color">Resistor Color</a></li><li><a href="#two-fer">Two Fer</a></li></ul>
+    <ul><li><a href="#accumulate">Accumulate</a></li><li><a href="#armstrong-numbers">Armstrong Numbers</a></li><li><a href="#binary">Binary</a></li><li><a href="#binary-search">Binary Search</a></li><li><a href="#clock">Clock</a></li><li><a href="#collatz-conjecture">Collatz Conjecture</a></li><li><a href="#darts">Darts</a></li><li><a href="#difference-of-squares">Difference Of Squares</a></li><li><a href="#grains">Grains</a></li><li><a href="#hello-world">Hello World</a></li><li><a href="#isogram">Isogram</a></li><li><a href="#leap">Leap</a></li><li><a href="#micro-blog">Micro Blog</a></li><li><a href="#raindrops">Raindrops</a></li><li><a href="#resistor-color">Resistor Color</a></li><li><a href="#rna-transcription">Rna Transcription</a></li><li><a href="#two-fer">Two Fer</a></li></ul>
     </div>
     <div class="main md:ml-[300px] px-2">
     
@@ -249,6 +249,22 @@ differenceOfSquares = \\number ->
 `}</code></pre>
         
 
+            <h3><a name="grains">Grains</a></h3>
+            <a href="/problems/grains">Other "Grains" solutions.</a>
+            <pre><code class="language-roc">{`module [grainsOnSquare, totalGrains]
+
+grainsOnSquare : U8 -> Result U64 _
+grainsOnSquare = \\square ->
+    if square > 0 && square <= 64 then
+        Ok (Num.powInt 2 ((Num.toU64 square) - 1))
+    else
+        Err NotAChessSquare
+
+totalGrains : U64
+totalGrains = Num.maxU64
+`}</code></pre>
+        
+
             <h3><a name="hello-world">Hello World</a></h3>
             <a href="/problems/hello-world">Other "Hello World" solutions.</a>
             <pre><code class="language-roc">{`module [hello]
@@ -352,6 +368,28 @@ colorCode = \\color ->
 
 colors : List Str
 colors = Dict.keys colorMap
+`}</code></pre>
+        
+
+            <h3><a name="rna-transcription">Rna Transcription</a></h3>
+            <a href="/problems/rna-transcription">Other "Rna Transcription" solutions.</a>
+            <pre><code class="language-roc">{`module [toRna]
+
+toRna : Str -> Str
+toRna = \\dna ->
+    dna
+    |> Str.toUtf8
+    |> List.map nucleoTideComplement
+    |> Str.fromUtf8
+    |> Result.withDefault ""
+
+nucleoTideComplement = \\n ->
+    when n is
+        'G' -> 'C'
+        'C' -> 'G'
+        'T' -> 'A'
+        'A' -> 'U'
+        _ -> n
 `}</code></pre>
         
 
