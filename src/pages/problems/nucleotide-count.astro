@@ -12,7 +12,7 @@ import Layout from "../../layouts/Layout.astro";
     <ul>
       <li><a href="/exercism.html">Index</a></li>
     </ul>
-    <ul><li><a href="#elm">Elm</a></li></ul>
+    <ul><li><a href="#elm">Elm</a></li><li><a href="#roc">Roc</a></li></ul>
     </div>
     <div class="main md:ml-[300px] px-2">
     
@@ -79,6 +79,27 @@ group list =
                     helper remaining <| ( toGather, gathering ) :: gathered
     in
     helper list []
+`}</code></pre>
+        
+
+            <h3><a name="roc">Roc</a></h3>
+            <a href="/languages/roc">Other Roc solutions.</a>
+            <pre><code class="language-roc">{`module [nucleotideCounts]
+
+nucleotideCounts : Str -> Result { a : U64, c : U64, g : U64, t : U64 } _
+nucleotideCounts = \\input ->
+    counts = { a: 0, c: 0, g: 0, t: 0 }
+    Str.walkUtf8
+        input
+        (Ok counts)
+        \\acc, char ->
+            when char is
+                'A' -> Result.map acc (\\sums -> { sums & a: sums.a + 1 })
+                'C' -> Result.map acc (\\sums -> { sums & c: sums.c + 1 })
+                'G' -> Result.map acc (\\sums -> { sums & g: sums.g + 1 })
+                'T' -> Result.map acc (\\sums -> { sums & t: sums.t + 1 })
+                _ -> Err InvalidNucleotide
+
 `}</code></pre>
         
     </div>

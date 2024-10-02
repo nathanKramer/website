@@ -1,0 +1,60 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Sublist">
+<link rel="stylesheet" href="/css/prism.css" />
+<link rel="stylesheet" href="/css/style.css" />
+    <div class="side-bar hidden md:block">
+    <h2>Sublist</h2>
+    <p>Solutions to sublist in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#roc">Roc</a></li></ul>
+    </div>
+    <div class="main md:ml-[300px] px-2">
+    
+            <h3><a name="roc">Roc</a></h3>
+            <a href="/languages/roc">Other Roc solutions.</a>
+            <pre><code class="language-roc">{`module [sublist]
+
+sublist : List U8, List U8 -> [Equal, Sublist, Superlist, Unequal]
+sublist = \\list1, list2 ->
+    if list1 == list2 then
+        Equal
+    else if isSublist list1 list2 then
+        Superlist
+    else if isSublist list2 list1 then
+        Sublist
+    else
+        Unequal
+
+isSublist = \\list1, list2 ->
+    List.walkWithIndex
+        list1
+        Bool.false
+        \\sublistFound, _, idx ->
+            if sublistFound then
+                sublistFound
+                else
+
+            attemptedSublist = List.sublist list1 { start: idx, len: List.len list2 }
+
+            attemptedSublist == list2
+
+`}</code></pre>
+        
+    </div>
+
+    <script src="/js/prism.js" isinline></script>
+    <script>
+        Prism.languages['roc'] = Prism.languages['elm']
+    </script>
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

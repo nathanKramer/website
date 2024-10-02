@@ -12,7 +12,7 @@ import Layout from "../../layouts/Layout.astro";
     <ul>
       <li><a href="/exercism.html">Index</a></li>
     </ul>
-    <ul><li><a href="#accumulate">Accumulate</a></li><li><a href="#armstrong-numbers">Armstrong Numbers</a></li><li><a href="#binary">Binary</a></li><li><a href="#binary-search">Binary Search</a></li><li><a href="#clock">Clock</a></li><li><a href="#collatz-conjecture">Collatz Conjecture</a></li><li><a href="#darts">Darts</a></li><li><a href="#difference-of-squares">Difference Of Squares</a></li><li><a href="#grains">Grains</a></li><li><a href="#hello-world">Hello World</a></li><li><a href="#isogram">Isogram</a></li><li><a href="#leap">Leap</a></li><li><a href="#micro-blog">Micro Blog</a></li><li><a href="#raindrops">Raindrops</a></li><li><a href="#resistor-color">Resistor Color</a></li><li><a href="#rna-transcription">Rna Transcription</a></li><li><a href="#series">Series</a></li><li><a href="#space-age">Space Age</a></li><li><a href="#two-fer">Two Fer</a></li></ul>
+    <ul><li><a href="#accumulate">Accumulate</a></li><li><a href="#armstrong-numbers">Armstrong Numbers</a></li><li><a href="#binary">Binary</a></li><li><a href="#binary-search">Binary Search</a></li><li><a href="#clock">Clock</a></li><li><a href="#collatz-conjecture">Collatz Conjecture</a></li><li><a href="#darts">Darts</a></li><li><a href="#difference-of-squares">Difference Of Squares</a></li><li><a href="#grains">Grains</a></li><li><a href="#hello-world">Hello World</a></li><li><a href="#isogram">Isogram</a></li><li><a href="#leap">Leap</a></li><li><a href="#micro-blog">Micro Blog</a></li><li><a href="#nucleotide-count">Nucleotide Count</a></li><li><a href="#raindrops">Raindrops</a></li><li><a href="#resistor-color">Resistor Color</a></li><li><a href="#rna-transcription">Rna Transcription</a></li><li><a href="#series">Series</a></li><li><a href="#space-age">Space Age</a></li><li><a href="#sublist">Sublist</a></li><li><a href="#two-fer">Two Fer</a></li></ul>
     </div>
     <div class="main md:ml-[300px] px-2">
     
@@ -326,6 +326,27 @@ truncate = \\input ->
 `}</code></pre>
         
 
+            <h3><a name="nucleotide-count">Nucleotide Count</a></h3>
+            <a href="/problems/nucleotide-count">Other "Nucleotide Count" solutions.</a>
+            <pre><code class="language-roc">{`module [nucleotideCounts]
+
+nucleotideCounts : Str -> Result { a : U64, c : U64, g : U64, t : U64 } _
+nucleotideCounts = \\input ->
+    counts = { a: 0, c: 0, g: 0, t: 0 }
+    Str.walkUtf8
+        input
+        (Ok counts)
+        \\acc, char ->
+            when char is
+                'A' -> Result.map acc (\\sums -> { sums & a: sums.a + 1 })
+                'C' -> Result.map acc (\\sums -> { sums & c: sums.c + 1 })
+                'G' -> Result.map acc (\\sums -> { sums & g: sums.g + 1 })
+                'T' -> Result.map acc (\\sums -> { sums & t: sums.t + 1 })
+                _ -> Err InvalidNucleotide
+
+`}</code></pre>
+        
+
             <h3><a name="raindrops">Raindrops</a></h3>
             <a href="/problems/raindrops">Other "Raindrops" solutions.</a>
             <pre><code class="language-roc">{`module [convert]
@@ -452,6 +473,37 @@ orbitalPeriod = \\planet ->
         Saturn -> 29.447498
         Uranus -> 84.016846
         Neptune -> 164.79132
+
+`}</code></pre>
+        
+
+            <h3><a name="sublist">Sublist</a></h3>
+            <a href="/problems/sublist">Other "Sublist" solutions.</a>
+            <pre><code class="language-roc">{`module [sublist]
+
+sublist : List U8, List U8 -> [Equal, Sublist, Superlist, Unequal]
+sublist = \\list1, list2 ->
+    if list1 == list2 then
+        Equal
+    else if isSublist list1 list2 then
+        Superlist
+    else if isSublist list2 list1 then
+        Sublist
+    else
+        Unequal
+
+isSublist = \\list1, list2 ->
+    List.walkWithIndex
+        list1
+        Bool.false
+        \\sublistFound, _, idx ->
+            if sublistFound then
+                sublistFound
+                else
+
+            attemptedSublist = List.sublist list1 { start: idx, len: List.len list2 }
+
+            attemptedSublist == list2
 
 `}</code></pre>
         
