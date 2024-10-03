@@ -1,0 +1,56 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Proverb">
+<link rel="stylesheet" href="/css/prism.css" />
+<link rel="stylesheet" href="/css/style.css" />
+    <div class="side-bar hidden md:block">
+    <h2>Proverb</h2>
+    <p>Solutions to proverb in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#roc">Roc</a></li></ul>
+    </div>
+    <div class="main md:ml-[300px] px-2">
+    
+            <h3><a name="roc">Roc</a></h3>
+            <a href="/languages/roc">Other Roc solutions.</a>
+            <pre><code class="language-roc">{`module [recite]
+
+recite : List Str -> Str
+recite = \\strings ->
+    loop = \\idx, acc ->
+        catalyst = Result.withDefault (List.first strings) ""
+        words = List.sublist strings { start: idx, len: 2 }
+
+        newLine =
+            when words is
+                [a, b] -> "For want of a $(a) the $(b) was lost."
+                [_] -> "And all for the want of a $(catalyst)."
+                _ -> ""
+
+        proverb = List.append acc newLine
+
+        if idx + 1 < List.len strings then
+            loop (idx + 1) proverb
+        else
+            proverb
+
+    Str.joinWith (loop 0 []) "\\n"
+`}</code></pre>
+        
+    </div>
+
+    <script src="/js/prism.js" isinline></script>
+    <script>
+        Prism.languages['roc'] = Prism.languages['elm']
+    </script>
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>
