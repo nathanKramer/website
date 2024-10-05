@@ -12,7 +12,7 @@ import Layout from "../../layouts/Layout.astro";
     <ul>
       <li><a href="/exercism.html">Index</a></li>
     </ul>
-    <ul><li><a href="#accumulate">Accumulate</a></li><li><a href="#armstrong-numbers">Armstrong Numbers</a></li><li><a href="#binary">Binary</a></li><li><a href="#binary-search">Binary Search</a></li><li><a href="#bob">Bob</a></li><li><a href="#clock">Clock</a></li><li><a href="#collatz-conjecture">Collatz Conjecture</a></li><li><a href="#darts">Darts</a></li><li><a href="#difference-of-squares">Difference Of Squares</a></li><li><a href="#grains">Grains</a></li><li><a href="#hello-world">Hello World</a></li><li><a href="#isogram">Isogram</a></li><li><a href="#leap">Leap</a></li><li><a href="#micro-blog">Micro Blog</a></li><li><a href="#nucleotide-count">Nucleotide Count</a></li><li><a href="#pangram">Pangram</a></li><li><a href="#proverb">Proverb</a></li><li><a href="#raindrops">Raindrops</a></li><li><a href="#resistor-color">Resistor Color</a></li><li><a href="#reverse-string">Reverse String</a></li><li><a href="#rna-transcription">Rna Transcription</a></li><li><a href="#series">Series</a></li><li><a href="#space-age">Space Age</a></li><li><a href="#sublist">Sublist</a></li><li><a href="#sum-of-multiples">Sum Of Multiples</a></li><li><a href="#two-fer">Two Fer</a></li></ul>
+    <ul><li><a href="#accumulate">Accumulate</a></li><li><a href="#anagram">Anagram</a></li><li><a href="#armstrong-numbers">Armstrong Numbers</a></li><li><a href="#binary">Binary</a></li><li><a href="#binary-search">Binary Search</a></li><li><a href="#bob">Bob</a></li><li><a href="#clock">Clock</a></li><li><a href="#collatz-conjecture">Collatz Conjecture</a></li><li><a href="#complex-numbers">Complex Numbers</a></li><li><a href="#darts">Darts</a></li><li><a href="#difference-of-squares">Difference Of Squares</a></li><li><a href="#grains">Grains</a></li><li><a href="#hello-world">Hello World</a></li><li><a href="#hexadecimal">Hexadecimal</a></li><li><a href="#isogram">Isogram</a></li><li><a href="#leap">Leap</a></li><li><a href="#micro-blog">Micro Blog</a></li><li><a href="#nucleotide-count">Nucleotide Count</a></li><li><a href="#pangram">Pangram</a></li><li><a href="#proverb">Proverb</a></li><li><a href="#raindrops">Raindrops</a></li><li><a href="#resistor-color">Resistor Color</a></li><li><a href="#reverse-string">Reverse String</a></li><li><a href="#rna-transcription">Rna Transcription</a></li><li><a href="#series">Series</a></li><li><a href="#space-age">Space Age</a></li><li><a href="#sublist">Sublist</a></li><li><a href="#sum-of-multiples">Sum Of Multiples</a></li><li><a href="#two-fer">Two Fer</a></li></ul>
     </div>
     <div class="main md:ml-[300px] px-2">
     
@@ -31,6 +31,53 @@ helper = \\list, fn, acc ->
         [x, .. as rest] ->
             newAcc = List.append acc (fn x)
             helper rest fn newAcc
+`}</code></pre>
+        
+
+            <h3><a name="anagram">Anagram</a></h3>
+            <a href="/problems/anagram">Other "Anagram" solutions.</a>
+            <pre><code class="language-roc">{`module [findAnagrams]
+
+import unicode.Grapheme
+
+findAnagrams : Str, List Str -> List Str
+findAnagrams = \\subject, candidates ->
+    List.walk
+        candidates
+        []
+        \\acc, candidate ->
+            if isAnagram subject candidate then
+                List.append acc candidate
+            else
+                acc
+
+isAnagram = \\word, candidate ->
+    wordLower = toLowerCase word
+    candidateLower = toLowerCase candidate
+    if wordLower == candidateLower then
+        Bool.false
+    else
+        charOccurrences wordLower == charOccurrences candidateLower
+
+charOccurrences = \\word ->
+    graphemes = Grapheme.split word |> Result.withDefault []
+    List.walk
+        graphemes
+        (Dict.empty {})
+        (\\acc, grapheme ->
+            value = Dict.get acc grapheme |> Result.withDefault 0
+            Dict.insert acc grapheme (value + 1)
+        )
+
+toLowerCase = \\word ->
+    word
+    |> Str.toUtf8
+    |> List.map toLower
+    |> Str.fromUtf8
+    |> Result.withDefault ""
+
+toLower = \\byte ->
+    if byte >= 'A' && byte <= 'Z' then byte + 32 else byte
 `}</code></pre>
         
 
@@ -236,6 +283,46 @@ collatzCount = \\stepCount, n ->
 `}</code></pre>
         
 
+            <h3><a name="complex-numbers">Complex Numbers</a></h3>
+            <a href="/problems/complex-numbers">Other "Complex Numbers" solutions.</a>
+            <pre><code class="language-roc">{`module [real, imaginary, add, sub, mul, div, conjugate, abs, exp]
+
+Complex : { re : F64, im : F64 }
+
+real : Complex -> F64
+real = \\{ re } -> re
+
+imaginary : Complex -> F64
+imaginary = \\{ im } -> im
+
+add : Complex, Complex -> Complex
+add = \\{ re: a, im: b }, { re: c, im: d } -> { re: a + c, im: b + d }
+
+sub : Complex, Complex -> Complex
+sub = \\{ re: a, im: b }, { re: c, im: d } -> { re: a - c, im: b - d }
+
+mul : Complex, Complex -> Complex
+mul = \\{ re: a, im: b }, { re: c, im: d } -> { re: a * c - b * d, im: b * c + a * d }
+
+div : Complex, Complex -> Complex
+div = \\{ re: a, im: b }, { re: c, im: d } -> {
+    re: (a * c + b * d) / (c ^ 2 + d ^ 2),
+    im: (b * c - a * d) / (c ^ 2 + d ^ 2),
+}
+
+conjugate : Complex -> Complex
+conjugate = \\{ re: a, im: b } -> { re: a, im: -b }
+
+abs : Complex -> F64
+abs = \\{ re: a, im: b } -> Num.sqrt (a * a + b * b)
+
+exp : Complex -> Complex
+exp = \\{ re: a, im: b } ->
+    ea = Num.e |> Num.pow a
+    { re: ea * Num.cos b, im: ea * Num.sin b }
+`}</code></pre>
+        
+
             <h3><a name="darts">Darts</a></h3>
             <a href="/problems/darts">Other "Darts" solutions.</a>
             <pre><code class="language-roc">{`module [score]
@@ -307,6 +394,49 @@ totalGrains = Num.maxU64
 
 hello : Str
 hello = "Hello, World!"
+`}</code></pre>
+        
+
+            <h3><a name="hexadecimal">Hexadecimal</a></h3>
+            <a href="/problems/hexadecimal">Other "Hexadecimal" solutions.</a>
+            <pre><code class="language-roc">{`module [parse]
+
+parse : Str -> Result U64 _
+parse = \\string ->
+    if string == "" then
+        Err Empty
+        else
+
+    hexadecimals =
+        string
+        |> Str.toUtf8
+        |> List.reverse
+        |> List.mapTry hexByteToDecimal
+
+    Result.map hexadecimals \\l ->
+        List.walkWithIndex l 0 \\sum, digit, i ->
+            sum + ((Num.powInt 16 i) * digit)
+
+hexByteToDecimal = \\hex ->
+    lower = if hex >= 'A' && hex <= 'Z' then hex + 32 else hex
+    when lower is
+        '0' -> Ok 0
+        '1' -> Ok 1
+        '2' -> Ok 2
+        '3' -> Ok 3
+        '4' -> Ok 4
+        '5' -> Ok 5
+        '6' -> Ok 6
+        '7' -> Ok 7
+        '8' -> Ok 8
+        '9' -> Ok 9
+        'a' -> Ok 10
+        'b' -> Ok 11
+        'c' -> Ok 12
+        'd' -> Ok 13
+        'e' -> Ok 14
+        'f' -> Ok 15
+        _ -> Err NotHex
 `}</code></pre>
         
 
