@@ -12,7 +12,7 @@ import Layout from "../../layouts/Layout.astro";
     <ul>
       <li><a href="/exercism.html">Index</a></li>
     </ul>
-    <ul><li><a href="#accumulate">Accumulate</a></li><li><a href="#anagram">Anagram</a></li><li><a href="#armstrong-numbers">Armstrong Numbers</a></li><li><a href="#binary">Binary</a></li><li><a href="#binary-search">Binary Search</a></li><li><a href="#bob">Bob</a></li><li><a href="#clock">Clock</a></li><li><a href="#collatz-conjecture">Collatz Conjecture</a></li><li><a href="#complex-numbers">Complex Numbers</a></li><li><a href="#darts">Darts</a></li><li><a href="#difference-of-squares">Difference Of Squares</a></li><li><a href="#grains">Grains</a></li><li><a href="#hello-world">Hello World</a></li><li><a href="#hexadecimal">Hexadecimal</a></li><li><a href="#isogram">Isogram</a></li><li><a href="#leap">Leap</a></li><li><a href="#micro-blog">Micro Blog</a></li><li><a href="#nucleotide-count">Nucleotide Count</a></li><li><a href="#pangram">Pangram</a></li><li><a href="#proverb">Proverb</a></li><li><a href="#raindrops">Raindrops</a></li><li><a href="#resistor-color">Resistor Color</a></li><li><a href="#reverse-string">Reverse String</a></li><li><a href="#rna-transcription">Rna Transcription</a></li><li><a href="#series">Series</a></li><li><a href="#space-age">Space Age</a></li><li><a href="#sublist">Sublist</a></li><li><a href="#sum-of-multiples">Sum Of Multiples</a></li><li><a href="#two-fer">Two Fer</a></li></ul>
+    <ul><li><a href="#accumulate">Accumulate</a></li><li><a href="#anagram">Anagram</a></li><li><a href="#armstrong-numbers">Armstrong Numbers</a></li><li><a href="#binary">Binary</a></li><li><a href="#binary-search">Binary Search</a></li><li><a href="#bob">Bob</a></li><li><a href="#clock">Clock</a></li><li><a href="#collatz-conjecture">Collatz Conjecture</a></li><li><a href="#complex-numbers">Complex Numbers</a></li><li><a href="#darts">Darts</a></li><li><a href="#difference-of-squares">Difference Of Squares</a></li><li><a href="#grains">Grains</a></li><li><a href="#hello-world">Hello World</a></li><li><a href="#hexadecimal">Hexadecimal</a></li><li><a href="#isogram">Isogram</a></li><li><a href="#leap">Leap</a></li><li><a href="#micro-blog">Micro Blog</a></li><li><a href="#nucleotide-count">Nucleotide Count</a></li><li><a href="#octal">Octal</a></li><li><a href="#pangram">Pangram</a></li><li><a href="#proverb">Proverb</a></li><li><a href="#raindrops">Raindrops</a></li><li><a href="#resistor-color">Resistor Color</a></li><li><a href="#resistor-color-duo">Resistor Color Duo</a></li><li><a href="#reverse-string">Reverse String</a></li><li><a href="#rna-transcription">Rna Transcription</a></li><li><a href="#roman-numerals">Roman Numerals</a></li><li><a href="#series">Series</a></li><li><a href="#space-age">Space Age</a></li><li><a href="#sublist">Sublist</a></li><li><a href="#sum-of-multiples">Sum Of Multiples</a></li><li><a href="#two-fer">Two Fer</a></li></ul>
     </div>
     <div class="main md:ml-[300px] px-2">
     
@@ -413,10 +413,20 @@ parse = \\string ->
         |> List.reverse
         |> List.mapTry hexByteToDecimal
 
-    Result.map hexadecimals \\l ->
-        List.walkWithIndex l 0 \\sum, digit, i ->
-            sum + ((Num.powInt 16 i) * digit)
+    Result.try hexadecimals \\l ->
+        List.walkWithIndex l (Ok 0) \\resultSum, digit, i ->
+            when resultSum is
+                Ok sum ->
+                    if digit > 0 && i > 16 then
+                        Err Overflow
+                        else
 
+                    safeMultiply = Num.mulChecked (Num.powInt 16 i) digit
+                    newValue = Result.try safeMultiply \\x -> Num.addChecked sum x
+                    newValue
+
+                Err _ ->
+                    resultSum
 hexByteToDecimal = \\hex ->
     lower = if hex >= 'A' && hex <= 'Z' then hex + 32 else hex
     when lower is
@@ -513,6 +523,48 @@ nucleotideCounts = \\input ->
 `}</code></pre>
         
 
+            <h3><a name="octal">Octal</a></h3>
+            <a href="/problems/octal">Other "Octal" solutions.</a>
+            <pre><code class="language-roc">{`module [parse]
+
+parse : Str -> Result U64 _
+parse = \\string ->
+    if string == "" then
+        Err Empty
+        else
+
+    octals =
+        string
+        |> Str.toUtf8
+        |> List.reverse
+        |> List.mapTry octalToDecimal
+
+    Result.try octals \\l ->
+        List.walkWithIndex l (Ok 0) \\resultSum, digit, i ->
+            when resultSum is
+                Ok sum ->
+                    safeMultiply = Num.mulChecked (Num.powInt 8 i) digit
+                    newValue = Result.try safeMultiply \\x -> Num.addChecked sum x
+                    newValue
+
+                Err _ ->
+                    resultSum
+
+octalToDecimal = \\octal ->
+    lower = if octal >= 'A' && octal <= 'Z' then octal + 32 else octal
+    when lower is
+        '0' -> Ok 0
+        '1' -> Ok 1
+        '2' -> Ok 2
+        '3' -> Ok 3
+        '4' -> Ok 4
+        '5' -> Ok 5
+        '6' -> Ok 6
+        '7' -> Ok 7
+        _ -> Err NotHex
+`}</code></pre>
+        
+
             <h3><a name="pangram">Pangram</a></h3>
             <a href="/problems/pangram">Other "Pangram" solutions.</a>
             <pre><code class="language-roc">{`module [isPangram]
@@ -606,6 +658,44 @@ colors = Dict.keys colorMap
 `}</code></pre>
         
 
+            <h3><a name="resistor-color-duo">Resistor Color Duo</a></h3>
+            <a href="/problems/resistor-color-duo">Other "Resistor Color Duo" solutions.</a>
+            <pre><code class="language-roc">{`module [value]
+
+Color : [
+    Black,
+    Brown,
+    Red,
+    Orange,
+    Yellow,
+    Green,
+    Blue,
+    Violet,
+    Grey,
+    White,
+]
+
+value : Color, Color -> U8
+value = \\first, second ->
+    firstDigit = colors first * 10
+    secondDigit = colors second
+    firstDigit + secondDigit
+
+colors = \\color ->
+    when color is
+        Black -> 0
+        Brown -> 1
+        Red -> 2
+        Orange -> 3
+        Yellow -> 4
+        Green -> 5
+        Blue -> 6
+        Violet -> 7
+        Grey -> 8
+        White -> 9
+`}</code></pre>
+        
+
             <h3><a name="reverse-string">Reverse String</a></h3>
             <a href="/problems/reverse-string">Other "Reverse String" solutions.</a>
             <pre><code class="language-roc">{`module [reverse]
@@ -641,6 +731,46 @@ nucleoTideComplement = \\n ->
         'T' -> 'A'
         'A' -> 'U'
         _ -> n
+`}</code></pre>
+        
+
+            <h3><a name="roman-numerals">Roman Numerals</a></h3>
+            <a href="/problems/roman-numerals">Other "Roman Numerals" solutions.</a>
+            <pre><code class="language-roc">{`module [roman]
+
+numerals = Dict.fromList [
+    (1000, "M"),
+    (900, "CM"),
+    (500, "D"),
+    (400, "CD"),
+    (100, "C"),
+    (90, "XC"),
+    (50, "L"),
+    (40, "XL"),
+    (10, "X"),
+    (9, "IX"),
+    (5, "V"),
+    (4, "IV"),
+    (1, "I"),
+]
+
+roman : U64 -> Result Str _
+roman = \\number ->
+    nums =
+        numerals
+        |> Dict.keys
+        |> List.sortDesc
+
+    (resultString, _) = List.walk nums ("", number) \\(result, n), denominator ->
+        if (n // denominator) >= 1 then
+            romanChar = numerals |> Dict.get denominator |> Result.withDefault ""
+            newChars = Str.repeat romanChar (n // denominator)
+            (Str.concat result newChars, Num.rem n denominator)
+        else
+            (result, n)
+
+    Ok resultString
+
 `}</code></pre>
         
 

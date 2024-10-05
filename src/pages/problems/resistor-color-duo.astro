@@ -12,10 +12,48 @@ import Layout from "../../layouts/Layout.astro";
     <ul>
       <li><a href="/exercism.html">Index</a></li>
     </ul>
-    <ul><li><a href="#c">C</a></li></ul>
+    <ul><li><a href="#roc">Roc</a></li><li><a href="#c">C</a></li></ul>
     </div>
     <div class="main md:ml-[300px] px-2">
     
+            <h3><a name="roc">Roc</a></h3>
+            <a href="/languages/roc">Other Roc solutions.</a>
+            <pre><code class="language-roc">{`module [value]
+
+Color : [
+    Black,
+    Brown,
+    Red,
+    Orange,
+    Yellow,
+    Green,
+    Blue,
+    Violet,
+    Grey,
+    White,
+]
+
+value : Color, Color -> U8
+value = \\first, second ->
+    firstDigit = colors first * 10
+    secondDigit = colors second
+    firstDigit + secondDigit
+
+colors = \\color ->
+    when color is
+        Black -> 0
+        Brown -> 1
+        Red -> 2
+        Orange -> 3
+        Yellow -> 4
+        Green -> 5
+        Blue -> 6
+        Violet -> 7
+        Grey -> 8
+        White -> 9
+`}</code></pre>
+        
+
             <h3><a name="c">C</a></h3>
             <a href="/languages/c">Other C solutions.</a>
             <pre><code class="language-c">{`#include "resistor_color_duo.h"
