@@ -12,7 +12,7 @@ import Layout from "../../layouts/Layout.astro";
     <ul>
       <li><a href="/exercism.html">Index</a></li>
     </ul>
-    <ul><li><a href="#clojure">Clojure</a></li><li><a href="#elixir">Elixir</a></li></ul>
+    <ul><li><a href="#clojure">Clojure</a></li><li><a href="#elixir">Elixir</a></li><li><a href="#roc">Roc</a></li></ul>
     </div>
     <div class="main md:ml-[300px] px-2">
     
@@ -61,6 +61,37 @@ import Layout from "../../layouts/Layout.astro";
     |> Enum.into(%{})
   end
 end
+`}</code></pre>
+        
+
+            <h3><a name="roc">Roc</a></h3>
+            <a href="/languages/roc">Other Roc solutions.</a>
+            <pre><code class="language-roc">{`module [countWords]
+
+countWords : Str -> Dict Str U64
+countWords = \\sentence ->
+    sentence
+    |> Str.replaceEach "," " "
+    |> Str.split " "
+    |> List.map sanitizeWord
+    |> List.dropIf Str.isEmpty
+    |> List.walk (Dict.empty {}) \\dict, word ->
+        Dict.update dict word \\result ->
+            when result is
+                Ok existing -> Ok (existing + 1)
+                Err Missing -> Ok 1
+
+sanitizeWord : Str -> Str
+sanitizeWord = \\word ->
+    word
+    |> Str.trim
+    |> Str.dropPrefix "'"
+    |> Str.dropSuffix "'"
+    |> Str.toUtf8
+    |> List.map \\char -> if char >= 'A' && char <= 'Z' then char + 32 else char
+    |> List.keepIf \\char -> (char >= 'a' && char <= 'z') || (char >= '0' && char <= '9') || char == '\\''
+    |> Str.fromUtf8
+    |> Result.withDefault ""
 `}</code></pre>
         
     </div>
