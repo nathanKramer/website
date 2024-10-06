@@ -12,7 +12,7 @@ import Layout from "../../layouts/Layout.astro";
     <ul>
       <li><a href="/exercism.html">Index</a></li>
     </ul>
-    <ul><li><a href="#accumulate">Accumulate</a></li><li><a href="#anagram">Anagram</a></li><li><a href="#armstrong-numbers">Armstrong Numbers</a></li><li><a href="#binary">Binary</a></li><li><a href="#binary-search">Binary Search</a></li><li><a href="#bob">Bob</a></li><li><a href="#clock">Clock</a></li><li><a href="#collatz-conjecture">Collatz Conjecture</a></li><li><a href="#complex-numbers">Complex Numbers</a></li><li><a href="#darts">Darts</a></li><li><a href="#difference-of-squares">Difference Of Squares</a></li><li><a href="#grains">Grains</a></li><li><a href="#hello-world">Hello World</a></li><li><a href="#hexadecimal">Hexadecimal</a></li><li><a href="#isogram">Isogram</a></li><li><a href="#kindergarten-garden">Kindergarten Garden</a></li><li><a href="#leap">Leap</a></li><li><a href="#micro-blog">Micro Blog</a></li><li><a href="#nucleotide-count">Nucleotide Count</a></li><li><a href="#octal">Octal</a></li><li><a href="#pangram">Pangram</a></li><li><a href="#proverb">Proverb</a></li><li><a href="#raindrops">Raindrops</a></li><li><a href="#resistor-color">Resistor Color</a></li><li><a href="#resistor-color-duo">Resistor Color Duo</a></li><li><a href="#reverse-string">Reverse String</a></li><li><a href="#rna-transcription">Rna Transcription</a></li><li><a href="#roman-numerals">Roman Numerals</a></li><li><a href="#series">Series</a></li><li><a href="#space-age">Space Age</a></li><li><a href="#sublist">Sublist</a></li><li><a href="#sum-of-multiples">Sum Of Multiples</a></li><li><a href="#two-fer">Two Fer</a></li></ul>
+    <ul><li><a href="#accumulate">Accumulate</a></li><li><a href="#anagram">Anagram</a></li><li><a href="#armstrong-numbers">Armstrong Numbers</a></li><li><a href="#binary">Binary</a></li><li><a href="#binary-search">Binary Search</a></li><li><a href="#bob">Bob</a></li><li><a href="#clock">Clock</a></li><li><a href="#collatz-conjecture">Collatz Conjecture</a></li><li><a href="#complex-numbers">Complex Numbers</a></li><li><a href="#darts">Darts</a></li><li><a href="#difference-of-squares">Difference Of Squares</a></li><li><a href="#grains">Grains</a></li><li><a href="#hello-world">Hello World</a></li><li><a href="#hexadecimal">Hexadecimal</a></li><li><a href="#isogram">Isogram</a></li><li><a href="#kindergarten-garden">Kindergarten Garden</a></li><li><a href="#leap">Leap</a></li><li><a href="#micro-blog">Micro Blog</a></li><li><a href="#nucleotide-count">Nucleotide Count</a></li><li><a href="#octal">Octal</a></li><li><a href="#pangram">Pangram</a></li><li><a href="#proverb">Proverb</a></li><li><a href="#raindrops">Raindrops</a></li><li><a href="#resistor-color">Resistor Color</a></li><li><a href="#resistor-color-duo">Resistor Color Duo</a></li><li><a href="#reverse-string">Reverse String</a></li><li><a href="#rna-transcription">Rna Transcription</a></li><li><a href="#robot-simulator">Robot Simulator</a></li><li><a href="#roman-numerals">Roman Numerals</a></li><li><a href="#secret-handshake">Secret Handshake</a></li><li><a href="#series">Series</a></li><li><a href="#space-age">Space Age</a></li><li><a href="#sublist">Sublist</a></li><li><a href="#sum-of-multiples">Sum Of Multiples</a></li><li><a href="#two-fer">Two Fer</a></li></ul>
     </div>
     <div class="main md:ml-[300px] px-2">
     
@@ -787,6 +787,58 @@ nucleoTideComplement = \\n ->
 `}</code></pre>
         
 
+            <h3><a name="robot-simulator">Robot Simulator</a></h3>
+            <a href="/problems/robot-simulator">Other "Robot Simulator" solutions.</a>
+            <pre><code class="language-roc">{`module [create, move]
+
+Direction : [North, East, South, West]
+Robot : { x : I64, y : I64, direction : Direction }
+
+create : { x ? I64, y ? I64, direction ? Direction } -> Robot
+create = \\{ x ? 0, y ? 0, direction ? North } -> {
+    x,
+    y,
+    direction,
+}
+
+move : Robot, Str -> Robot
+move = \\robot, instructions ->
+    instructionBytes = Str.toUtf8 instructions
+    List.walk instructionBytes robot applyInstruction
+
+applyInstruction : Robot, U8 -> Robot
+applyInstruction = \\{ x, y, direction }, instruction ->
+    when instruction is
+        'L' ->
+            newDirection =
+                when direction is
+                    North -> West
+                    South -> East
+                    East -> North
+                    West -> South
+            { x, y, direction: newDirection }
+
+        'R' ->
+            newDirection =
+                when direction is
+                    North -> East
+                    East -> South
+                    South -> West
+                    West -> North
+            { x, y, direction: newDirection }
+
+        'A' ->
+            when direction is
+                North -> { x, y: y + 1, direction }
+                East -> { x: x + 1, y, direction }
+                South -> { x, y: y - 1, direction }
+                West -> { x: x - 1, y, direction }
+
+        _ -> { x, y, direction }
+
+`}</code></pre>
+        
+
             <h3><a name="roman-numerals">Roman Numerals</a></h3>
             <a href="/problems/roman-numerals">Other "Roman Numerals" solutions.</a>
             <pre><code class="language-roc">{`module [roman]
@@ -824,6 +876,31 @@ roman = \\number ->
 
     Ok resultString
 
+`}</code></pre>
+        
+
+            <h3><a name="secret-handshake">Secret Handshake</a></h3>
+            <a href="/problems/secret-handshake">Other "Secret Handshake" solutions.</a>
+            <pre><code class="language-roc">{`module [commands]
+
+actions = [
+    (1, "wink"),
+    (2, "double blink"),
+    (4, "close your eyes"),
+    (8, "jump"),
+]
+
+commands : U64 -> List Str
+commands = \\number ->
+    commandList = List.walk actions [] \\acc, (mask, action) ->
+        if Num.bitwiseAnd number mask == mask then
+            List.append acc action
+        else
+            acc
+    if Num.bitwiseAnd number 16 == 16 then
+        List.reverse commandList
+    else
+        commandList
 `}</code></pre>
         
 
