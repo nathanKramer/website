@@ -12,7 +12,7 @@ import Layout from "../../layouts/Layout.astro";
     <ul>
       <li><a href="/exercism.html">Index</a></li>
     </ul>
-    <ul><li><a href="#elm">Elm</a></li></ul>
+    <ul><li><a href="#elm">Elm</a></li><li><a href="#roc">Roc</a></li></ul>
     </div>
     <div class="main md:ml-[300px] px-2">
     
@@ -59,6 +59,39 @@ triangleKind x y z =
 
     else
         classification
+`}</code></pre>
+        
+
+            <h3><a name="roc">Roc</a></h3>
+            <a href="/languages/roc">Other Roc solutions.</a>
+            <pre><code class="language-roc">{`module [isEquilateral, isIsosceles, isScalene]
+
+isEquilateral : (F64, F64, F64) -> Bool
+isEquilateral = \\(a, b, c) ->
+    isTriangle (a, b, c)
+    && Num.isApproxEq a b {}
+    && Num.isApproxEq b c {}
+
+isIsosceles : (F64, F64, F64) -> Bool
+isIsosceles = \\(a, b, c) ->
+    isTriangle (a, b, c) && (eq a b || eq b c || eq a c)
+
+isScalene : (F64, F64, F64) -> Bool
+isScalene = \\(a, b, c) ->
+    isTriangle (a, b, c) && neq a b && neq b c && neq a c
+
+isTriangle : (F64, F64, F64) -> Bool
+isTriangle = \\(a, b, c) ->
+    (a + b >= c)
+    && (b + c >= a)
+    && (a + c >= b)
+    && List.all [a, b, c] \\x -> x > 0
+
+eq : F64, F64 -> Bool
+eq = \\a, b -> Num.isApproxEq a b {}
+
+neq : F64, F64 -> Bool
+neq = \\a, b -> !(Num.isApproxEq a b {})
 `}</code></pre>
         
     </div>

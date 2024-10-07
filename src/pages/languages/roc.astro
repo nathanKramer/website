@@ -12,7 +12,7 @@ import Layout from "../../layouts/Layout.astro";
     <ul>
       <li><a href="/exercism.html">Index</a></li>
     </ul>
-    <ul><li><a href="#accumulate">Accumulate</a></li><li><a href="#anagram">Anagram</a></li><li><a href="#armstrong-numbers">Armstrong Numbers</a></li><li><a href="#binary">Binary</a></li><li><a href="#binary-search">Binary Search</a></li><li><a href="#bob">Bob</a></li><li><a href="#clock">Clock</a></li><li><a href="#collatz-conjecture">Collatz Conjecture</a></li><li><a href="#complex-numbers">Complex Numbers</a></li><li><a href="#darts">Darts</a></li><li><a href="#difference-of-squares">Difference Of Squares</a></li><li><a href="#grains">Grains</a></li><li><a href="#hello-world">Hello World</a></li><li><a href="#hexadecimal">Hexadecimal</a></li><li><a href="#isogram">Isogram</a></li><li><a href="#kindergarten-garden">Kindergarten Garden</a></li><li><a href="#leap">Leap</a></li><li><a href="#micro-blog">Micro Blog</a></li><li><a href="#nucleotide-count">Nucleotide Count</a></li><li><a href="#octal">Octal</a></li><li><a href="#pangram">Pangram</a></li><li><a href="#proverb">Proverb</a></li><li><a href="#raindrops">Raindrops</a></li><li><a href="#resistor-color">Resistor Color</a></li><li><a href="#resistor-color-duo">Resistor Color Duo</a></li><li><a href="#reverse-string">Reverse String</a></li><li><a href="#rna-transcription">Rna Transcription</a></li><li><a href="#robot-simulator">Robot Simulator</a></li><li><a href="#roman-numerals">Roman Numerals</a></li><li><a href="#scrabble-score">Scrabble Score</a></li><li><a href="#secret-handshake">Secret Handshake</a></li><li><a href="#series">Series</a></li><li><a href="#space-age">Space Age</a></li><li><a href="#sublist">Sublist</a></li><li><a href="#sum-of-multiples">Sum Of Multiples</a></li><li><a href="#two-fer">Two Fer</a></li><li><a href="#word-count">Word Count</a></li></ul>
+    <ul><li><a href="#accumulate">Accumulate</a></li><li><a href="#allergies">Allergies</a></li><li><a href="#anagram">Anagram</a></li><li><a href="#armstrong-numbers">Armstrong Numbers</a></li><li><a href="#binary">Binary</a></li><li><a href="#binary-search">Binary Search</a></li><li><a href="#bob">Bob</a></li><li><a href="#clock">Clock</a></li><li><a href="#collatz-conjecture">Collatz Conjecture</a></li><li><a href="#complex-numbers">Complex Numbers</a></li><li><a href="#darts">Darts</a></li><li><a href="#diamond">Diamond</a></li><li><a href="#difference-of-squares">Difference Of Squares</a></li><li><a href="#grains">Grains</a></li><li><a href="#hello-world">Hello World</a></li><li><a href="#hexadecimal">Hexadecimal</a></li><li><a href="#isogram">Isogram</a></li><li><a href="#kindergarten-garden">Kindergarten Garden</a></li><li><a href="#leap">Leap</a></li><li><a href="#micro-blog">Micro Blog</a></li><li><a href="#nucleotide-count">Nucleotide Count</a></li><li><a href="#octal">Octal</a></li><li><a href="#pangram">Pangram</a></li><li><a href="#proverb">Proverb</a></li><li><a href="#raindrops">Raindrops</a></li><li><a href="#resistor-color">Resistor Color</a></li><li><a href="#resistor-color-duo">Resistor Color Duo</a></li><li><a href="#reverse-string">Reverse String</a></li><li><a href="#rna-transcription">Rna Transcription</a></li><li><a href="#robot-simulator">Robot Simulator</a></li><li><a href="#roman-numerals">Roman Numerals</a></li><li><a href="#scrabble-score">Scrabble Score</a></li><li><a href="#secret-handshake">Secret Handshake</a></li><li><a href="#series">Series</a></li><li><a href="#space-age">Space Age</a></li><li><a href="#sublist">Sublist</a></li><li><a href="#sum-of-multiples">Sum Of Multiples</a></li><li><a href="#triangle">Triangle</a></li><li><a href="#two-fer">Two Fer</a></li><li><a href="#word-count">Word Count</a></li></ul>
     </div>
     <div class="main md:ml-[300px] px-2">
     
@@ -31,6 +31,37 @@ helper = \\list, fn, acc ->
         [x, .. as rest] ->
             newAcc = List.append acc (fn x)
             helper rest fn newAcc
+`}</code></pre>
+        
+
+            <h3><a name="allergies">Allergies</a></h3>
+            <a href="/problems/allergies">Other "Allergies" solutions.</a>
+            <pre><code class="language-roc">{`module [allergicTo, set]
+
+Allergen : [Eggs, Peanuts, Shellfish, Strawberries, Tomatoes, Chocolate, Pollen, Cats]
+
+allergies = [Eggs, Peanuts, Shellfish, Strawberries, Tomatoes, Chocolate, Pollen, Cats]
+
+allergicTo : Allergen, U64 -> Bool
+allergicTo = \\allergen, score ->
+    mask = Num.bitwiseAnd score (allergyScores allergen)
+    mask != 0
+
+set : U64 -> Set Allergen
+set = \\score ->
+    List.keepIf allergies \\allergen -> allergicTo allergen score
+    |> Set.fromList
+
+allergyScores = \\allergen ->
+    when allergen is
+        Eggs -> 1
+        Peanuts -> 2
+        Shellfish -> 4
+        Strawberries -> 8
+        Tomatoes -> 16
+        Chocolate -> 32
+        Pollen -> 64
+        Cats -> 128
 `}</code></pre>
         
 
@@ -337,6 +368,39 @@ score = \\x, y ->
         _ if r <= 10 -> 1
         _ -> 0
 
+`}</code></pre>
+        
+
+            <h3><a name="diamond">Diamond</a></h3>
+            <a href="/problems/diamond">Other "Diamond" solutions.</a>
+            <pre><code class="language-roc">{`module [diamond]
+
+diamond : U8 -> Str
+diamond = \\letter ->
+    if letter == 'A' then
+        "A"
+        else
+
+    midPoint = Num.toU64 letter - 'A'
+    width = Num.toU64 ((Num.toU64 midPoint) * 2) + 1
+
+    topHalf = List.range { start: At 'A', end: At letter }
+    bottomHalf = List.range { start: At 'A', end: Before letter }
+
+    generateRow = \\char ->
+        charStr = Result.withDefault (Str.fromUtf8 [char]) ""
+        row = List.repeat " " width
+        offsetFromMiddle = Num.toU64 char - Num.toU64 'A'
+        (pos1, pos2) = (midPoint - offsetFromMiddle, midPoint + offsetFromMiddle)
+
+        row
+        |> List.set pos1 charStr
+        |> List.set pos2 charStr
+        |> Str.joinWith ""
+
+    rows = List.concat (List.map topHalf generateRow) (List.reverse (List.map bottomHalf generateRow))
+
+    Str.joinWith rows "\\n"
 `}</code></pre>
         
 
@@ -1057,6 +1121,39 @@ multiplesLessThan = \\factor, limit ->
         else
 
     List.range { start: At factor, end: Before limit, step: factor }
+`}</code></pre>
+        
+
+            <h3><a name="triangle">Triangle</a></h3>
+            <a href="/problems/triangle">Other "Triangle" solutions.</a>
+            <pre><code class="language-roc">{`module [isEquilateral, isIsosceles, isScalene]
+
+isEquilateral : (F64, F64, F64) -> Bool
+isEquilateral = \\(a, b, c) ->
+    isTriangle (a, b, c)
+    && Num.isApproxEq a b {}
+    && Num.isApproxEq b c {}
+
+isIsosceles : (F64, F64, F64) -> Bool
+isIsosceles = \\(a, b, c) ->
+    isTriangle (a, b, c) && (eq a b || eq b c || eq a c)
+
+isScalene : (F64, F64, F64) -> Bool
+isScalene = \\(a, b, c) ->
+    isTriangle (a, b, c) && neq a b && neq b c && neq a c
+
+isTriangle : (F64, F64, F64) -> Bool
+isTriangle = \\(a, b, c) ->
+    (a + b >= c)
+    && (b + c >= a)
+    && (a + c >= b)
+    && List.all [a, b, c] \\x -> x > 0
+
+eq : F64, F64 -> Bool
+eq = \\a, b -> Num.isApproxEq a b {}
+
+neq : F64, F64 -> Bool
+neq = \\a, b -> !(Num.isApproxEq a b {})
 `}</code></pre>
         
 
