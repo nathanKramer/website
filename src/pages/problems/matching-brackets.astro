@@ -1,0 +1,63 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Matching Brackets">
+<link rel="stylesheet" href="/css/prism.css" />
+<link rel="stylesheet" href="/css/style.css" />
+    <div class="side-bar hidden md:block">
+    <h2>Matching Brackets</h2>
+    <p>Solutions to matching-brackets in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#roc">Roc</a></li></ul>
+    </div>
+    <div class="main md:ml-[300px] px-2">
+    
+            <h3><a name="roc">Roc</a></h3>
+            <a href="/languages/roc">Other Roc solutions.</a>
+            <pre><code class="language-roc">{`module [isPaired]
+
+isPaired : Str -> Bool
+isPaired = \\string ->
+    chars =
+        string
+        |> Str.toUtf8
+        |> List.keepIf isBracket
+
+    bracketStack = List.walkTry chars [] \\stack, char ->
+        when (stack, char) is
+            (_, '{') -> Ok (List.append stack '{')
+            (_, '[') -> Ok (List.append stack '[')
+            (_, '(') -> Ok (List.append stack '(')
+            ([.. as rest, '{'], '}') -> Ok rest
+            ([.. as rest, '['], ']') -> Ok rest
+            ([.. as rest, '('], ')') -> Ok rest
+            (_, ')') -> Err Unbalanced
+            (_, ']') -> Err Unbalanced
+            (_, '}') -> Err Unbalanced
+            _ -> Ok stack
+
+    when bracketStack is
+        Ok [] -> Bool.true
+        _ -> Bool.false
+
+isBracket = \\c ->
+    set = Set.fromList ['{', '}', '(', ')', '[', ']']
+    Set.contains set c
+`}</code></pre>
+        
+    </div>
+
+    <script src="/js/prism.js" isinline></script>
+    <script>
+        Prism.languages['roc'] = Prism.languages['elm']
+    </script>
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

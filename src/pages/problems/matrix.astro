@@ -1,0 +1,63 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Matrix">
+<link rel="stylesheet" href="/css/prism.css" />
+<link rel="stylesheet" href="/css/style.css" />
+    <div class="side-bar hidden md:block">
+    <h2>Matrix</h2>
+    <p>Solutions to matrix in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#roc">Roc</a></li></ul>
+    </div>
+    <div class="main md:ml-[300px] px-2">
+    
+            <h3><a name="roc">Roc</a></h3>
+            <a href="/languages/roc">Other Roc solutions.</a>
+            <pre><code class="language-roc">{`module [row, column]
+
+column : Str, U64 -> Result (List I64) _
+column = \\matrixStr, index ->
+    rowCount = List.len (Str.split matrixStr "\\n")
+    rowIndices = List.range { start: At 1, end: At rowCount }
+    theRows = List.keepOks rowIndices \\idx -> row matrixStr idx
+
+    walkRows : List I64, List I64 -> List I64
+    walkRows = \\col, theRow ->
+        int = List.get theRow (index - 1)
+        when int is
+            Ok x -> List.append col x
+            Err _ -> col
+
+    colValues = List.walk theRows [] walkRows
+
+    Ok colValues
+
+row : Str, U64 -> Result (List I64) _
+row = \\matrixStr, index ->
+    theRow =
+        matrixStr
+        |> Str.split "\\n"
+        |> List.get (index - 1)
+    Result.map theRow \\rowStr ->
+        rowStr
+        |> Str.split " "
+        |> List.keepOks Str.toI64
+`}</code></pre>
+        
+    </div>
+
+    <script src="/js/prism.js" isinline></script>
+    <script>
+        Prism.languages['roc'] = Prism.languages['elm']
+    </script>
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

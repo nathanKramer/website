@@ -12,7 +12,7 @@ import Layout from "../../layouts/Layout.astro";
     <ul>
       <li><a href="/exercism.html">Index</a></li>
     </ul>
-    <ul><li><a href="#accumulate">Accumulate</a></li><li><a href="#allergies">Allergies</a></li><li><a href="#anagram">Anagram</a></li><li><a href="#armstrong-numbers">Armstrong Numbers</a></li><li><a href="#binary">Binary</a></li><li><a href="#binary-search">Binary Search</a></li><li><a href="#bob">Bob</a></li><li><a href="#clock">Clock</a></li><li><a href="#collatz-conjecture">Collatz Conjecture</a></li><li><a href="#complex-numbers">Complex Numbers</a></li><li><a href="#darts">Darts</a></li><li><a href="#diamond">Diamond</a></li><li><a href="#difference-of-squares">Difference Of Squares</a></li><li><a href="#grains">Grains</a></li><li><a href="#hello-world">Hello World</a></li><li><a href="#hexadecimal">Hexadecimal</a></li><li><a href="#isogram">Isogram</a></li><li><a href="#kindergarten-garden">Kindergarten Garden</a></li><li><a href="#leap">Leap</a></li><li><a href="#micro-blog">Micro Blog</a></li><li><a href="#nucleotide-count">Nucleotide Count</a></li><li><a href="#octal">Octal</a></li><li><a href="#pangram">Pangram</a></li><li><a href="#proverb">Proverb</a></li><li><a href="#raindrops">Raindrops</a></li><li><a href="#resistor-color">Resistor Color</a></li><li><a href="#resistor-color-duo">Resistor Color Duo</a></li><li><a href="#reverse-string">Reverse String</a></li><li><a href="#rna-transcription">Rna Transcription</a></li><li><a href="#robot-simulator">Robot Simulator</a></li><li><a href="#roman-numerals">Roman Numerals</a></li><li><a href="#scrabble-score">Scrabble Score</a></li><li><a href="#secret-handshake">Secret Handshake</a></li><li><a href="#series">Series</a></li><li><a href="#space-age">Space Age</a></li><li><a href="#sublist">Sublist</a></li><li><a href="#sum-of-multiples">Sum Of Multiples</a></li><li><a href="#triangle">Triangle</a></li><li><a href="#two-fer">Two Fer</a></li><li><a href="#word-count">Word Count</a></li></ul>
+    <ul><li><a href="#accumulate">Accumulate</a></li><li><a href="#allergies">Allergies</a></li><li><a href="#anagram">Anagram</a></li><li><a href="#armstrong-numbers">Armstrong Numbers</a></li><li><a href="#binary">Binary</a></li><li><a href="#binary-search">Binary Search</a></li><li><a href="#bob">Bob</a></li><li><a href="#clock">Clock</a></li><li><a href="#collatz-conjecture">Collatz Conjecture</a></li><li><a href="#complex-numbers">Complex Numbers</a></li><li><a href="#darts">Darts</a></li><li><a href="#diamond">Diamond</a></li><li><a href="#difference-of-squares">Difference Of Squares</a></li><li><a href="#etl">Etl</a></li><li><a href="#grains">Grains</a></li><li><a href="#hamming">Hamming</a></li><li><a href="#hello-world">Hello World</a></li><li><a href="#hexadecimal">Hexadecimal</a></li><li><a href="#high-scores">High Scores</a></li><li><a href="#isbn-verifier">Isbn Verifier</a></li><li><a href="#isogram">Isogram</a></li><li><a href="#kindergarten-garden">Kindergarten Garden</a></li><li><a href="#leap">Leap</a></li><li><a href="#matching-brackets">Matching Brackets</a></li><li><a href="#matrix">Matrix</a></li><li><a href="#micro-blog">Micro Blog</a></li><li><a href="#nucleotide-count">Nucleotide Count</a></li><li><a href="#octal">Octal</a></li><li><a href="#pangram">Pangram</a></li><li><a href="#proverb">Proverb</a></li><li><a href="#raindrops">Raindrops</a></li><li><a href="#resistor-color">Resistor Color</a></li><li><a href="#resistor-color-duo">Resistor Color Duo</a></li><li><a href="#reverse-string">Reverse String</a></li><li><a href="#rna-transcription">Rna Transcription</a></li><li><a href="#robot-simulator">Robot Simulator</a></li><li><a href="#roman-numerals">Roman Numerals</a></li><li><a href="#scrabble-score">Scrabble Score</a></li><li><a href="#secret-handshake">Secret Handshake</a></li><li><a href="#series">Series</a></li><li><a href="#space-age">Space Age</a></li><li><a href="#sublist">Sublist</a></li><li><a href="#sum-of-multiples">Sum Of Multiples</a></li><li><a href="#triangle">Triangle</a></li><li><a href="#two-fer">Two Fer</a></li><li><a href="#word-count">Word Count</a></li></ul>
     </div>
     <div class="main md:ml-[300px] px-2">
     
@@ -377,10 +377,6 @@ score = \\x, y ->
 
 diamond : U8 -> Str
 diamond = \\letter ->
-    if letter == 'A' then
-        "A"
-        else
-
     midPoint = Num.toU64 letter - 'A'
     width = Num.toU64 ((Num.toU64 midPoint) * 2) + 1
 
@@ -436,6 +432,22 @@ differenceOfSquares = \\number ->
 `}</code></pre>
         
 
+            <h3><a name="etl">Etl</a></h3>
+            <a href="/problems/etl">Other "Etl" solutions.</a>
+            <pre><code class="language-roc">{`module [transform]
+
+transform : Dict U64 (List U8) -> Dict U8 U64
+transform = \\legacy ->
+    Dict.walk legacy (Dict.empty {}) \\acc, score, letters ->
+        letters
+        |> List.map \\letter -> (toLower letter, score)
+        |> Dict.fromList
+        |> Dict.insertAll acc
+
+toLower = \\char -> if char >= 'A' && char <= 'Z' then char + ('a' - 'A') else char
+`}</code></pre>
+        
+
             <h3><a name="grains">Grains</a></h3>
             <a href="/problems/grains">Other "Grains" solutions.</a>
             <pre><code class="language-roc">{`module [grainsOnSquare, totalGrains]
@@ -449,6 +461,25 @@ grainsOnSquare = \\square ->
 
 totalGrains : U64
 totalGrains = Num.maxU64
+`}</code></pre>
+        
+
+            <h3><a name="hamming">Hamming</a></h3>
+            <a href="/problems/hamming">Other "Hamming" solutions.</a>
+            <pre><code class="language-roc">{`module [distance]
+
+distance : Str, Str -> Result U64 _
+distance = \\strand1, strand2 ->
+    list1 = Str.toUtf8 strand1
+    list2 = Str.toUtf8 strand2
+
+    if List.len list1 != List.len list2 then
+        Err InvalidInput
+        else
+
+    List.map2 list1 list2 Pair
+    |> List.countIf \\Pair s1 s2 -> s1 != s2
+    |> Ok
 `}</code></pre>
         
 
@@ -511,6 +542,63 @@ hexByteToDecimal = \\hex ->
         'e' -> Ok 14
         'f' -> Ok 15
         _ -> Err NotHex
+`}</code></pre>
+        
+
+            <h3><a name="high-scores">High Scores</a></h3>
+            <a href="/problems/high-scores">Other "High Scores" solutions.</a>
+            <pre><code class="language-roc">{`module [latest, personalBest, personalTopThree]
+
+Score : U64
+
+latest : List Score -> Result Score _
+latest = List.last
+
+personalBest : List Score -> Result Score _
+personalBest = List.max
+
+personalTopThree : List Score -> List Score
+personalTopThree = \\scores ->
+    scores
+    |> List.sortDesc
+    |> List.takeFirst 3
+`}</code></pre>
+        
+
+            <h3><a name="isbn-verifier">Isbn Verifier</a></h3>
+            <a href="/problems/isbn-verifier">Other "Isbn Verifier" solutions.</a>
+            <pre><code class="language-roc">{`module [isValid]
+
+isValid : Str -> Bool
+isValid = \\isbn ->
+    sanitized =
+        isbn
+        |> Str.toUtf8
+        |> List.dropIf \\c -> c == '-'
+
+    if List.len sanitized != 10 then
+        Bool.false
+        else
+
+    checkDigit =
+        sanitized
+        |> List.last
+        |> Result.map \\c -> if c == 'X' then 10 else c - '0'
+
+    digits =
+        sanitized
+        |> List.dropLast 1
+        |> List.keepIf isDigit
+        |> List.map \\c -> c - '0'
+        |> List.appendIfOk checkDigit
+
+    checkSum = List.walkWithIndex digits (Num.toU64 0) \\state, digit, idx ->
+        multiplier = 10 - idx
+        state + ((Num.toU64 digit) * multiplier)
+
+    checkSum % 11 == 0
+
+isDigit = \\c -> c >= '0' && c <= '9'
 `}</code></pre>
         
 
@@ -599,6 +687,74 @@ isLeapYear : I64 -> Bool
 isLeapYear = \\year ->
     year % 4 == 0 &&
     year % 100 != 0 || year % 400 == 0
+`}</code></pre>
+        
+
+            <h3><a name="matching-brackets">Matching Brackets</a></h3>
+            <a href="/problems/matching-brackets">Other "Matching Brackets" solutions.</a>
+            <pre><code class="language-roc">{`module [isPaired]
+
+isPaired : Str -> Bool
+isPaired = \\string ->
+    chars =
+        string
+        |> Str.toUtf8
+        |> List.keepIf isBracket
+
+    bracketStack = List.walkTry chars [] \\stack, char ->
+        when (stack, char) is
+            (_, '{') -> Ok (List.append stack '{')
+            (_, '[') -> Ok (List.append stack '[')
+            (_, '(') -> Ok (List.append stack '(')
+            ([.. as rest, '{'], '}') -> Ok rest
+            ([.. as rest, '['], ']') -> Ok rest
+            ([.. as rest, '('], ')') -> Ok rest
+            (_, ')') -> Err Unbalanced
+            (_, ']') -> Err Unbalanced
+            (_, '}') -> Err Unbalanced
+            _ -> Ok stack
+
+    when bracketStack is
+        Ok [] -> Bool.true
+        _ -> Bool.false
+
+isBracket = \\c ->
+    set = Set.fromList ['{', '}', '(', ')', '[', ']']
+    Set.contains set c
+`}</code></pre>
+        
+
+            <h3><a name="matrix">Matrix</a></h3>
+            <a href="/problems/matrix">Other "Matrix" solutions.</a>
+            <pre><code class="language-roc">{`module [row, column]
+
+column : Str, U64 -> Result (List I64) _
+column = \\matrixStr, index ->
+    rowCount = List.len (Str.split matrixStr "\\n")
+    rowIndices = List.range { start: At 1, end: At rowCount }
+    theRows = List.keepOks rowIndices \\idx -> row matrixStr idx
+
+    walkRows : List I64, List I64 -> List I64
+    walkRows = \\col, theRow ->
+        int = List.get theRow (index - 1)
+        when int is
+            Ok x -> List.append col x
+            Err _ -> col
+
+    colValues = List.walk theRows [] walkRows
+
+    Ok colValues
+
+row : Str, U64 -> Result (List I64) _
+row = \\matrixStr, index ->
+    theRow =
+        matrixStr
+        |> Str.split "\\n"
+        |> List.get (index - 1)
+    Result.map theRow \\rowStr ->
+        rowStr
+        |> Str.split " "
+        |> List.keepOks Str.toI64
 `}</code></pre>
         
 

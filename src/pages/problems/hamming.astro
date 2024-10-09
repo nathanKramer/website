@@ -12,7 +12,7 @@ import Layout from "../../layouts/Layout.astro";
     <ul>
       <li><a href="/exercism.html">Index</a></li>
     </ul>
-    <ul><li><a href="#ocaml">Ocaml</a></li><li><a href="#elm">Elm</a></li></ul>
+    <ul><li><a href="#ocaml">Ocaml</a></li><li><a href="#elm">Elm</a></li><li><a href="#roc">Roc</a></li></ul>
     </div>
     <div class="main md:ml-[300px] px-2">
     
@@ -48,6 +48,25 @@ calculateDistance left right =
     List.map2 Tuple.pair (String.toList left) (String.toList right)
         |> List.filter (\\( a, b ) -> a /= b)
         |> List.length
+`}</code></pre>
+        
+
+            <h3><a name="roc">Roc</a></h3>
+            <a href="/languages/roc">Other Roc solutions.</a>
+            <pre><code class="language-roc">{`module [distance]
+
+distance : Str, Str -> Result U64 _
+distance = \\strand1, strand2 ->
+    list1 = Str.toUtf8 strand1
+    list2 = Str.toUtf8 strand2
+
+    if List.len list1 != List.len list2 then
+        Err InvalidInput
+        else
+
+    List.map2 list1 list2 Pair
+    |> List.countIf \\Pair s1 s2 -> s1 != s2
+    |> Ok
 `}</code></pre>
         
     </div>
