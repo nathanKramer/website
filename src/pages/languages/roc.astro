@@ -12,7 +12,7 @@ import Layout from "../../layouts/Layout.astro";
     <ul>
       <li><a href="/exercism.html">Index</a></li>
     </ul>
-    <ul><li><a href="#accumulate">Accumulate</a></li><li><a href="#allergies">Allergies</a></li><li><a href="#anagram">Anagram</a></li><li><a href="#armstrong-numbers">Armstrong Numbers</a></li><li><a href="#atbash-cipher">Atbash Cipher</a></li><li><a href="#binary">Binary</a></li><li><a href="#binary-search">Binary Search</a></li><li><a href="#bob">Bob</a></li><li><a href="#clock">Clock</a></li><li><a href="#collatz-conjecture">Collatz Conjecture</a></li><li><a href="#complex-numbers">Complex Numbers</a></li><li><a href="#darts">Darts</a></li><li><a href="#diamond">Diamond</a></li><li><a href="#difference-of-squares">Difference Of Squares</a></li><li><a href="#etl">Etl</a></li><li><a href="#grains">Grains</a></li><li><a href="#hamming">Hamming</a></li><li><a href="#hello-world">Hello World</a></li><li><a href="#hexadecimal">Hexadecimal</a></li><li><a href="#high-scores">High Scores</a></li><li><a href="#isbn-verifier">Isbn Verifier</a></li><li><a href="#isogram">Isogram</a></li><li><a href="#kindergarten-garden">Kindergarten Garden</a></li><li><a href="#leap">Leap</a></li><li><a href="#matching-brackets">Matching Brackets</a></li><li><a href="#matrix">Matrix</a></li><li><a href="#micro-blog">Micro Blog</a></li><li><a href="#nucleotide-count">Nucleotide Count</a></li><li><a href="#octal">Octal</a></li><li><a href="#pangram">Pangram</a></li><li><a href="#protein-translation">Protein Translation</a></li><li><a href="#proverb">Proverb</a></li><li><a href="#raindrops">Raindrops</a></li><li><a href="#resistor-color">Resistor Color</a></li><li><a href="#resistor-color-duo">Resistor Color Duo</a></li><li><a href="#reverse-string">Reverse String</a></li><li><a href="#rna-transcription">Rna Transcription</a></li><li><a href="#robot-simulator">Robot Simulator</a></li><li><a href="#roman-numerals">Roman Numerals</a></li><li><a href="#scrabble-score">Scrabble Score</a></li><li><a href="#secret-handshake">Secret Handshake</a></li><li><a href="#series">Series</a></li><li><a href="#space-age">Space Age</a></li><li><a href="#strain">Strain</a></li><li><a href="#sublist">Sublist</a></li><li><a href="#sum-of-multiples">Sum Of Multiples</a></li><li><a href="#triangle">Triangle</a></li><li><a href="#two-fer">Two Fer</a></li><li><a href="#word-count">Word Count</a></li></ul>
+    <ul><li><a href="#accumulate">Accumulate</a></li><li><a href="#allergies">Allergies</a></li><li><a href="#anagram">Anagram</a></li><li><a href="#armstrong-numbers">Armstrong Numbers</a></li><li><a href="#atbash-cipher">Atbash Cipher</a></li><li><a href="#binary">Binary</a></li><li><a href="#binary-search">Binary Search</a></li><li><a href="#bob">Bob</a></li><li><a href="#clock">Clock</a></li><li><a href="#collatz-conjecture">Collatz Conjecture</a></li><li><a href="#complex-numbers">Complex Numbers</a></li><li><a href="#crypto-square">Crypto Square</a></li><li><a href="#darts">Darts</a></li><li><a href="#diamond">Diamond</a></li><li><a href="#difference-of-squares">Difference Of Squares</a></li><li><a href="#etl">Etl</a></li><li><a href="#grains">Grains</a></li><li><a href="#hamming">Hamming</a></li><li><a href="#hello-world">Hello World</a></li><li><a href="#hexadecimal">Hexadecimal</a></li><li><a href="#high-scores">High Scores</a></li><li><a href="#isbn-verifier">Isbn Verifier</a></li><li><a href="#isogram">Isogram</a></li><li><a href="#kindergarten-garden">Kindergarten Garden</a></li><li><a href="#leap">Leap</a></li><li><a href="#matching-brackets">Matching Brackets</a></li><li><a href="#matrix">Matrix</a></li><li><a href="#micro-blog">Micro Blog</a></li><li><a href="#nth-prime">Nth Prime</a></li><li><a href="#nucleotide-count">Nucleotide Count</a></li><li><a href="#octal">Octal</a></li><li><a href="#pangram">Pangram</a></li><li><a href="#protein-translation">Protein Translation</a></li><li><a href="#proverb">Proverb</a></li><li><a href="#pythagorean-triplet">Pythagorean Triplet</a></li><li><a href="#raindrops">Raindrops</a></li><li><a href="#resistor-color">Resistor Color</a></li><li><a href="#resistor-color-duo">Resistor Color Duo</a></li><li><a href="#reverse-string">Reverse String</a></li><li><a href="#rna-transcription">Rna Transcription</a></li><li><a href="#robot-simulator">Robot Simulator</a></li><li><a href="#roman-numerals">Roman Numerals</a></li><li><a href="#rotational-cipher">Rotational Cipher</a></li><li><a href="#scrabble-score">Scrabble Score</a></li><li><a href="#secret-handshake">Secret Handshake</a></li><li><a href="#series">Series</a></li><li><a href="#space-age">Space Age</a></li><li><a href="#strain">Strain</a></li><li><a href="#sublist">Sublist</a></li><li><a href="#sum-of-multiples">Sum Of Multiples</a></li><li><a href="#triangle">Triangle</a></li><li><a href="#two-fer">Two Fer</a></li><li><a href="#word-count">Word Count</a></li></ul>
     </div>
     <div class="main md:ml-[300px] px-2">
     
@@ -404,6 +404,58 @@ exp : Complex -> Complex
 exp = \\{ re: a, im: b } ->
     ea = Num.e |> Num.pow a
     { re: ea * Num.cos b, im: ea * Num.sin b }
+`}</code></pre>
+        
+
+            <h3><a name="crypto-square">Crypto Square</a></h3>
+            <a href="/problems/crypto-square">Other "Crypto Square" solutions.</a>
+            <pre><code class="language-roc">{`module [ciphertext]
+
+ciphertext : Str -> Result Str _
+ciphertext = \\text ->
+    chars =
+        text
+        |> Str.toUtf8
+        |> List.map \\c -> if c >= 'A' && c <= 'Z' then c + 32 else c
+        |> List.keepIf \\c -> (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9')
+
+    (_, colCount) = findRectangle (List.len chars)
+
+    rows = List.chunksOf chars colCount
+
+    cols = List.range { start: At 0, end: Before colCount }
+
+    encodedChars = List.map cols \\colIdx ->
+        List.map rows \\row ->
+            row
+            |> List.get colIdx
+            |> Result.withDefault ' '
+
+    words =
+        List.intersperse encodedChars [' ']
+        |> List.join
+
+    Str.fromUtf8 words
+
+findRectangle = \\strLength ->
+    candidateC =
+        strLength
+        |> Num.toF32
+        |> Num.sqrt
+        |> Num.ceiling
+
+    loop = \\c ->
+        r = Num.ceiling (Num.toFrac strLength / Num.toFrac c)
+        if c >= r && c - r <= 1 then
+            (r, c)
+        else
+            loop (c + 1)
+
+    loop candidateC
+
+expect
+    result = findRectangle 54
+    result == (7, 8)
 `}</code></pre>
         
 
@@ -828,6 +880,41 @@ truncate = \\input ->
 `}</code></pre>
         
 
+            <h3><a name="nth-prime">Nth Prime</a></h3>
+            <a href="/problems/nth-prime">Other "Nth Prime" solutions.</a>
+            <pre><code class="language-roc">{`module [prime]
+
+prime : U64 -> Result U64 _
+prime = \\number ->
+    loop = \\primes, current ->
+        next = if current == 2 then 3 else current + 2
+        if List.len primes == number then
+            List.last primes
+        else if isPrime current then
+            List.append primes current
+            |>
+            loop next
+        else
+            loop primes next
+
+    loop [] 2
+
+isPrime : U64 -> Bool
+isPrime = \\number ->
+    if number < 2 then
+        Bool.false
+    else if number == 2 then
+        Bool.true
+    else if number % 2 == 0 then
+        Bool.false
+    else
+        top = Num.sqrt (Num.toF32 number) |> Num.floor
+        toCheck = List.range { start: At 3, end: At top, step: 2 }
+        anyDivisible = List.any toCheck \\el -> number % el == 0
+        !anyDivisible
+`}</code></pre>
+        
+
             <h3><a name="nucleotide-count">Nucleotide Count</a></h3>
             <a href="/problems/nucleotide-count">Other "Nucleotide Count" solutions.</a>
             <pre><code class="language-roc">{`module [nucleotideCounts]
@@ -983,6 +1070,30 @@ recite = \\strings ->
             proverb
 
     Str.joinWith (loop 0 []) "\\n"
+`}</code></pre>
+        
+
+            <h3><a name="pythagorean-triplet">Pythagorean Triplet</a></h3>
+            <a href="/problems/pythagorean-triplet">Other "Pythagorean Triplet" solutions.</a>
+            <pre><code class="language-roc">{`module [tripletsWithSum]
+
+Triplet : (U64, U64, U64)
+
+tripletsWithSum : U64 -> Set Triplet
+tripletsWithSum = \\n ->
+    possibleAValues = List.range { start: At 1, end: At (n // 3) }
+    possibleAValues
+    |> List.walk (Set.empty {}) \\triplets, a ->
+        # Calculate values of B and C.
+        # I asked Claude how to do this because I was stuck :/
+        b = (n * (n - 2 * a)) // (2 * (n - a))
+        c = n - a - b
+
+        # Check if it's a valid Pythagorean triplet
+        if a * a + b * b == c * c && a < b && b < c then
+            Set.insert triplets (a, b, c)
+        else
+            triplets
 `}</code></pre>
         
 
@@ -1196,6 +1307,29 @@ roman = \\number ->
 
     Ok resultString
 
+`}</code></pre>
+        
+
+            <h3><a name="rotational-cipher">Rotational Cipher</a></h3>
+            <a href="/problems/rotational-cipher">Other "Rotational Cipher" solutions.</a>
+            <pre><code class="language-roc">{`module [rotate]
+
+rotate : Str, U8 -> Str
+rotate = \\text, shiftKey ->
+    text
+    |> Str.toUtf8
+    |> List.map \\c -> rotateChar c shiftKey
+    |> Str.fromUtf8
+    |> Result.withDefault ""
+
+rotateChar : U8, U8 -> U8
+rotateChar = \\char, shiftKey ->
+    if char >= 'A' && char <= 'Z' then
+        (char - 'A' + shiftKey) % 26 + 'A'
+    else if char >= 'a' && char <= 'z' then
+        (char - 'a' + shiftKey) % 26 + 'a'
+    else
+        char
 `}</code></pre>
         
 

@@ -12,10 +12,31 @@ import Layout from "../../layouts/Layout.astro";
     <ul>
       <li><a href="/exercism.html">Index</a></li>
     </ul>
-    <ul><li><a href="#binary-search-tree">Binary Search Tree</a></li><li><a href="#hello-world">Hello World</a></li><li><a href="#raindrops">Raindrops</a></li><li><a href="#run-length-encoding">Run Length Encoding</a></li><li><a href="#something">Something</a></li><li><a href="#two-fer">Two Fer</a></li></ul>
+    <ul><li><a href="#binary-search">Binary Search</a></li><li><a href="#binary-search-tree">Binary Search Tree</a></li><li><a href="#hello-world">Hello World</a></li><li><a href="#pangram">Pangram</a></li><li><a href="#raindrops">Raindrops</a></li><li><a href="#run-length-encoding">Run Length Encoding</a></li><li><a href="#something">Something</a></li><li><a href="#two-fer">Two Fer</a></li></ul>
     </div>
     <div class="main md:ml-[300px] px-2">
     
+            <h3><a name="binary-search">Binary Search</a></h3>
+            <a href="/problems/binary-search">Other "Binary Search" solutions.</a>
+            <pre><code class="language-python">{`from typing import List
+
+def find(search_list: List[int], value: int) -> int:
+    if len(search_list) == 0:
+        raise ValueError("value not in array")
+
+    index = len(search_list) // 2
+
+    middle_item = search_list[index]
+
+    if middle_item > value:
+        return find(search_list[0:index], value)
+    elif middle_item < value:
+        return index + 1 + find(search_list[index + 1:], value)
+
+    return index
+`}</code></pre>
+        
+
             <h3><a name="binary-search-tree">Binary Search Tree</a></h3>
             <a href="/problems/binary-search-tree">Other "Binary Search Tree" solutions.</a>
             <pre><code class="language-python">{`def push_node(tree_node, datum):
@@ -72,6 +93,15 @@ class BinarySearchTree:
             <a href="/problems/hello-world">Other "Hello World" solutions.</a>
             <pre><code class="language-python">{`def hello():
     return "Hello, World!"
+`}</code></pre>
+        
+
+            <h3><a name="pangram">Pangram</a></h3>
+            <a href="/problems/pangram">Other "Pangram" solutions.</a>
+            <pre><code class="language-python">{`import string
+
+def is_pangram(sentence: str):
+    return set(sentence.lower()) >= set(string.ascii_lowercase)
 `}</code></pre>
         
 

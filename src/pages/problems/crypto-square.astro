@@ -1,0 +1,81 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Crypto Square">
+<link rel="stylesheet" href="/css/prism.css" />
+<link rel="stylesheet" href="/css/style.css" />
+    <div class="side-bar hidden md:block">
+    <h2>Crypto Square</h2>
+    <p>Solutions to crypto-square in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#roc">Roc</a></li></ul>
+    </div>
+    <div class="main md:ml-[300px] px-2">
+    
+            <h3><a name="roc">Roc</a></h3>
+            <a href="/languages/roc">Other Roc solutions.</a>
+            <pre><code class="language-roc">{`module [ciphertext]
+
+ciphertext : Str -> Result Str _
+ciphertext = \\text ->
+    chars =
+        text
+        |> Str.toUtf8
+        |> List.map \\c -> if c >= 'A' && c <= 'Z' then c + 32 else c
+        |> List.keepIf \\c -> (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9')
+
+    (_, colCount) = findRectangle (List.len chars)
+
+    rows = List.chunksOf chars colCount
+
+    cols = List.range { start: At 0, end: Before colCount }
+
+    encodedChars = List.map cols \\colIdx ->
+        List.map rows \\row ->
+            row
+            |> List.get colIdx
+            |> Result.withDefault ' '
+
+    words =
+        List.intersperse encodedChars [' ']
+        |> List.join
+
+    Str.fromUtf8 words
+
+findRectangle = \\strLength ->
+    candidateC =
+        strLength
+        |> Num.toF32
+        |> Num.sqrt
+        |> Num.ceiling
+
+    loop = \\c ->
+        r = Num.ceiling (Num.toFrac strLength / Num.toFrac c)
+        if c >= r && c - r <= 1 then
+            (r, c)
+        else
+            loop (c + 1)
+
+    loop candidateC
+
+expect
+    result = findRectangle 54
+    result == (7, 8)
+`}</code></pre>
+        
+    </div>
+
+    <script src="/js/prism.js" isinline></script>
+    <script>
+        Prism.languages['roc'] = Prism.languages['elm']
+    </script>
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

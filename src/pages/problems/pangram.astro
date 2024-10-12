@@ -12,7 +12,7 @@ import Layout from "../../layouts/Layout.astro";
     <ul>
       <li><a href="/exercism.html">Index</a></li>
     </ul>
-    <ul><li><a href="#nim">Nim</a></li><li><a href="#elm">Elm</a></li><li><a href="#haskell">Haskell</a></li><li><a href="#roc">Roc</a></li></ul>
+    <ul><li><a href="#nim">Nim</a></li><li><a href="#python">Python</a></li><li><a href="#elm">Elm</a></li><li><a href="#haskell">Haskell</a></li><li><a href="#roc">Roc</a></li></ul>
     </div>
     <div class="main md:ml-[300px] px-2">
     
@@ -22,6 +22,15 @@ import Layout from "../../layouts/Layout.astro";
 
 func isPangram*(phrase: string): bool =
   {'a'..'z'}.allIt it.in(phrase.toLower)
+`}</code></pre>
+        
+
+            <h3><a name="python">Python</a></h3>
+            <a href="/languages/python">Other Python solutions.</a>
+            <pre><code class="language-python">{`import string
+
+def is_pangram(sentence: str):
+    return set(sentence.lower()) >= set(string.ascii_lowercase)
 `}</code></pre>
         
 

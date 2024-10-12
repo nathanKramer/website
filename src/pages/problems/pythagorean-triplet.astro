@@ -1,0 +1,53 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Pythagorean Triplet">
+<link rel="stylesheet" href="/css/prism.css" />
+<link rel="stylesheet" href="/css/style.css" />
+    <div class="side-bar hidden md:block">
+    <h2>Pythagorean Triplet</h2>
+    <p>Solutions to pythagorean-triplet in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#roc">Roc</a></li></ul>
+    </div>
+    <div class="main md:ml-[300px] px-2">
+    
+            <h3><a name="roc">Roc</a></h3>
+            <a href="/languages/roc">Other Roc solutions.</a>
+            <pre><code class="language-roc">{`module [tripletsWithSum]
+
+Triplet : (U64, U64, U64)
+
+tripletsWithSum : U64 -> Set Triplet
+tripletsWithSum = \\n ->
+    possibleAValues = List.range { start: At 1, end: At (n // 3) }
+    possibleAValues
+    |> List.walk (Set.empty {}) \\triplets, a ->
+        # Calculate values of B and C.
+        # I asked Claude how to do this because I was stuck :/
+        b = (n * (n - 2 * a)) // (2 * (n - a))
+        c = n - a - b
+
+        # Check if it's a valid Pythagorean triplet
+        if a * a + b * b == c * c && a < b && b < c then
+            Set.insert triplets (a, b, c)
+        else
+            triplets
+`}</code></pre>
+        
+    </div>
+
+    <script src="/js/prism.js" isinline></script>
+    <script>
+        Prism.languages['roc'] = Prism.languages['elm']
+    </script>
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>
