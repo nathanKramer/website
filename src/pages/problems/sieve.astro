@@ -1,0 +1,64 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Sieve">
+<link rel="stylesheet" href="/css/prism.css" />
+<link rel="stylesheet" href="/css/style.css" />
+    <div class="side-bar hidden md:block">
+    <h2>Sieve</h2>
+    <p>Solutions to sieve in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#roc">Roc</a></li></ul>
+    </div>
+    <div class="main md:ml-[300px] px-2">
+    
+            <h3><a name="roc">Roc</a></h3>
+            <a href="/languages/roc">Other Roc solutions.</a>
+            <pre><code class="language-roc">{`module [primes]
+
+primes : U64 -> List U64
+primes = \\limit ->
+    if limit < 2 then
+        []
+        else
+
+    loop = \\primeValues, nonPrimes, current ->
+        if current == limit then
+            if !(Set.contains nonPrimes current) then
+                List.append primeValues current
+            else
+                primeValues
+        else if Set.contains nonPrimes current then
+            loop primeValues nonPrimes (current + 1)
+        else
+            newPrimes = List.append primeValues current
+            newNonPrimes =
+                nonPrimes
+                |> Set.toList
+                |> List.concat (multiplesUpTo current limit)
+                |> Set.fromList
+            loop newPrimes newNonPrimes (current + 1)
+
+    loop [2] (Set.fromList (multiplesUpTo 2 limit)) 2
+
+multiplesUpTo : U64, U64 -> List U64
+multiplesUpTo = \\current, limit ->
+    List.range { start: At current, end: At limit, step: current }
+`}</code></pre>
+        
+    </div>
+
+    <script src="/js/prism.js" isinline></script>
+    <script>
+        Prism.languages['roc'] = Prism.languages['elm']
+    </script>
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>
