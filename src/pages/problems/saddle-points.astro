@@ -1,0 +1,78 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Saddle Points">
+<link rel="stylesheet" href="/css/prism.css" />
+<link rel="stylesheet" href="/css/style.css" />
+    <div class="side-bar hidden md:block">
+    <h2>Saddle Points</h2>
+    <p>Solutions to saddle-points in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#roc">Roc</a></li></ul>
+    </div>
+    <div class="main md:ml-[300px] px-2">
+    
+            <h3><a name="roc">Roc</a></h3>
+            <a href="/languages/roc">Other Roc solutions.</a>
+            <pre><code class="language-roc">{`module [saddlePoints]
+
+Forest : List (List U8)
+Position : { row : U64, column : U64 }
+
+saddlePoints : Forest -> Set Position
+saddlePoints = \\treeHeights ->
+    tallestInRows = List.walkWithIndex treeHeights [] \\tallestTrees, row, rowIndex ->
+        tallest = List.max row |> Result.withDefault 0
+        tallestPositionsInRow = List.walkWithIndex row [] \\tallestTreesInRow, treeHeight, columnIndex ->
+            if treeHeight == tallest then
+                List.append tallestTreesInRow ({ row: rowIndex + 1, column: columnIndex + 1 })
+            else
+                tallestTreesInRow
+        List.concat tallestTrees tallestPositionsInRow
+    tallestInRowsSet = Set.fromList tallestInRows
+
+    columnCount =
+        treeHeights
+        |> List.first
+        |> Result.map \\row -> List.len row
+        |> Result.withDefault 0
+
+    columns = List.range { start: At 0, end: Before columnCount }
+
+    shortestInColumns =
+        List.joinMap columns \\columnIndex ->
+            column =
+                treeHeights
+                |>
+                List.mapWithIndex \\row, rowIdx ->
+                    List.get row columnIndex
+                    |> Result.map \\treeHeight -> { treeHeight, rowIdx }
+                |> List.keepOks identity
+            shortest = List.map column .treeHeight |> List.min |> Result.withDefault 0
+
+            column
+            |> List.keepIf \\{ treeHeight } -> treeHeight == shortest
+            |> List.map \\{ rowIdx } -> { row: rowIdx + 1, column: columnIndex + 1 }
+
+    shortestInColumnsSet = Set.fromList shortestInColumns
+    Set.intersection tallestInRowsSet shortestInColumnsSet
+
+identity = \\id -> id
+`}</code></pre>
+        
+    </div>
+
+    <script src="/js/prism.js" isinline></script>
+    <script>
+        Prism.languages['roc'] = Prism.languages['elm']
+    </script>
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>
