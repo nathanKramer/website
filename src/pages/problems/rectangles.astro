@@ -1,0 +1,105 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Rectangles">
+<link rel="stylesheet" href="/css/prism.css" />
+<link rel="stylesheet" href="/css/style.css" />
+    <div class="side-bar hidden md:block">
+    <h2>Rectangles</h2>
+    <p>Solutions to rectangles in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#roc">Roc</a></li></ul>
+    </div>
+    <div class="main md:ml-[300px] px-2">
+    
+            <h3><a name="roc">Roc</a></h3>
+            <a href="/languages/roc">Other Roc solutions.</a>
+            <pre><code class="language-roc">{`module [rectangles]
+
+# Heavy inspiration from Ageron's solution.
+
+rectangles : Str -> U64
+rectangles = \\diagram ->
+    grid =
+        Str.split diagram "\\n"
+        |> List.map Str.toUtf8
+
+    height = List.len grid
+
+    List.mapWithIndex grid \\row, y1 ->
+        List.mapWithIndex row \\_, x1 ->
+            y2s = List.range { start: After y1, end: Before height }
+            List.map y2s \\y2 ->
+                x2s = List.range { start: After x1, end: Before (List.len row) }
+                List.map x2s \\x2 ->
+                    if isRectangle grid (x1, y1) (x2, y2) then
+                        1
+                    else
+                        0
+                |> List.sum
+            |> List.sum
+        |> List.sum
+    |> List.sum
+
+isRectangle : List (List U8), (U64, U64), (U64, U64) -> Bool
+isRectangle = \\grid, (x1, y1), (x2, y2) ->
+    getGridValue = \\x, y ->
+        row = List.get? grid y
+        value = List.get row x
+        value
+
+    hasTopLeftCorner = getGridValue x1 y1 == Ok '+'
+    hasBottomLeftCorner = getGridValue x1 y2 == Ok '+'
+    hasTopRightCorner = getGridValue x2 y1 == Ok '+'
+    hasBottomRightCorner = getGridValue x2 y2 == Ok '+'
+
+    hasTopHorizontalEdge =
+        xs = List.range { start: At x1, end: At x2 }
+        List.all xs \\x ->
+            getGridValue x y1 == Ok '+' || getGridValue x y1 == Ok '-'
+
+    hasBottomHorizontalEdge =
+        xs = List.range { start: At x1, end: At x2 }
+        List.all xs \\x ->
+            getGridValue x y2 == Ok '+' || getGridValue x y2 == Ok '-'
+
+    hasLeftVerticalEdge =
+        ys = List.range { start: At y1, end: At y2 }
+        List.all ys \\y ->
+            getGridValue x1 y == Ok '+' || getGridValue x1 y == Ok '|'
+
+    hasRightVerticalEdge =
+        ys = List.range { start: At y1, end: At y2 }
+        List.all ys \\y ->
+            getGridValue x2 y == Ok '+' || getGridValue x2 y == Ok '|'
+
+    List.all
+        [
+            hasTopLeftCorner,
+            hasBottomLeftCorner,
+            hasTopRightCorner,
+            hasBottomRightCorner,
+            hasTopHorizontalEdge,
+            hasBottomHorizontalEdge,
+            hasLeftVerticalEdge,
+            hasRightVerticalEdge,
+        ]
+        \\identity -> identity
+`}</code></pre>
+        
+    </div>
+
+    <script src="/js/prism.js" isinline></script>
+    <script>
+        Prism.languages['roc'] = Prism.languages['elm']
+    </script>
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>
