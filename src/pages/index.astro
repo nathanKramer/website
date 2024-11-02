@@ -4,102 +4,106 @@ import banner from "../../public/banner-tight.jpg";
 ---
 
 <Layout title="Nathan Kramer">
-  <img class="hidden md:block" src={banner} />
-  <main>
-    <article>
-      <h1>Nathan Kramer</h1>
+    <img class="hidden md:block" src={banner.src} />
+    <main>
+        <article>
+            <h1>Nathan Kramer</h1>
 
-      <img src="./face.jpg" class="profile-photo" />
+            <img src="./face.jpg" class="profile-photo" />
 
-      <br />
-      <div>
-        <p>I'm a software engineer and hobbiest musician from New Zealand.</p>
-        <p>
-          I might put some posts on this website at some point, but for now here
-          is my <a href="/exercism">exercism portfolio</a>.
-        </p>
-      </div>
+            <br />
+            <div>
+                <p>
+                    I'm a software engineer and hobbiest musician from New
+                    Zealand.
+                </p>
+                <p>
+                    I might put some posts on this website at some point, but
+                    for now here is my <a href="/exercism">exercism portfolio</a
+                    >.
+                </p>
+            </div>
 
-      <h2>Interests</h2>
+            <h2>Interests</h2>
 
-      <ul>
-        <li>music</li>
-        <li>consciousness</li>
-        <li>epistemology</li>
-        <li>writing & reading</li>
-        <li>humane technology</li>
-      </ul>
-    </article>
-  </main>
+            <ul>
+                <li>music</li>
+                <li>consciousness</li>
+                <li>epistemology</li>
+                <li>writing & reading</li>
+                <li>humane technology</li>
+            </ul>
+        </article>
+    </main>
 </Layout>
 
 <style>
-  ul {
-    list-style: none;
-    padding: 0;
-    margin: 20px 0;
-  }
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 20px 0;
+    }
 
-  ul li {
-    padding-left: 20px;
-    position: relative;
-  }
+    ul li {
+        padding-left: 20px;
+        position: relative;
+    }
 
-  ul li::before {
-    content: "•";
-    position: absolute;
-    left: 0;
-    top: 0;
-  }
+    ul li::before {
+        content: "•";
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
 
-  a {
-    color: #f15125;
-  }
+    a {
+        color: #f15125;
+    }
 
-  .profile-photo {
-    width: 150px;
-    border-radius: 50%;
-  }
+    .profile-photo {
+        width: 150px;
+        border-radius: 50%;
+    }
 
-  main {
-    margin: auto;
-    padding: 1.5rem;
-    max-width: 90ch;
-    color: #aaaaaa;
-  }
+    main {
+        margin: auto;
+        padding: 1.5rem;
+        max-width: 90ch;
+        color: #aaaaaa;
+    }
 
-  main article {
-    font-family: "Open Sans", sans-serif;
-    font-size: 18px;
-    line-height: 1.5;
-  }
+    main article {
+        font-family: "Open Sans", sans-serif;
+        font-size: 18px;
+        line-height: 1.5;
+    }
 
-  main article h1,
-  main article h2,
-  main article h3 {
-    font-weight: bold;
-    margin-top: 20px;
-    margin-bottom: 10px;
-  }
+    main article h1,
+    main article h2,
+    main article h3 {
+        font-weight: bold;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
 
-  main article h1 {
-    color: #eeeeee;
-    font-size: 36px;
-  }
+    main article h1 {
+        color: #eeeeee;
+        font-size: 36px;
+    }
 
-  main article h2 {
-    color: #eeeeee;
-    font-size: 20px;
-  }
+    main article h2 {
+        color: #eeeeee;
+        font-size: 20px;
+    }
 
-  main article h3 {
-    color: #eeeeee;
-    font-size: 24px;
-  }
+    main article h3 {
+        color: #eeeeee;
+        font-size: 24px;
+    }
 
-  h1 {
-    font-size: 3rem;
-    font-weight: 800;
-    margin: 0;
-  }
+    h1 {
+        font-size: 3rem;
+        font-weight: 800;
+        margin: 0;
+    }
 </style>
