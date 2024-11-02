@@ -12,23 +12,10 @@ import Layout from "../../layouts/Layout.astro";
     <ul>
       <li><a href="/exercism.html">Index</a></li>
     </ul>
-    <ul><li><a href="#ocaml">Ocaml</a></li><li><a href="#elm">Elm</a></li><li><a href="#roc">Roc</a></li></ul>
+    <ul><li><a href="#elm">Elm</a></li><li><a href="#ocaml">Ocaml</a></li><li><a href="#roc">Roc</a></li></ul>
     </div>
     <div class="main md:ml-[300px] px-2">
     
-            <h3><a name="ocaml">Ocaml</a></h3>
-            <a href="/languages/ocaml">Other Ocaml solutions.</a>
-            <pre><code class="language-ocaml">{`open Base
-
-type nucleotide = A | C | G | T
-
-let hamming_distance a b =
-  match List.zip a b with
-  | [] -> 0
-  | [ ([ (x :: xs) ] :: rest) ] -> 1 + hamming_distance rest
-`}</code></pre>
-        
-
             <h3><a name="elm">Elm</a></h3>
             <a href="/languages/elm">Other Elm solutions.</a>
             <pre><code class="language-elm">{`module Hamming exposing (distance)
@@ -48,6 +35,19 @@ calculateDistance left right =
     List.map2 Tuple.pair (String.toList left) (String.toList right)
         |> List.filter (\\( a, b ) -> a /= b)
         |> List.length
+`}</code></pre>
+        
+
+            <h3><a name="ocaml">Ocaml</a></h3>
+            <a href="/languages/ocaml">Other Ocaml solutions.</a>
+            <pre><code class="language-ocaml">{`open Base
+
+type nucleotide = A | C | G | T
+
+let hamming_distance a b =
+  match List.zip a b with
+  | [] -> 0
+  | [ ([ (x :: xs) ] :: rest) ] -> 1 + hamming_distance rest
 `}</code></pre>
         
 

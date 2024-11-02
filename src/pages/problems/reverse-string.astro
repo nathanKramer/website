@@ -12,23 +12,10 @@ import Layout from "../../layouts/Layout.astro";
     <ul>
       <li><a href="/exercism.html">Index</a></li>
     </ul>
-    <ul><li><a href="#nim">Nim</a></li><li><a href="#clojure">Clojure</a></li><li><a href="#rust">Rust</a></li><li><a href="#roc">Roc</a></li></ul>
+    <ul><li><a href="#clojure">Clojure</a></li><li><a href="#nim">Nim</a></li><li><a href="#roc">Roc</a></li><li><a href="#rust">Rust</a></li></ul>
     </div>
     <div class="main md:ml-[300px] px-2">
     
-            <h3><a name="nim">Nim</a></h3>
-            <a href="/languages/nim">Other Nim solutions.</a>
-            <pre><code class="language-nim">{`proc reverse*(s: string): string =
-  if s == "":
-    return s
-
-  var aux = s
-  for i in 0 .. high(s) div 2:
-    swap(aux[i], aux[high(aux) - i])
-  aux
-`}</code></pre>
-        
-
             <h3><a name="clojure">Clojure</a></h3>
             <a href="/languages/clojure">Other Clojure solutions.</a>
             <pre><code class="language-clojure">{`(ns reverse-string)
@@ -39,11 +26,16 @@ import Layout from "../../layouts/Layout.astro";
 `}</code></pre>
         
 
-            <h3><a name="rust">Rust</a></h3>
-            <a href="/languages/rust">Other Rust solutions.</a>
-            <pre><code class="language-rust">{`pub fn reverse(input: &str) -> String {
-    input.chars().rev().collect::<String>()
-}
+            <h3><a name="nim">Nim</a></h3>
+            <a href="/languages/nim">Other Nim solutions.</a>
+            <pre><code class="language-nim">{`proc reverse*(s: string): string =
+  if s == "":
+    return s
+
+  var aux = s
+  for i in 0 .. high(s) div 2:
+    swap(aux[i], aux[high(aux) - i])
+  aux
 `}</code></pre>
         
 
@@ -60,6 +52,14 @@ reverse = \\string ->
             chars |> List.reverse |> Str.joinWith ""
 
         Err _ -> ""
+`}</code></pre>
+        
+
+            <h3><a name="rust">Rust</a></h3>
+            <a href="/languages/rust">Other Rust solutions.</a>
+            <pre><code class="language-rust">{`pub fn reverse(input: &str) -> String {
+    input.chars().rev().collect::<String>()
+}
 `}</code></pre>
         
     </div>

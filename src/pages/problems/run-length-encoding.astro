@@ -12,39 +12,10 @@ import Layout from "../../layouts/Layout.astro";
     <ul>
       <li><a href="/exercism.html">Index</a></li>
     </ul>
-    <ul><li><a href="#python">Python</a></li><li><a href="#clojure">Clojure</a></li></ul>
+    <ul><li><a href="#clojure">Clojure</a></li><li><a href="#python">Python</a></li></ul>
     </div>
     <div class="main md:ml-[300px] px-2">
     
-            <h3><a name="python">Python</a></h3>
-            <a href="/languages/python">Other Python solutions.</a>
-            <pre><code class="language-python">{`from itertools import groupby
-
-
-def decode(string):
-    digits = ""
-    acc = ""
-    for c in string:
-        if not c.isdigit():
-            count = int(digits or 1)
-            digits = ""
-            acc += (c * count)
-        else:
-            digits += c
-    return acc
-
-
-def encode(string):
-    def encode_group(k, g):
-        count = len(list(g))
-        if count == 1:
-            return k
-        return f"{count}{k}"
-
-    return "".join([encode_group(k, g) for k, g in groupby(string)])
-`}</code></pre>
-        
-
             <h3><a name="clojure">Clojure</a></h3>
             <a href="/languages/clojure">Other Clojure solutions.</a>
             <pre><code class="language-clojure">{`(ns run-length-encoding)
@@ -73,6 +44,35 @@ def encode(string):
     (if encoded?
       decode
       cipher-text)))
+`}</code></pre>
+        
+
+            <h3><a name="python">Python</a></h3>
+            <a href="/languages/python">Other Python solutions.</a>
+            <pre><code class="language-python">{`from itertools import groupby
+
+
+def decode(string):
+    digits = ""
+    acc = ""
+    for c in string:
+        if not c.isdigit():
+            count = int(digits or 1)
+            digits = ""
+            acc += (c * count)
+        else:
+            digits += c
+    return acc
+
+
+def encode(string):
+    def encode_group(k, g):
+        count = len(list(g))
+        if count == 1:
+            return k
+        return f"{count}{k}"
+
+    return "".join([encode_group(k, g) for k, g in groupby(string)])
 `}</code></pre>
         
     </div>

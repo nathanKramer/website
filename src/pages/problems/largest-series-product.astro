@@ -1,0 +1,66 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Largest Series Product">
+<link rel="stylesheet" href="/css/prism.css" />
+<link rel="stylesheet" href="/css/style.css" />
+    <div class="side-bar hidden md:block">
+    <h2>Largest Series Product</h2>
+    <p>Solutions to largest-series-product in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#roc">Roc</a></li></ul>
+    </div>
+    <div class="main md:ml-[300px] px-2">
+    
+            <h3><a name="roc">Roc</a></h3>
+            <a href="/languages/roc">Other Roc solutions.</a>
+            <pre><code class="language-roc">{`module [largestProduct]
+
+largestProduct : Str, U64 -> Result U64 _
+largestProduct = \\digitsStr, span ->
+    digits = Str.toUtf8 digitsStr
+    if span > List.len digits then
+        Err InvalidSpanLength
+    else if List.any digits nonDigit then
+        Err InvalidDigit
+    else if span == 0 then
+        Ok 1 # Not sure why we would return 1 here but it's what the tests want so OK.
+        else
+
+    help = \\n, currentLargest ->
+        withoutFirstN = List.dropFirst digits n
+        nextSpan = List.takeFirst withoutFirstN span
+        spanDigits = List.map nextSpan toDigit
+
+        if List.len spanDigits < span then
+            currentLargest
+        else
+            product = List.walk spanDigits 1 \\p, digit ->
+                p * Num.toU64 digit
+            newLargest = if product > currentLargest then product else currentLargest
+
+            help (n + 1) newLargest
+
+    Ok (help 0 0)
+
+toDigit = \\c -> c - '0'
+
+nonDigit = \\c -> !(c >= '0' && c <= '9')
+`}</code></pre>
+        
+    </div>
+
+    <script src="/js/prism.js" isinline></script>
+    <script>
+        Prism.languages['roc'] = Prism.languages['elm']
+    </script>
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

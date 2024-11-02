@@ -12,35 +12,10 @@ import Layout from "../../layouts/Layout.astro";
     <ul>
       <li><a href="/exercism.html">Index</a></li>
     </ul>
-    <ul><li><a href="#ocaml">Ocaml</a></li><li><a href="#nim">Nim</a></li><li><a href="#rust">Rust</a></li><li><a href="#elm">Elm</a></li><li><a href="#haskell">Haskell</a></li><li><a href="#roc">Roc</a></li></ul>
+    <ul><li><a href="#elm">Elm</a></li><li><a href="#haskell">Haskell</a></li><li><a href="#nim">Nim</a></li><li><a href="#ocaml">Ocaml</a></li><li><a href="#roc">Roc</a></li><li><a href="#rust">Rust</a></li></ul>
     </div>
     <div class="main md:ml-[300px] px-2">
     
-            <h3><a name="ocaml">Ocaml</a></h3>
-            <a href="/languages/ocaml">Other Ocaml solutions.</a>
-            <pre><code class="language-ocaml">{`let leap_year year = 
-    year mod 4 = 0 && 
-        (year mod 100 <> 0 || year mod 400 = 0)
-`}</code></pre>
-        
-
-            <h3><a name="nim">Nim</a></h3>
-            <a href="/languages/nim">Other Nim solutions.</a>
-            <pre><code class="language-nim">{`func isLeapYear*(year: int): bool =
-  year mod 4 == 0 and (
-    year mod 100 != 0 or year mod 400 == 0
-  )
-`}</code></pre>
-        
-
-            <h3><a name="rust">Rust</a></h3>
-            <a href="/languages/rust">Other Rust solutions.</a>
-            <pre><code class="language-rust">{`pub fn is_leap_year(year: u64) -> bool {
-    return year % 400 == 0 || (year % 4 == 0 && year % 100 != 0);
-}
-`}</code></pre>
-        
-
             <h3><a name="elm">Elm</a></h3>
             <a href="/languages/elm">Other Elm solutions.</a>
             <pre><code class="language-elm">{`module Leap exposing (isLeapYear)
@@ -91,6 +66,23 @@ isLeapYear = isDivisibleBy 400 ||$ (isDivisibleBy 4 &&$ not . isDivisibleBy 100)
 `}</code></pre>
         
 
+            <h3><a name="nim">Nim</a></h3>
+            <a href="/languages/nim">Other Nim solutions.</a>
+            <pre><code class="language-nim">{`func isLeapYear*(year: int): bool =
+  year mod 4 == 0 and (
+    year mod 100 != 0 or year mod 400 == 0
+  )
+`}</code></pre>
+        
+
+            <h3><a name="ocaml">Ocaml</a></h3>
+            <a href="/languages/ocaml">Other Ocaml solutions.</a>
+            <pre><code class="language-ocaml">{`let leap_year year = 
+    year mod 4 = 0 && 
+        (year mod 100 <> 0 || year mod 400 = 0)
+`}</code></pre>
+        
+
             <h3><a name="roc">Roc</a></h3>
             <a href="/languages/roc">Other Roc solutions.</a>
             <pre><code class="language-roc">{`module [isLeapYear]
@@ -99,6 +91,14 @@ isLeapYear : I64 -> Bool
 isLeapYear = \\year ->
     year % 4 == 0 &&
     year % 100 != 0 || year % 400 == 0
+`}</code></pre>
+        
+
+            <h3><a name="rust">Rust</a></h3>
+            <a href="/languages/rust">Other Rust solutions.</a>
+            <pre><code class="language-rust">{`pub fn is_leap_year(year: u64) -> bool {
+    return year % 400 == 0 || (year % 4 == 0 && year % 100 != 0);
+}
 `}</code></pre>
         
     </div>

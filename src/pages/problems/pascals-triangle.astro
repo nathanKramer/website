@@ -1,0 +1,66 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Pascals Triangle">
+<link rel="stylesheet" href="/css/prism.css" />
+<link rel="stylesheet" href="/css/style.css" />
+    <div class="side-bar hidden md:block">
+    <h2>Pascals Triangle</h2>
+    <p>Solutions to pascals-triangle in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#roc">Roc</a></li></ul>
+    </div>
+    <div class="main md:ml-[300px] px-2">
+    
+            <h3><a name="roc">Roc</a></h3>
+            <a href="/languages/roc">Other Roc solutions.</a>
+            <pre><code class="language-roc">{`module [pascalsTriangle]
+
+pascalsTriangle : U64 -> List (List U64)
+pascalsTriangle = \\count ->
+    if count == 0 then
+        []
+    else if count == 1 then
+        [[1]]
+        else
+
+    help = \\currentRow, triangle ->
+
+        newRow =
+            List.range { start: At 0, end: At currentRow }
+            |> List.map \\idx ->
+                previousRow =
+                    List.get triangle (currentRow - 1)
+                    |> Result.withDefault []
+                leftSide =
+                    if idx == 0 then Ok 0 else List.get previousRow (idx - 1)
+
+                rightSide = List.get previousRow idx
+                leftSideValue = Result.withDefault leftSide 0
+                rightSideValue = Result.withDefault rightSide 0
+
+                leftSideValue + rightSideValue
+        newTriangle = List.append triangle newRow
+        if currentRow == count - 1 then
+            newTriangle
+        else
+            help (currentRow + 1) newTriangle
+    help 1 [[1]]
+`}</code></pre>
+        
+    </div>
+
+    <script src="/js/prism.js" isinline></script>
+    <script>
+        Prism.languages['roc'] = Prism.languages['elm']
+    </script>
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

@@ -12,10 +12,38 @@ import Layout from "../../layouts/Layout.astro";
     <ul>
       <li><a href="/exercism.html">Index</a></li>
     </ul>
-    <ul><li><a href="#elixir">Elixir</a></li><li><a href="#roc">Roc</a></li><li><a href="#c">C</a></li></ul>
+    <ul><li><a href="#c">C</a></li><li><a href="#elixir">Elixir</a></li><li><a href="#roc">Roc</a></li></ul>
     </div>
     <div class="main md:ml-[300px] px-2">
     
+            <h3><a name="c">C</a></h3>
+            <a href="/languages/c">Other C solutions.</a>
+            <pre><code class="language-c">{`#include "darts.h"
+#include <math.h>
+
+uint8_t score(coordinate_t coord)
+{
+   float hyp = sqrt(pow(coord.x, 2) + pow(coord.y, 2));
+   int score = 0;
+
+   if (hyp <= 1.0F)
+   {
+      score = 10;
+   }
+   else if (hyp <= 5.0F)
+   {
+      score = 5;
+   }
+   else if (hyp <= 10.0F)
+   {
+      score = 1;
+   }
+
+   return score;
+}
+`}</code></pre>
+        
+
             <h3><a name="elixir">Elixir</a></h3>
             <a href="/languages/elixir">Other Elixir solutions.</a>
             <pre><code class="language-elixir">{`defmodule Darts do
@@ -53,34 +81,6 @@ score = \\x, y ->
         _ if r <= 10 -> 1
         _ -> 0
 
-`}</code></pre>
-        
-
-            <h3><a name="c">C</a></h3>
-            <a href="/languages/c">Other C solutions.</a>
-            <pre><code class="language-c">{`#include "darts.h"
-#include <math.h>
-
-uint8_t score(coordinate_t coord)
-{
-   float hyp = sqrt(pow(coord.x, 2) + pow(coord.y, 2));
-   int score = 0;
-
-   if (hyp <= 1.0F)
-   {
-      score = 10;
-   }
-   else if (hyp <= 5.0F)
-   {
-      score = 5;
-   }
-   else if (hyp <= 10.0F)
-   {
-      score = 1;
-   }
-
-   return score;
-}
 `}</code></pre>
         
     </div>

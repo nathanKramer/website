@@ -12,52 +12,18 @@ import Layout from "../../layouts/Layout.astro";
     <ul>
       <li><a href="/exercism.html">Index</a></li>
     </ul>
-    <ul><li><a href="#ocaml">Ocaml</a></li><li><a href="#prolog">Prolog</a></li><li><a href="#racket">Racket</a></li><li><a href="#nim">Nim</a></li><li><a href="#python">Python</a></li><li><a href="#clojure">Clojure</a></li><li><a href="#elixir">Elixir</a></li><li><a href="#rust">Rust</a></li><li><a href="#elm">Elm</a></li><li><a href="#haskell">Haskell</a></li><li><a href="#roc">Roc</a></li><li><a href="#javascript">Javascript</a></li><li><a href="#c">C</a></li></ul>
+    <ul><li><a href="#c">C</a></li><li><a href="#clojure">Clojure</a></li><li><a href="#elixir">Elixir</a></li><li><a href="#elm">Elm</a></li><li><a href="#haskell">Haskell</a></li><li><a href="#javascript">Javascript</a></li><li><a href="#nim">Nim</a></li><li><a href="#ocaml">Ocaml</a></li><li><a href="#prolog">Prolog</a></li><li><a href="#python">Python</a></li><li><a href="#racket">Racket</a></li><li><a href="#roc">Roc</a></li><li><a href="#rust">Rust</a></li></ul>
     </div>
     <div class="main md:ml-[300px] px-2">
     
-            <h3><a name="ocaml">Ocaml</a></h3>
-            <a href="/languages/ocaml">Other Ocaml solutions.</a>
-            <pre><code class="language-ocaml">{`let hello = "Hello, World!"
-`}</code></pre>
-        
+            <h3><a name="c">C</a></h3>
+            <a href="/languages/c">Other C solutions.</a>
+            <pre><code class="language-c">{`#include "hello_world.h"
 
-            <h3><a name="prolog">Prolog</a></h3>
-            <a href="/languages/prolog">Other Prolog solutions.</a>
-            <pre><code class="language-prolog">{`% Please visit https://exercism.io/tracks/prolog/installation
-% for instructions on setting up prolog.
-% Visit https://exercism.io/tracks/prolog/tests
-% for help running the tests for prolog exercises.
-
-% Replace the goal below with
-% your implementation.
-
-hello_world('Hello World!').
-`}</code></pre>
-        
-
-            <h3><a name="racket">Racket</a></h3>
-            <a href="/languages/racket">Other Racket solutions.</a>
-            <pre><code class="language-racket">{`#lang racket
-
-(define (hello) "Hello, World!")
-
-
-(provide hello)
-`}</code></pre>
-        
-
-            <h3><a name="nim">Nim</a></h3>
-            <a href="/languages/nim">Other Nim solutions.</a>
-            <pre><code class="language-nim">{`proc hello*: string =
-  "Hello, World!"
-`}</code></pre>
-        
-
-            <h3><a name="python">Python</a></h3>
-            <a href="/languages/python">Other Python solutions.</a>
-            <pre><code class="language-python">{`def hello():
-    return "Hello, World!"
+const char *hello(void)
+{
+   return "Hello, World!";
+}
 `}</code></pre>
         
 
@@ -83,16 +49,6 @@ end
 `}</code></pre>
         
 
-            <h3><a name="rust">Rust</a></h3>
-            <a href="/languages/rust">Other Rust solutions.</a>
-            <pre><code class="language-rust">{`// The &'static here means the return type has a static lifetime.
-// This is a Rust feature that you don't need to worry about now.
-pub fn hello() -> &'static str {
-    "Hello, World!"
-}
-`}</code></pre>
-        
-
             <h3><a name="elm">Elm</a></h3>
             <a href="/languages/elm">Other Elm solutions.</a>
             <pre><code class="language-elm">{`module HelloWorld exposing (helloWorld)
@@ -115,15 +71,6 @@ hello = "Hello, World!"
 `}</code></pre>
         
 
-            <h3><a name="roc">Roc</a></h3>
-            <a href="/languages/roc">Other Roc solutions.</a>
-            <pre><code class="language-roc">{`module [hello]
-
-hello : Str
-hello = "Hello, World!"
-`}</code></pre>
-        
-
             <h3><a name="javascript">Javascript</a></h3>
             <a href="/languages/javascript">Other Javascript solutions.</a>
             <pre><code class="language-javascript">{`//
@@ -137,13 +84,66 @@ export function hello() {
 `}</code></pre>
         
 
-            <h3><a name="c">C</a></h3>
-            <a href="/languages/c">Other C solutions.</a>
-            <pre><code class="language-c">{`#include "hello_world.h"
+            <h3><a name="nim">Nim</a></h3>
+            <a href="/languages/nim">Other Nim solutions.</a>
+            <pre><code class="language-nim">{`proc hello*: string =
+  "Hello, World!"
+`}</code></pre>
+        
 
-const char *hello(void)
-{
-   return "Hello, World!";
+            <h3><a name="ocaml">Ocaml</a></h3>
+            <a href="/languages/ocaml">Other Ocaml solutions.</a>
+            <pre><code class="language-ocaml">{`let hello = "Hello, World!"
+`}</code></pre>
+        
+
+            <h3><a name="prolog">Prolog</a></h3>
+            <a href="/languages/prolog">Other Prolog solutions.</a>
+            <pre><code class="language-prolog">{`% Please visit https://exercism.io/tracks/prolog/installation
+% for instructions on setting up prolog.
+% Visit https://exercism.io/tracks/prolog/tests
+% for help running the tests for prolog exercises.
+
+% Replace the goal below with
+% your implementation.
+
+hello_world('Hello World!').
+`}</code></pre>
+        
+
+            <h3><a name="python">Python</a></h3>
+            <a href="/languages/python">Other Python solutions.</a>
+            <pre><code class="language-python">{`def hello():
+    return "Hello, World!"
+`}</code></pre>
+        
+
+            <h3><a name="racket">Racket</a></h3>
+            <a href="/languages/racket">Other Racket solutions.</a>
+            <pre><code class="language-racket">{`#lang racket
+
+(define (hello) "Hello, World!")
+
+
+(provide hello)
+`}</code></pre>
+        
+
+            <h3><a name="roc">Roc</a></h3>
+            <a href="/languages/roc">Other Roc solutions.</a>
+            <pre><code class="language-roc">{`module [hello]
+
+hello : Str
+hello = "Hello, World!"
+`}</code></pre>
+        
+
+            <h3><a name="rust">Rust</a></h3>
+            <a href="/languages/rust">Other Rust solutions.</a>
+            <pre><code class="language-rust">{`// The &'static here means the return type has a static lifetime.
+// This is a Rust feature that you don't need to worry about now.
+pub fn hello() -> &'static str {
+    "Hello, World!"
 }
 `}</code></pre>
         

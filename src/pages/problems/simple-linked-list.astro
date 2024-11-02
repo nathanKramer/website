@@ -1,0 +1,101 @@
+
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Simple Linked List">
+<link rel="stylesheet" href="/css/prism.css" />
+<link rel="stylesheet" href="/css/style.css" />
+    <div class="side-bar hidden md:block">
+    <h2>Simple Linked List</h2>
+    <p>Solutions to simple-linked-list in various languages.</p>
+    <ul>
+      <li><a href="/exercism.html">Index</a></li>
+    </ul>
+    <ul><li><a href="#roc">Roc</a></li></ul>
+    </div>
+    <div class="main md:ml-[300px] px-2">
+    
+            <h3><a name="roc">Roc</a></h3>
+            <a href="/languages/roc">Other Roc solutions.</a>
+            <pre><code class="language-roc">{`module [fromList, toList, push, pop, reverse, len]
+
+SimpleLinkedList : [
+    Empty,
+    Node
+        {
+            value : U64,
+            next : SimpleLinkedList,
+        },
+]
+
+fromList : List U64 -> SimpleLinkedList
+fromList = \\list ->
+    when list is
+        [] -> Empty
+        [data, .. as rest] -> Node { value: data, next: fromList rest }
+
+toList : SimpleLinkedList -> List U64
+toList = \\linkedList ->
+    help = \\acc, next ->
+        when next is
+            Empty -> acc
+            Node data ->
+                newList = List.append acc data.value
+                help newList data.next
+    help [] linkedList
+
+push : SimpleLinkedList, U64 -> SimpleLinkedList
+push = \\linkedList, item ->
+    help = \\ll ->
+        when ll is
+            Empty -> Node { value: item, next: Empty }
+            Node data -> Node { value: data.value, next: help data.next }
+    help linkedList
+
+pop : SimpleLinkedList -> Result { value : U64, linkedList : SimpleLinkedList } _
+pop = \\linkedList ->
+    when linkedList is
+        Empty ->
+            Err NoValue
+
+        Node { value, next: Empty } ->
+            Ok { value, linkedList: Empty }
+
+        Node { value, next } ->
+            when pop next is
+                Ok { value: popped, linkedList: tail } ->
+                    Ok { value: popped, linkedList: Node { value, next: tail } }
+
+                Err err -> Err err
+
+reverse : SimpleLinkedList -> SimpleLinkedList
+reverse = \\linkedList ->
+    help = \\prev, acc ->
+        when prev is
+            Empty -> acc
+            Node { next, value } -> help next (Node { value, next: acc })
+
+    help linkedList Empty
+
+len : SimpleLinkedList -> U64
+len = \\linkedList ->
+    help = \\next, i ->
+        when next is
+            Empty -> i
+            Node data -> help data.next (i + 1)
+    help linkedList 0
+`}</code></pre>
+        
+    </div>
+
+    <script src="/js/prism.js" isinline></script>
+    <script>
+        Prism.languages['roc'] = Prism.languages['elm']
+    </script>
+<style>
+a[href] {
+  color: #f15125;
+}
+</style>
+</Layout>

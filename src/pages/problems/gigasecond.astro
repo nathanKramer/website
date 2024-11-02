@@ -12,10 +12,24 @@ import Layout from "../../layouts/Layout.astro";
     <ul>
       <li><a href="/exercism.html">Index</a></li>
     </ul>
-    <ul><li><a href="#go">Go</a></li><li><a href="#elm">Elm</a></li></ul>
+    <ul><li><a href="#elm">Elm</a></li><li><a href="#go">Go</a></li></ul>
     </div>
     <div class="main md:ml-[300px] px-2">
     
+            <h3><a name="elm">Elm</a></h3>
+            <a href="/languages/elm">Other Elm solutions.</a>
+            <pre><code class="language-elm">{`module Gigasecond exposing (add)
+
+import Time exposing (millisToPosix, posixToMillis)
+
+
+add : Time.Posix -> Time.Posix
+add timestamp =
+    (posixToMillis timestamp + 10 ^ 12)
+        |> millisToPosix
+`}</code></pre>
+        
+
             <h3><a name="go">Go</a></h3>
             <a href="/languages/go">Other Go solutions.</a>
             <pre><code class="language-go">{`package gigasecond
@@ -29,20 +43,6 @@ const gigasecond = time.Second * 1_000_000_000
 func AddGigasecond(t time.Time) time.Time {
 	return t.Add(gigasecond)
 }
-`}</code></pre>
-        
-
-            <h3><a name="elm">Elm</a></h3>
-            <a href="/languages/elm">Other Elm solutions.</a>
-            <pre><code class="language-elm">{`module Gigasecond exposing (add)
-
-import Time exposing (millisToPosix, posixToMillis)
-
-
-add : Time.Posix -> Time.Posix
-add timestamp =
-    (posixToMillis timestamp + 10 ^ 12)
-        |> millisToPosix
 `}</code></pre>
         
     </div>
