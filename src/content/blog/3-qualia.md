@@ -19,7 +19,7 @@ Ask yourself: what is the visual field made of?
 You could consider many things at this point.
 Firstly, you could wonder whether that question makes sense. Does it make sense to ask whether the visual field is made of anything? Is qualia really a substance?
 
-Whatever strong intuitions you have about such questions, consider that this - whatever _this_ is - is the only thing you've ever known directly. Everything else, from atoms to other minds, is inference.
+Whatever strong intuitions you have about such questions, consider that your visual field - when taken together with your thoughts, sounds, and sensations - is the only thing you've ever known directly. Everything else, from atoms to other minds, is inference.
 Yet our materialist models of reality consist exclusively of such inferences, while omitting the one thing we started with - qualia.
 This preference for third-person descriptions of reality is what summons the hard problem into being.
 
