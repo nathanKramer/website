@@ -1,7 +1,7 @@
 ---
 title: "Auth0 Tip: Populating YAML Arrays with Environment Variables"
 description: " Using keyword replacement and inline YAML arrays "
-date: 2026-01-31
+date: 2026-01-29
 tags: ["auth0"]
 draft: false
 ---
