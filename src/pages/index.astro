@@ -1,6 +1,9 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import banner from "../../public/banner-tight.jpg";
+import { getEntry } from "astro:content";
+
+const pinnedPost = await getEntry("blog", "1-values");
 ---
 
 <Layout title="Nathan Kramer">
@@ -11,28 +14,19 @@ import banner from "../../public/banner-tight.jpg";
 
             <img src="./face.jpg" class="profile-photo" alt="profile photo" />
 
-            <br />
-            <div>
-                <p>
-                    I'm a software engineer and hobbyist musician from New
-                    Zealand.
-                </p>
-                <p>
-                    I might put some posts on this website at some point, but
-                    for now here is my <a href="/exercism">exercism portfolio</a
-                    >.
-                </p>
-            </div>
-
-            <h2>Interests</h2>
-
-            <ul>
-                <li>music</li>
-                <li>consciousness</li>
-                <li>epistemology</li>
-                <li>writing & reading</li>
-                <li>humane technology</li>
-            </ul>
+            {pinnedPost && (
+                <section class="pinned-post">
+                    <a href={`/blog/${pinnedPost.slug}`} class="pinned-link">
+                        <span class="pinned-title">
+                            <svg class="pin-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/>
+                            </svg>
+                            {pinnedPost.data.title}
+                        </span>
+                        <span class="pinned-description">{pinnedPost.data.description}</span>
+                    </a>
+                </section>
+            )}
         </article>
     </main>
 </Layout>
@@ -105,5 +99,51 @@ import banner from "../../public/banner-tight.jpg";
         font-size: 3rem;
         font-weight: 800;
         margin: 0;
+    }
+
+    .pinned-post {
+        margin-top: 2rem;
+    }
+
+    .pinned-link {
+        display: block;
+        padding: 1rem;
+        border: 1px solid #333;
+        border-radius: 0.5rem;
+        text-decoration: none;
+        background-color: rgba(255, 255, 255, 0.02);
+        transition: border-color 0.3s ease, background-color 0.3s ease;
+    }
+
+    .pinned-link:hover {
+        border-color: #f15125;
+        background-color: rgba(241, 81, 37, 0.05);
+    }
+
+    .pinned-title {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #eeeeee;
+        font-size: 1.25rem;
+        font-weight: 700;
+        transition: color 0.3s ease;
+    }
+
+    .pin-icon {
+        width: 1.1rem;
+        height: 1.1rem;
+        flex-shrink: 0;
+    }
+
+    .pinned-link:hover .pinned-title {
+        color: #f15125;
+    }
+
+    .pinned-description {
+        display: block;
+        color: #aaaaaa;
+        font-size: 0.95rem;
+        margin-top: 0.25rem;
     }
 </style>

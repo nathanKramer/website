@@ -1,5 +1,5 @@
 ---
-title: "My values and interests"
+title: "About me"
 description: " I'm a software engineer and hobbyist musician from New Zealand. "
 date: 2026-01-31
 tags: ["values"]
