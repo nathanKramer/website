@@ -1,10 +1,14 @@
 ---
 title: "About me"
-description: " I'm a software engineer and hobbyist musician from New Zealand. "
+description: " A bit about my values and interests "
 date: 2026-01-31
 tags: ["values"]
 draft: false
 --- 
+
+Hi, I'm Nathan. I'm a Software Engineer and hobbyist musician from New Zealand.
+
+Here are a few of the things that I find important in life:
 
 ## Values
 

@@ -10,9 +10,13 @@ const pinnedPost = await getEntry("blog", "1-values");
     <img class="hidden md:block" src={banner.src} alt="banner" />
     <main>
         <article>
-            <h1>Nathan Kramer</h1>
-
-            <img src="./face.jpg" class="profile-photo" alt="profile photo" />
+            <div class="intro">
+                <img src="./face.jpg" class="profile-photo" alt="profile photo" />
+                <div class="intro-text">
+                    <h1>Nathan Kramer</h1>
+                    <p class="tagline">Software engineer and hobbyist musician from New Zealand</p>
+                </div>
+            </div>
 
             {pinnedPost && (
                 <section class="pinned-post">
@@ -54,9 +58,31 @@ const pinnedPost = await getEntry("blog", "1-values");
         color: #f15125;
     }
 
+    .intro {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    .intro-text {
+        flex: 1;
+    }
+
+    .intro-text h1 {
+        margin: 0;
+    }
+
+    .tagline {
+        color: #aaaaaa;
+        margin: 0.5rem 0 0 0;
+        font-size: 1.1rem;
+    }
+
     .profile-photo {
-        width: 150px;
+        width: 120px;
+        height: 120px;
         border-radius: 50%;
+        flex-shrink: 0;
     }
 
     main {
