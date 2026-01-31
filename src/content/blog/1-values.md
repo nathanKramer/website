@@ -1,6 +1,6 @@
 ---
 title: "My values and interests"
-description: " I'm a software engineer and hobbiest musician from New Zealand. "
+description: " I'm a software engineer and hobbyist musician from New Zealand. "
 date: 2026-01-31
 tags: ["values"]
 draft: false
