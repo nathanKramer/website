@@ -1,0 +1,70 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import BlogCard from "../../components/BlogCard.astro";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog", ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<Layout title="Blog - Nathan Kramer">
+  <main>
+    <header>
+      <h1>Blog</h1>
+      <p class="intro">
+        Thoughts on software engineering, music, consciousness, and more.
+      </p>
+    </header>
+
+    <section class="posts">
+      {posts.length === 0 ? (
+        <p class="no-posts">No posts yet. Check back soon!</p>
+      ) : (
+        posts.map((post) => (
+          <BlogCard
+            title={post.data.title}
+            description={post.data.description}
+            date={post.data.date}
+            slug={post.slug}
+            tags={post.data.tags}
+          />
+        ))
+      )}
+    </section>
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: auto;
+    padding: 1.5rem;
+    max-width: 90ch;
+    color: #aaaaaa;
+  }
+
+  header {
+    margin-bottom: 2rem;
+  }
+
+  h1 {
+    color: #eeeeee;
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin: 0;
+  }
+
+  .intro {
+    color: #aaaaaa;
+    font-size: 1.125rem;
+    margin-top: 0.5rem;
+  }
+
+  .posts {
+    margin-top: 2rem;
+  }
+
+  .no-posts {
+    color: #888888;
+    font-style: italic;
+  }
+</style>

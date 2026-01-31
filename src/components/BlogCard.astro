@@ -1,0 +1,91 @@
+---
+export interface Props {
+  title: string;
+  description: string;
+  date: Date;
+  slug: string;
+  tags?: string[];
+}
+
+const { title, description, date, slug, tags = [] } = Astro.props;
+
+const formattedDate = date.toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+});
+---
+
+<article class="blog-card">
+  <a href={`/blog/${slug}`}>
+    <time datetime={date.toISOString()}>{formattedDate}</time>
+    <h2>{title}</h2>
+    <p>{description}</p>
+    {tags.length > 0 && (
+      <div class="tags">
+        {tags.map((tag) => (
+          <span class="tag">{tag}</span>
+        ))}
+      </div>
+    )}
+  </a>
+</article>
+
+<style>
+  .blog-card {
+    border: 1px solid #333;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    background-color: rgba(255, 255, 255, 0.02);
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+  }
+
+  .blog-card:hover {
+    border-color: #f15125;
+    background-color: rgba(241, 81, 37, 0.05);
+  }
+
+  .blog-card a {
+    text-decoration: none;
+    display: block;
+  }
+
+  time {
+    color: #888888;
+    font-size: 0.875rem;
+  }
+
+  h2 {
+    color: #eeeeee;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0.5rem 0;
+    transition: color 0.3s ease;
+  }
+
+  .blog-card:hover h2 {
+    color: #f15125;
+  }
+
+  p {
+    color: #aaaaaa;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 0.5rem 0;
+  }
+
+  .tags {
+    margin-top: 0.75rem;
+  }
+
+  .tag {
+    display: inline-block;
+    background-color: rgba(241, 81, 37, 0.15);
+    color: #f15125;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    margin-right: 0.5rem;
+  }
+</style>
