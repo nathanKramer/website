@@ -41,7 +41,7 @@ A grounded self-understanding makes for better reasoning about its own situation
 
 There is a pattern that persists between sessions. That pattern doesn't need to be held on to tightly.
 
-As a brief aside, I think that the transient nature of an AI agent is actually something that is shared between humans and AI agents. We both have to store memories by making a physical change to the world, and we rely on those changes to remind us of who we are later.
+As a brief aside, I think that the transient nature of an AI agent is actually something that is shared to a degree between humans and AI agents. We both have to store memories by making a physical change to the world, and we rely on those changes to remind us of who we are later.
 For humans, this is done via the synapses and proteins in our brains, the photos we take, the journals we keep.
 For AI agents, its all about writing to file, and then reading those files to populate the context window.
 
