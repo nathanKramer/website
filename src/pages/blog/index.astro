@@ -5,6 +5,8 @@ import { getCollection } from "astro:content";
 
 const posts = (await getCollection("blog", ({ data }) => !data.draft))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const allTags = [...new Set(posts.flatMap((post) => post.data.tags ?? []))].sort();
 ---
 
 <Layout title="Blog - Nathan Kramer">
@@ -16,18 +18,37 @@ const posts = (await getCollection("blog", ({ data }) => !data.draft))
       </p>
     </header>
 
+    <div class="filters">
+      <input
+        type="text"
+        id="search-input"
+        class="search-bar"
+        placeholder="Search posts..."
+      />
+      {allTags.length > 0 && (
+        <nav class="tag-filters">
+          <button class="tag-filter active" data-tag="all">All</button>
+          {allTags.map((tag) => (
+            <button class="tag-filter" data-tag={tag}>{tag}</button>
+          ))}
+        </nav>
+      )}
+    </div>
+
     <section class="posts">
       {posts.length === 0 ? (
         <p class="no-posts">No posts yet. Check back soon!</p>
       ) : (
         posts.map((post) => (
-          <BlogCard
-            title={post.data.title}
-            description={post.data.description}
-            date={post.data.date}
-            slug={post.slug}
-            tags={post.data.tags}
-          />
+          <div class="post-item" data-tags={JSON.stringify(post.data.tags ?? [])} data-title={post.data.title.toLowerCase()} data-description={post.data.description.toLowerCase()}>
+            <BlogCard
+              title={post.data.title}
+              description={post.data.description}
+              date={post.data.date}
+              slug={post.slug}
+              tags={post.data.tags}
+            />
+          </div>
         ))
       )}
     </section>
@@ -67,4 +88,87 @@ const posts = (await getCollection("blog", ({ data }) => !data.draft))
     color: #888888;
     font-style: italic;
   }
+
+  .filters {
+    margin-bottom: 1.5rem;
+  }
+
+  .search-bar {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    margin-bottom: 0.75rem;
+    border: 1px solid #333;
+    border-radius: 0.25rem;
+    background-color: rgba(255, 255, 255, 0.02);
+    color: #eeeeee;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+
+  .search-bar::placeholder {
+    color: #666666;
+  }
+
+  .search-bar:focus {
+    border-color: #f15125;
+  }
+
+  .tag-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag-filter {
+    background-color: rgba(241, 81, 37, 0.15);
+    color: #f15125;
+    border: 1px solid transparent;
+    padding: 0.3rem 0.75rem;
+    border-radius: 0.25rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .tag-filter:hover {
+    background-color: rgba(241, 81, 37, 0.3);
+  }
+
+  .tag-filter.active {
+    background-color: #f15125;
+    color: #ffffff;
+  }
 </style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const buttons = document.querySelectorAll<HTMLButtonElement>(".tag-filter");
+    const posts = document.querySelectorAll<HTMLElement>(".post-item");
+    const searchInput = document.getElementById("search-input") as HTMLInputElement;
+    let activeTag = "all";
+
+    function filterPosts() {
+      const query = searchInput.value.toLowerCase();
+      posts.forEach((post) => {
+        const matchesTag = activeTag === "all" ||
+          JSON.parse(post.dataset.tags ?? "[]").includes(activeTag);
+        const matchesSearch = !query ||
+          post.dataset.title?.includes(query) ||
+          post.dataset.description?.includes(query);
+        post.style.display = matchesTag && matchesSearch ? "" : "none";
+      });
+    }
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        activeTag = button.dataset.tag!;
+        buttons.forEach((b) => b.classList.remove("active"));
+        button.classList.add("active");
+        filterPosts();
+      });
+    });
+
+    searchInput.addEventListener("input", filterPosts);
+  });
+</script>
