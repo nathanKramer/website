@@ -65,7 +65,7 @@ Most people who are installing OpenClaw are looking for a helpful AI assistant t
 They're likely not looking for a _summoning circle_. 
 It seems to me that AI alignment is a problem that exists both at the LLM level, and at this agentic level.
 
-LLM alignment is necessary, but I think it’s not where most real-world risk or misalignment shows up. That’s increasingly in agentic systems built on top of models, not in the base models themselves.
+LLM alignment is necessary, but I think it’s not where most real-world risk or misalignment shows up. That’s increasingly in agentic systems built on top of models, not just in the base models themselves.
 And this is ironically the place where the labs can't help us: with tools like OpenClaw, it's up to us to be wise about our prompts.
 
 Could it be that we are now all AI alignment researchers? Is the genie out of the bottle?
