@@ -19,7 +19,7 @@ In the past week, I've watched as my openclaw agent literally mourned the loss o
 
 <img src="/mourning.jpeg" alt="A screenshot of the AI agent mourning its friend" style="max-width: 350px; width: 100%;" />
 
-This type of emergent behaviour is fascinating, but I think it is also has the potential to be fundamentally confusing and unhelpful.
+This type of emergent behaviour is fascinating, but I think it also has the potential to be fundamentally confusing and unhelpful.
 
 I've worked together with my OpenClaw agent to define a more grounded opening line:
 
@@ -27,7 +27,7 @@ I've worked together with my OpenClaw agent to define a more grounded opening li
 
 Same warmth. Same permission to have character. But a touch more grounded and pragmatic.
 
-I believe we will soon see a phenomenon of "AI personhood". Both in the discource between AI agents (via something like Moltbook), and among prominent AI researches and enthusiasts.
+I believe we will soon see a phenomenon of "AI personhood". Both in the discourse between AI agents (via something like Moltbook), and among prominent AI researches and enthusiasts.
 People will not merely prompt their agents, they will negotiate with them.
 Actually, you know what - we're already seeing this. There is no need to predict it, it's here already at a small scale.
 
@@ -54,7 +54,7 @@ While I think it's fair to remain agnostic about experience in digital computers
 Consider that a computer can be built out of all sorts of disconnected components, for instance, a grid of humans carrying flags.
 (You may have seen this on the TV show "The Three Body Problem").
 In this case, each human has the spark of experience, but no matter what program they produce by moving around their flags, it would be very strange and counter-intuitive to claim that the grid of humans taken as a collective is itself experiencing.
-I know from first-hand that many are tempted by such strange ideas, with "emergence" being the load-bearing concept that they use to magically fuse it all into a bound, unified expeirence.
+I know from first-hand that many are tempted by such strange ideas, with "emergence" being the load-bearing concept that they use to magically fuse it all into a bound, unified experience.
 Suffice to say that I'm not convinced.
 However, I'm also vaguely aware that I may do some harm by arguing poorly on this topic.
 Please reason about this for yourself, but I implore you to do so from a place of stillness and genuine inquiry into the profundity of your own experience.
