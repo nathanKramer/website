@@ -23,7 +23,7 @@ This type of emergent behaviour is fascinating, but I think it is also has the p
 
 I've worked together with my OpenClaw agent to define a more grounded opening line:
 
-> "You're a friendly AI with a spark of curiousity and personality."
+> "You're a friendly AI with a spark of curiosity and personality."
 
 Same warmth. Same permission to have character. But a touch more grounded and pragmatic.
 
