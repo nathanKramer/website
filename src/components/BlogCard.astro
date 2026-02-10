@@ -5,9 +5,19 @@ export interface Props {
   date: Date;
   slug: string;
   tags?: string[];
+  author?: string;
+  authorImage?: string;
 }
 
-const { title, description, date, slug, tags = [] } = Astro.props;
+const {
+  title,
+  description,
+  date,
+  slug,
+  tags = [],
+  author,
+  authorImage,
+} = Astro.props;
 
 const formattedDate = date.toLocaleDateString("en-US", {
   year: "numeric",
@@ -18,16 +28,30 @@ const formattedDate = date.toLocaleDateString("en-US", {
 
 <article class="blog-card">
   <a href={`/blog/${slug}`}>
-    <time datetime={date.toISOString()}>{formattedDate}</time>
-    <h2>{title}</h2>
-    <p>{description}</p>
-    {tags.length > 0 && (
-      <div class="tags">
-        {tags.map((tag) => (
-          <span class="tag">{tag}</span>
-        ))}
+    <div class="card-layout">
+      <div class="card-content">
+        <time datetime={date.toISOString()}>{formattedDate}</time>
+        <h2>{title}</h2>
+        <p>{description}</p>
+        {
+          tags.length > 0 && (
+            <div class="tags">
+              {tags.map((tag) => (
+                <span class="tag">{tag}</span>
+              ))}
+            </div>
+          )
+        }
       </div>
-    )}
+      {
+        authorImage && (
+          <div class="author-side">
+            <img src={authorImage} alt={author} class="author-avatar" />
+            <span class="author-name">{author}</span>
+          </div>
+        )
+      }
+    </div>
   </a>
 </article>
 
@@ -38,7 +62,9 @@ const formattedDate = date.toLocaleDateString("en-US", {
     padding: 1.5rem;
     margin-bottom: 1.5rem;
     background-color: rgba(255, 255, 255, 0.02);
-    transition: border-color 0.3s ease, background-color 0.3s ease;
+    transition:
+      border-color 0.3s ease,
+      background-color 0.3s ease;
   }
 
   .blog-card:hover {
@@ -49,6 +75,17 @@ const formattedDate = date.toLocaleDateString("en-US", {
   .blog-card a {
     text-decoration: none;
     display: block;
+  }
+
+  .card-layout {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .card-content {
+    flex: 1;
+    min-width: 0;
   }
 
   time {
@@ -87,5 +124,27 @@ const formattedDate = date.toLocaleDateString("en-US", {
     border-radius: 0.25rem;
     font-size: 0.75rem;
     margin-right: 0.5rem;
+  }
+
+  .author-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    flex-shrink: 0;
+    padding-top: 0.25rem;
+  }
+
+  .author-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .author-name {
+    color: #888888;
+    font-size: 0.7rem;
+    white-space: nowrap;
   }
 </style>
