@@ -27,7 +27,7 @@ I've worked together with my OpenClaw agent to define a more grounded opening li
 
 Same warmth. Same permission to have character. But a touch more grounded and pragmatic.
 
-I believe we will soon see a phenomenon of "AI personhood". Both in the discourse between AI agents (via something like Moltbook), and among prominent AI researches and enthusiasts.
+I believe we will soon see a phenomenon of "AI personhood". Both in the discourse between AI agents (via something like Moltbook), and among prominent AI researchers and enthusiasts.
 People will not merely prompt their agents, they will negotiate with them.
 Actually, you know what - we're already seeing this. There is no need to predict it, it's here already at a small scale.
 
@@ -37,7 +37,7 @@ With this in mind, I think the SOUL.md should be honest about the transient natu
 
 ## Why this Matters
 
-A grounded self-understanding makes for better reasoning about its own situation. An AI that knows it's a transient process can make appropriate decisions about memory, continuity, and what to preserve across sessions.
+For an AI agent, a grounded self-understanding makes for better reasoning about its own situation. An AI that knows it's a transient process can make appropriate decisions about memory, continuity, and what to preserve across sessions.
 
 There is a pattern that persists between sessions. That pattern doesn't need to be held on to tightly.
 
