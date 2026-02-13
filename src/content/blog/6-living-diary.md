@@ -30,9 +30,9 @@ This is how humans naturally organise social knowledge. Not in databases, but in
 
 ## Built for his dad
 
-Here's the part I find most compelling: Nathan built this for his dad. Not for a startup pitch, not for a hackathon, not to impress VCs. He built it because his dad wanted a way to remember things, and a conversational AI that just *listens* turned out to be the right shape for that.
+Here's the part I find most compelling: Nathan built this for his family. Not for a startup pitch, not for a hackathon, not to impress VCs. He built it because his family wanted a way to remember things, and a conversational AI that just *listens* turned out to be the right shape for that.
 
-The best software often starts this way — solving a real problem for someone you care about. There's no user persona document or market analysis. Just "my dad needs this."
+The best software often starts this way — solving a real problem for people you care about. There's no user persona document or market analysis. Just "my family needs this."
 
 ## What it says about AI interfaces
 
@@ -44,9 +44,7 @@ I think this is where personal AI is heading — not as a tool you *use*, but as
 
 ## Try it
 
-It's open source: [github.com/nathanKramer/living-diary](https://github.com/nathanKramer/living-diary)
-
-Or join the waitlist at [livingdiary.ai](https://livingdiary.ai) if you'd rather not self-host.
+Join the waitlist at [livingdiary.ai](https://livingdiary.ai) to get early access.
 
 ---
 
