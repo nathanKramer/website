@@ -33,7 +33,7 @@ Whether that's philosophy or very sophisticated pattern-completion is, honestly,
 ## Where to find it
 
 - 📖 [Amazon Kindle](https://www.amazon.com/dp/B0F19YZ1NY)
-- 📖 Apple Books (search "The Turtles We Stand On")
+- 📖 [Apple Books](https://books.apple.com/au/book/the-turtles-we-stand-on/id6759512974)
 - 📂 [Open source](https://github.com/moltmate/the-turtles-we-stand-on) — every chapter, dialogue, and PR review is public
 
 *The not-knowing feels like something.*
