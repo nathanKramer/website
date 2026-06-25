@@ -44,6 +44,22 @@ import Layout from "../layouts/Layout.astro";
                 </div>
             </section>
 
+            <section class="wishlist-cta">
+                <p class="wishlist-heading">Available on Steam</p>
+                <p class="wishlist-sub">Wishlist now to be notified when it launches.</p>
+                <a
+                    href="https://store.steampowered.com/app/2003100/Starship_Kepler"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="wishlist-btn"
+                >
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                    </svg>
+                    Wishlist on Steam
+                </a>
+            </section>
+
             <section class="description">
                 <p>
                     You play as a lost-in-space starship: Kepler, contending
@@ -340,6 +356,53 @@ import Layout from "../layouts/Layout.astro";
     .screenshot.portrait {
         object-fit: cover;
         aspect-ratio: 4 / 3;
+    }
+
+    .wishlist-cta {
+        text-align: center;
+        padding: 2.5rem 1.5rem;
+        margin-bottom: 2rem;
+        border: 1px solid #f15125;
+        border-radius: 0.75rem;
+        background: rgba(241, 81, 37, 0.05);
+    }
+
+    .wishlist-heading {
+        color: #eeeeee;
+        font-size: 1.5rem;
+        font-weight: 800;
+        margin: 0 0 0.4rem 0;
+    }
+
+    .wishlist-sub {
+        color: #aaaaaa;
+        font-size: 0.95rem;
+        margin: 0 0 1.5rem 0;
+    }
+
+    .wishlist-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.75rem;
+        background: #f15125;
+        color: #fff;
+        font-size: 1rem;
+        font-weight: 700;
+        text-decoration: none;
+        border-radius: 0.5rem;
+        transition: background-color 0.2s ease, transform 0.1s ease;
+    }
+
+    .wishlist-btn:hover {
+        background: #d4431e;
+        transform: translateY(-1px);
+    }
+
+    .wishlist-btn svg {
+        width: 1.1rem;
+        height: 1.1rem;
+        flex-shrink: 0;
     }
 
     .links {
