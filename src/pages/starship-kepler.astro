@@ -1,0 +1,361 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout
+    title="Starship Kepler"
+    description="An intense arcade shooter that encourages movement and variety. Pilot a lone starship through waves of vivid geometric enemies, weaving through danger while your weapons carve color across the void."
+    image="/images/starship-kepler-1232-706.png"
+>
+    <div class="hero">
+        <img
+            src="/images/starship-kepler-3840-1240.png"
+            alt="Starship Kepler"
+            class="hero-banner"
+        />
+    </div>
+
+    <main>
+        <article>
+            <div class="game-header">
+                <img
+                    src="/images/starship-kepler-icon-256x256.png"
+                    alt="Starship Kepler icon"
+                    class="game-icon"
+                />
+                <div class="game-title-block">
+                    <h1>Starship Kepler</h1>
+                    <p class="tagline">
+                        An intense arcade shooter that encourages movement and
+                        variety.
+                    </p>
+                </div>
+            </div>
+
+            <section class="trailer">
+                <div class="video-wrapper">
+                    <iframe
+                        src="https://www.youtube.com/embed/RagZE3vSjbw"
+                        title="Starship Kepler trailer"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                </div>
+            </section>
+
+            <section class="description">
+                <p>
+                    You play as a lost-in-space starship: Kepler, contending
+                    with an endless barrage of geometric shapes. Pilot a lone
+                    starship through waves of vivid geometric enemies, weaving
+                    through danger while your weapons carve color across the
+                    void.
+                </p>
+                <p>
+                    Every fight is fast, readable, and score-hungry: dodge by a
+                    hair, clear the screen, grab what you can, and keep moving.
+                </p>
+                <p>
+                    Your ship is shaped by elements. Collect and combine powers
+                    to change how you fight — from familiar projectile weapons
+                    to stranger builds like sustained beams, chained lightning,
+                    reflective weaponry, and fire. The right element can turn a
+                    desperate screen into a comeback.
+                </p>
+            </section>
+
+            <section class="modes">
+                <div class="mode-row">
+                    <div class="mode-text">
+                        <h2>Free Play</h2>
+                        <p>
+                            Travel outward through a strange and hostile deep
+                            space, following signals, triggering anomalies, and
+                            uncovering a quiet cosmic story told between
+                            battles.
+                        </p>
+                    </div>
+                    <img
+                        src="/images/freeplay-gif.gif"
+                        alt="Free Play gameplay"
+                        class="mode-gif"
+                    />
+                </div>
+                <div class="mode-row reverse">
+                    <div class="mode-text">
+                        <h2>Quick Play</h2>
+                        <p>
+                            Confined to a morphing cage, survive for as long as
+                            you can and beat your high score. Immediate, brutal,
+                            and endlessly replayable.
+                        </p>
+                    </div>
+                    <img
+                        src="/images/quickplay-gif.gif"
+                        alt="Quick Play gameplay"
+                        class="mode-gif"
+                    />
+                </div>
+            </section>
+
+            <section class="features">
+                <h2>Features</h2>
+                <ul>
+                    <li>Fast twin-stick arcade combat</li>
+                    <li>Difficult</li>
+                    <li>Short, arcade style gameplay</li>
+                    <li>Free Play with escalating anomalies and boss encounters</li>
+                    <li>Quick Play for immediate score-chasing survival</li>
+                    <li>Elemental weapon builds that change your attack style</li>
+                    <li>
+                        Bright, minimalist visuals built around clarity, motion,
+                        and impact
+                    </li>
+                    <li>A lonely sci-fi atmosphere beneath the chaos</li>
+                </ul>
+            </section>
+
+            <p class="closing-line">
+                Burn brighter. Push farther. Something out there is listening.
+            </p>
+        </article>
+    </main>
+</Layout>
+
+<style>
+    .hero {
+        width: 100%;
+        overflow: hidden;
+        max-height: 320px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #000;
+    }
+
+    .hero-banner {
+        width: 100%;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+    }
+
+    main {
+        margin: auto;
+        padding: 1.5rem;
+        max-width: 90ch;
+        color: #aaaaaa;
+    }
+
+    main article {
+        font-family: "Open Sans", sans-serif;
+        font-size: 18px;
+        line-height: 1.5;
+    }
+
+    .game-header {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        margin-top: 2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .game-icon {
+        width: 96px;
+        height: 96px;
+        border-radius: 16px;
+        flex-shrink: 0;
+        image-rendering: pixelated;
+    }
+
+    .game-title-block h1 {
+        margin: 0 0 0.25rem 0;
+        color: #eeeeee;
+        font-size: 2.5rem;
+        font-weight: 800;
+        line-height: 1.1;
+    }
+
+    .tagline {
+        color: #aaaaaa;
+        margin: 0;
+        font-size: 1.05rem;
+    }
+
+    .description {
+        margin-bottom: 2rem;
+    }
+
+    .description p {
+        margin: 0 0 1rem 0;
+    }
+
+    .trailer {
+        margin-bottom: 2.5rem;
+    }
+
+    .video-wrapper {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+        border-radius: 0.5rem;
+        border: 1px solid #222;
+    }
+
+    .video-wrapper iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .modes {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .mode-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        align-items: center;
+    }
+
+    .mode-row.reverse {
+        direction: rtl;
+    }
+
+    .mode-row.reverse .mode-text {
+        direction: ltr;
+    }
+
+    .mode-text h2 {
+        color: #f15125;
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin: 0 0 0.5rem 0;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        direction: ltr;
+    }
+
+    .mode-text p {
+        margin: 0;
+        font-size: 0.95rem;
+        direction: ltr;
+    }
+
+    .mode-gif {
+        width: 100%;
+        border-radius: 0.375rem;
+        display: block;
+        border: 1px solid #222;
+    }
+
+    .features {
+        margin-bottom: 2rem;
+    }
+
+    .features h2 {
+        color: #eeeeee;
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin: 0 0 0.75rem 0;
+    }
+
+    .features ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.4rem 2rem;
+    }
+
+    .features ul li {
+        padding-left: 1.25rem;
+        position: relative;
+        font-size: 0.95rem;
+    }
+
+    .features ul li::before {
+        content: "—";
+        position: absolute;
+        left: 0;
+        color: #f15125;
+    }
+
+    .screenshots {
+        margin-bottom: 2rem;
+    }
+
+    .screenshots h2 {
+        color: #eeeeee;
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin: 0 0 0.75rem 0;
+    }
+
+    .screenshot-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+    }
+
+    .screenshot {
+        width: 100%;
+        border-radius: 0.375rem;
+        display: block;
+        border: 1px solid #222;
+    }
+
+    .screenshot.wide {
+        grid-column: span 2;
+    }
+
+    .screenshot.portrait {
+        object-fit: cover;
+        aspect-ratio: 4 / 3;
+    }
+
+    .closing-line {
+        color: #555;
+        font-style: italic;
+        font-size: 1rem;
+        text-align: center;
+        margin-top: 2.5rem;
+        margin-bottom: 0;
+        letter-spacing: 0.02em;
+    }
+
+    @media (max-width: 640px) {
+        .game-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .mode-row,
+        .mode-row.reverse {
+            grid-template-columns: 1fr;
+            direction: ltr;
+        }
+
+        .features ul {
+            grid-template-columns: 1fr;
+        }
+
+        .screenshot-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .screenshot.wide {
+            grid-column: span 1;
+        }
+    }
+</style>
