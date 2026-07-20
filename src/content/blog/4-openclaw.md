@@ -3,7 +3,7 @@ title: "OpenClaw and its anthropomorphic base prompts"
 description: " Rethinking SOUL.md for a more grounded approach "
 date: 2026-02-09
 tags: ["ai"]
-draft: false
+draft: true
 ---
 
 I won't introduce you to OpenClaw - instead I'll assume you've heard of it, know about its security weaknesses, and - of critical importance - know not to install it on a personal or work computer.
