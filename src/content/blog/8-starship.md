@@ -37,8 +37,15 @@ Eventually I settled on making elements drop from killed enemies. This simplifie
 
 I composed and produced all of the music for the game using Logic Pro.
 
-Shortly I'll be uploading the music to Youtube.
+Here's the soundtrack:
 
+<iframe
+    src="https://www.youtube.com/embed/uySgaBANeBA"
+    title="Starship Kepler soundtrack"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen
+></iframe>
 
 
 
