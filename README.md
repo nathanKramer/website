@@ -1,50 +1,40 @@
-# Welcome to [Astro](https://astro.build)
+# nathankramer.dev
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/s/github/withastro/astro/tree/latest/examples/basics)
+My personal website — [nathankramer.dev](https://nathankramer.dev). 
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+![The site's home page](docs/screenshot.png)
 
-![basics](https://user-images.githubusercontent.com/4677417/186188965-73453154-fdec-4d6b-9c34-cb35c248ae5b.png)
+Built with [Astro](https://astro.build) and Tailwind CSS, deployed on Netlify.
 
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
+## Layout
 
 ```
-/
-├── public/
-│   └── favicon.svg
+├── netlify/functions/   # Steam leaderboard proxy for the Starship Kepler page
+├── public/              # Static assets, incl. Prism.js for syntax highlighting
 ├── src/
-│   ├── components/
-│   │   └── Card.astro
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
+│   ├── components/      # Card.astro, BlogCard.astro
+│   ├── content/blog/    # Blog posts as markdown (schema in content/config.ts)
+│   ├── layouts/         # Layout.astro (base + nav), BlogPost.astro
+│   └── pages/           # Routes; languages/ and problems/ are generated
+└── generate.py          # Builds the Exercism pages from local solutions
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
+## Commands
 
 All commands are run from the root of the project, from a terminal:
 
 | Command                | Action                                             |
 | :--------------------- | :------------------------------------------------- |
 | `npm install`          | Installs dependencies                              |
-| `npm run dev`          | Starts local dev server at `localhost:3000`        |
-| `npm run build`        | Build your production site to `./dist/`            |
-| `npm run preview`      | Preview your build locally, before deploying       |
+| `npm run dev`          | Starts local dev server at `localhost:4321`        |
+| `npm run build`        | Build the production site to `./dist/`             |
+| `npm run preview`      | Preview the build locally, before deploying        |
 | `npm run astro ...`    | Run CLI commands like `astro add`, `astro preview` |
 | `npm run astro --help` | Get help using the Astro CLI                       |
 
-## 👀 Want to learn more?
+Reminder for my future self: to regenerate the Exercism pages, point `EXERCISM_DIR` at local Exercism
+solutions and run:
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+```bash
+python3 ./generate.py
+```
