@@ -16,8 +16,8 @@ import type { Config, Context } from "@netlify/functions";
 
 const APP_ID = 2003100;
 
-/** How many entries to pull per board. The boards are small; this is headroom. */
-const TOP_N = 25;
+/** The page shows a top 10, so there's no reason to fetch or ship more. */
+const TOP_N = 10;
 
 /** Steam caps GetPlayerSummaries at 100 steamids per request. */
 const SUMMARIES_CHUNK = 100;
@@ -241,13 +241,16 @@ export default async (_req: Request, _context: Context) => {
       title: BOARD_TITLES[board.name] ?? board.feedTitle,
       displayType: displayTypeName(board.displayType),
       totalEntries: board.totalEntries,
+      // Deliberately not spreading `entry`: the steamid and profile URL are
+      // used to look a player up and then dropped, so the only identity that
+      // leaves this function is the display name and avatar the board shows.
       entries: entries.map((entry) => {
         const profile = profiles.get(entry.steamId);
         return {
-          ...entry,
+          rank: entry.rank,
+          score: entry.score,
           name: profile?.name || null,
           avatar: profile?.avatar || null,
-          profileUrl: profile?.profileUrl || null,
         };
       }),
     })),
