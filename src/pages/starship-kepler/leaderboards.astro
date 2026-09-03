@@ -1,0 +1,650 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout
+    title="Starship Kepler — Leaderboards"
+    description="Global high scores from Starship Kepler on Steam. Free Play, Quick Play, and Labyrinth."
+    image="/images/starship-kepler-1232-706.png"
+>
+    <canvas id="starfield" class="starfield" aria-hidden="true"></canvas>
+
+    <main>
+        <article>
+            <div class="page-header">
+                <img
+                    src="/images/starship-kepler-icon-256x256.png"
+                    alt="Starship Kepler icon"
+                    class="game-icon"
+                />
+                <div class="title-block">
+                    <p class="eyebrow">
+                        <a href="/starship-kepler">Starship Kepler</a>
+                    </p>
+                    <h1>Leaderboards</h1>
+                    <p class="tagline">
+                        The best runs on Steam, straight from the global boards.
+                    </p>
+                </div>
+            </div>
+
+            <div id="boards" class="lb-boards" aria-live="polite" aria-busy="true">
+                <p class="status">Loading scores…</p>
+            </div>
+
+            <p class="updated" id="updated" hidden></p>
+
+            <section class="cta">
+                <p class="cta-heading">Think you can beat these?</p>
+                <a
+                    href="https://store.steampowered.com/app/2003100/Starship_Kepler"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="cta-btn"
+                >
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658c.545-.371 1.203-.59 1.912-.59.063 0 .125.004.188.006l2.861-4.142V8.91c0-2.495 2.028-4.523 4.524-4.523 2.494 0 4.524 2.031 4.524 4.527s-2.03 4.525-4.524 4.525h-.105l-4.076 2.911c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396-1.635 0-3.016-1.173-3.331-2.711L.436 16.476C1.862 20.868 6.598 24 11.979 24c6.627 0 11.999-5.373 11.999-12S18.606 0 11.979 0zM7.54 18.21l-1.473-.61c.262.543.714.999 1.314 1.25 1.297.539 2.793-.076 3.332-1.375.263-.63.264-1.319.005-1.949s-.75-1.121-1.377-1.383c-.624-.26-1.29-.249-1.878-.03l1.523.63c.956.4 1.409 1.5 1.009 2.455-.397.957-1.497 1.41-2.454 1.012H7.54zm11.415-9.303c0-1.662-1.353-3.015-3.015-3.015-1.665 0-3.015 1.353-3.015 3.015 0 1.665 1.35 3.015 3.015 3.015 1.662 0 3.015-1.35 3.015-3.015zm-5.273-.005c0-1.252 1.013-2.266 2.265-2.266 1.249 0 2.266 1.014 2.266 2.266 0 1.251-1.017 2.265-2.266 2.265-1.252 0-2.265-1.014-2.265-2.265z"/>
+                    </svg>
+                    Play on Steam
+                </a>
+            </section>
+        </article>
+    </main>
+</Layout>
+
+<script>
+    /*
+     * Mirrors what the function sends: no steamid and no profile URL, so no
+     * account identifier reaches the page or the DOM.
+     */
+    type Entry = {
+        rank: number;
+        score: number;
+        name: string | null;
+        avatar: string | null;
+    };
+
+    type Board = {
+        id: string;
+        name: string;
+        title: string;
+        displayType: "numeric" | "milliseconds" | "seconds";
+        totalEntries: number;
+        entries: Entry[];
+    };
+
+    /**
+     * Mirrors formatLabyrinthClock in the game (draw.go): milliseconds rounded
+     * to hundredths, rendered M:SS.cc, so the web board reads the same as the
+     * in-game one.
+     */
+    function formatClock(millis: number): string {
+        const centis = Math.floor((Math.max(0, millis) + 5) / 10);
+        const minutes = Math.floor(centis / 6000);
+        const seconds = Math.floor(centis / 100) % 60;
+        const hundredths = centis % 100;
+        return `${minutes}:${String(seconds).padStart(2, "0")}.${String(hundredths).padStart(2, "0")}`;
+    }
+
+    function formatScore(score: number, displayType: Board["displayType"]): string {
+        if (displayType === "milliseconds") return formatClock(score);
+        if (displayType === "seconds") return formatClock(score * 1000);
+        return score.toLocaleString("en-US");
+    }
+
+    /** Players with private profiles come back unresolved; they still placed. */
+    function displayName(entry: Entry): string {
+        return entry.name?.trim() || "Anonymous Pilot";
+    }
+
+    /**
+     * Persona names are player-controlled, and these rows are built as HTML, so
+     * everything interpolated below goes through here first.
+     */
+    function escapeHtml(value: string): string {
+        return value
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#39;");
+    }
+
+    /** Only let http(s) URLs from Steam through into href/src attributes. */
+    function safeUrl(url: string | null): string | null {
+        if (!url) return null;
+        try {
+            const parsed = new URL(url);
+            if (parsed.protocol !== "https:" && parsed.protocol !== "http:") return null;
+            return escapeHtml(parsed.href);
+        } catch {
+            return null;
+        }
+    }
+
+    function relativeTime(iso: string): string {
+        const seconds = Math.round((Date.now() - new Date(iso).getTime()) / 1000);
+        if (seconds < 90) return "just now";
+        const minutes = Math.round(seconds / 60);
+        if (minutes < 60) return `${minutes} minute${minutes === 1 ? "" : "s"} ago`;
+        const hours = Math.round(minutes / 60);
+        return `${hours} hour${hours === 1 ? "" : "s"} ago`;
+    }
+
+    function medalClass(rank: number): string {
+        return rank <= 3 ? ` medal medal-${rank}` : "";
+    }
+
+    function renderBoard(board: Board): string {
+        const rows = board.entries
+            .map((entry) => {
+                const name = escapeHtml(displayName(entry));
+                const avatarUrl = safeUrl(entry.avatar);
+                const avatar = avatarUrl
+                    ? `<img class="avatar" src="${avatarUrl}" alt="" loading="lazy" width="32" height="32" />`
+                    : `<span class="avatar avatar-blank" aria-hidden="true"></span>`;
+                return `
+                    <tr>
+                        <td class="rank${medalClass(entry.rank)}">${entry.rank}</td>
+                        <td class="player">
+                            <div class="player-cell">
+                                ${avatar}<span class="player-name">${name}</span>
+                            </div>
+                        </td>
+                        <td class="score">${formatScore(entry.score, board.displayType)}</td>
+                    </tr>`;
+            })
+            .join("");
+
+        const body = board.entries.length
+            ? `<table>
+                   <thead>
+                       <tr><th class="rank">#</th><th class="player">Pilot</th><th class="score">${
+                           board.displayType === "numeric" ? "Score" : "Time"
+                       }</th></tr>
+                   </thead>
+                   <tbody>${rows}</tbody>
+               </table>`
+            : `<p class="status">No scores on this board yet. Be the first.</p>`;
+
+        return `
+            <section class="board">
+                <h2>${escapeHtml(board.title)}</h2>
+                ${body}
+            </section>`;
+    }
+
+    async function load() {
+        const container = document.getElementById("boards")!;
+        const updated = document.getElementById("updated")!;
+
+        try {
+            const response = await fetch("/api/leaderboards");
+            if (!response.ok) throw new Error(`api responded ${response.status}`);
+            const data: { updatedAt: string; boards: Board[] } = await response.json();
+
+            container.innerHTML = data.boards.map(renderBoard).join("");
+            updated.textContent = `Updated ${relativeTime(data.updatedAt)} · scores are cached for a few minutes`;
+            updated.hidden = false;
+        } catch (error) {
+            console.error("leaderboards: load failed", error);
+            container.innerHTML = `<p class="status status-error">
+                Couldn't reach the leaderboards right now. Steam might be having a moment — try again shortly.
+            </p>`;
+        } finally {
+            container.setAttribute("aria-busy", "false");
+        }
+    }
+
+    load();
+</script>
+
+<script>
+    /**
+     * A drifting starfield behind the page, to match the game's setting.
+     *
+     * Deliberately cheap: a few hundred points on a single 2D canvas, sized to
+     * the viewport rather than the document so scrolling costs nothing. It
+     * holds still for anyone who asked for reduced motion, and stops entirely
+     * while the tab is hidden.
+     */
+    type Star = {
+        x: number;
+        y: number;
+        radius: number;
+        speed: number;
+        alpha: number;
+        twinkleRate: number;
+        phase: number;
+        colour: string;
+    };
+
+    const canvas = document.getElementById("starfield") as HTMLCanvasElement | null;
+    const ctx = canvas?.getContext("2d") ?? null;
+
+    if (canvas && ctx) {
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+        // Mostly cold starlight, with the odd ember in the game's accent colour.
+        const PALETTE = ["#ffffff", "#ffffff", "#cfe4ff", "#9ec5ff", "#f15125"];
+
+        let stars: Star[] = [];
+        let width = 0;
+        let height = 0;
+        let frame = 0;
+        let lastTime = 0;
+
+        function seed() {
+            // Roughly constant density, bounded so phones stay cheap and large
+            // monitors don't end up with an empty sky.
+            const count = Math.min(260, Math.max(70, Math.round((width * height) / 9000)));
+            stars = Array.from({ length: count }, () => {
+                // Depth drives size, speed and brightness together, which is
+                // what sells the parallax.
+                const depth = Math.random() ** 2;
+                return {
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    radius: 0.4 + depth * 1.3,
+                    speed: 1.5 + depth * 7,
+                    alpha: 0.25 + depth * 0.55,
+                    twinkleRate: 0.5 + Math.random() * 1.5,
+                    phase: Math.random() * Math.PI * 2,
+                    colour: PALETTE[Math.floor(Math.random() * PALETTE.length)],
+                };
+            });
+        }
+
+        function resize() {
+            const dpr = Math.min(window.devicePixelRatio || 1, 2);
+            width = canvas!.clientWidth;
+            height = canvas!.clientHeight;
+            canvas!.width = Math.round(width * dpr);
+            canvas!.height = Math.round(height * dpr);
+            ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
+            seed();
+        }
+
+        function draw(elapsed: number) {
+            ctx!.clearRect(0, 0, width, height);
+            for (const star of stars) {
+                const twinkle = reduceMotion.matches
+                    ? 1
+                    : 0.75 + 0.25 * Math.sin(star.phase + elapsed * star.twinkleRate);
+                ctx!.globalAlpha = Math.min(1, star.alpha * twinkle);
+                ctx!.fillStyle = star.colour;
+                ctx!.beginPath();
+                ctx!.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                ctx!.fill();
+            }
+            ctx!.globalAlpha = 1;
+        }
+
+        function tick(now: number) {
+            // Seconds since the previous frame, clamped so a backgrounded tab
+            // doesn't resume with one enormous jump.
+            const delta = Math.min((now - lastTime) / 1000, 0.05);
+            lastTime = now;
+
+            for (const star of stars) {
+                star.y += star.speed * delta;
+                if (star.y - star.radius > height) {
+                    star.y = -star.radius;
+                    star.x = Math.random() * width;
+                }
+            }
+
+            draw(now / 1000);
+            frame = requestAnimationFrame(tick);
+        }
+
+        function start() {
+            if (frame) return;
+            lastTime = performance.now();
+            frame = requestAnimationFrame(tick);
+        }
+
+        function stop() {
+            if (!frame) return;
+            cancelAnimationFrame(frame);
+            frame = 0;
+        }
+
+        function apply() {
+            stop();
+            if (reduceMotion.matches) {
+                draw(0); // A still sky rather than no sky at all.
+            } else {
+                start();
+            }
+        }
+
+        let resizeTimer = 0;
+        window.addEventListener("resize", () => {
+            window.clearTimeout(resizeTimer);
+            resizeTimer = window.setTimeout(() => {
+                resize();
+                apply();
+            }, 150);
+        });
+
+        document.addEventListener("visibilitychange", () => {
+            if (document.hidden) stop();
+            else if (!reduceMotion.matches) start();
+        });
+
+        reduceMotion.addEventListener("change", apply);
+
+        resize();
+        apply();
+    }
+</script>
+
+<style>
+    /*
+     * Pinned to the viewport rather than the document, so scrolling a long
+     * board doesn't drag the sky with it or cost a repaint.
+     */
+    .starfield {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+        pointer-events: none;
+        /*
+         * Negative, so the shared nav — which isn't positioned and so can't
+         * outrank a z-index of 0 — keeps painting over the sky.
+         */
+        z-index: -1;
+    }
+
+    main {
+        position: relative; /* lifts the content above the starfield */
+        z-index: 1;
+        margin: auto;
+        padding: 1.5rem;
+        max-width: 70ch;
+        color: #aaaaaa;
+    }
+
+    main article {
+        font-family: "Open Sans", sans-serif;
+        font-size: 18px;
+        line-height: 1.5;
+    }
+
+    .page-header {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        margin-top: 2rem;
+        margin-bottom: 2.5rem;
+    }
+
+    .game-icon {
+        width: 80px;
+        height: 80px;
+        border-radius: 16px;
+        flex-shrink: 0;
+        image-rendering: pixelated;
+    }
+
+    .eyebrow {
+        margin: 0 0 0.15rem 0;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+    }
+
+    .eyebrow a {
+        color: #f15125;
+        text-decoration: none;
+    }
+
+    .eyebrow a:hover {
+        text-decoration: underline;
+    }
+
+    .title-block h1 {
+        margin: 0 0 0.25rem 0;
+        color: #eeeeee;
+        font-size: 2.25rem;
+        font-weight: 800;
+        line-height: 1.1;
+    }
+
+    .tagline {
+        color: #aaaaaa;
+        margin: 0;
+        font-size: 1.05rem;
+    }
+
+    .lb-boards {
+        display: flex;
+        flex-direction: column;
+        gap: 2.5rem;
+    }
+
+    .updated {
+        color: #7a7a7a;
+        font-size: 0.8rem;
+        margin: 1.5rem 0 0 0;
+        text-align: right;
+    }
+
+    .cta {
+        text-align: center;
+        padding: 2rem 1.5rem;
+        margin-top: 3rem;
+        border: 1px solid #f15125;
+        border-radius: 0.75rem;
+        background: rgba(241, 81, 37, 0.05);
+    }
+
+    .cta-heading {
+        color: #eeeeee;
+        font-size: 1.25rem;
+        font-weight: 800;
+        margin: 0 0 1.25rem 0;
+    }
+
+    .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.75rem;
+        background: #f15125;
+        color: #fff;
+        font-size: 1rem;
+        font-weight: 700;
+        text-decoration: none;
+        border-radius: 0.5rem;
+        transition:
+            background-color 0.2s ease,
+            transform 0.1s ease;
+    }
+
+    .cta-btn:hover {
+        background: #d4431e;
+        transform: translateY(-1px);
+    }
+
+    .cta-btn svg {
+        width: 1.1rem;
+        height: 1.1rem;
+        flex-shrink: 0;
+    }
+
+    @media (max-width: 640px) {
+        .page-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+    }
+</style>
+
+<!--
+  The table is built at runtime with innerHTML, so its elements never receive
+  Astro's `data-astro-cid` scoping attribute and scoped rules cannot reach them.
+  These rules are global for that reason, namespaced under .lb-boards so they
+  stay confined to this page.
+-->
+<style is:global>
+    .lb-boards .board h2 {
+        display: inline-block;
+        padding: 0.1rem 0.5rem 0.1rem 0;
+        background: rgba(13, 6, 11, 0.72);
+        color: #f15125;
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin: 0 0 0.75rem 0;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    /*
+     * Fixed layout so the columns are driven by these widths rather than by
+     * whichever pilot happens to have the longest name: rank and score get
+     * exactly what they need, and the pilot column absorbs the rest.
+     */
+    .lb-boards .board table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+        font-size: 0.95rem;
+    }
+
+    .lb-boards .board th {
+        background: rgba(13, 6, 11, 0.72);
+        text-align: left;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #666;
+        padding: 0 0.5rem 0.5rem 0.5rem;
+        border-bottom: 1px solid #222;
+    }
+
+    /*
+     * The starfield shows through the gaps between rows; the cells themselves
+     * stay mostly opaque so no star ever sits behind a score.
+     */
+    .lb-boards .board td {
+        padding: 0.5rem;
+        background: rgba(13, 6, 11, 0.72);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    /* Replaces the bed rather than layering, so it keeps the same opacity. */
+    .lb-boards .board tbody tr:hover td {
+        background: rgba(46, 18, 15, 0.82);
+    }
+
+    .lb-boards th.rank,
+    .lb-boards td.rank {
+        width: 3.5rem;
+        padding-right: 1rem;
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+        color: #666;
+    }
+
+    .lb-boards td.rank.medal {
+        font-weight: 800;
+        color: #eeeeee;
+    }
+
+    .lb-boards td.rank.medal-1 {
+        color: #f15125;
+    }
+
+    /*
+     * The flex lives on this wrapper, not on the <td>. A table cell set to
+     * `display: flex` stops being a table cell, which drops it out of the
+     * column sizing entirely and stacks the avatar above the name.
+     */
+    .lb-boards .player-cell {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        min-width: 0;
+    }
+
+    .lb-boards .avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 0.25rem;
+        flex-shrink: 0;
+        display: block;
+        background: #161616;
+    }
+
+    .lb-boards .avatar-blank {
+        border: 1px solid #222;
+    }
+
+    /* Long persona names ellipsize rather than pushing the score column away. */
+    .lb-boards .player-name {
+        color: #eeeeee;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    /* Wide enough for the longest score a board can hold without wrapping. */
+    .lb-boards th.score,
+    .lb-boards td.score {
+        width: 8rem;
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+        color: #eeeeee;
+        white-space: nowrap;
+    }
+
+    .lb-boards .status {
+        color: #8a8a8a;
+        font-size: 0.95rem;
+        font-style: italic;
+        margin: 0;
+    }
+
+    .lb-boards .status-error {
+        color: #a05;
+        font-style: normal;
+    }
+
+    /*
+     * On narrow screens the fixed rank and score columns are what squeeze the
+     * pilot name, so both give ground back before the name starts truncating.
+     */
+    @media (max-width: 640px) {
+        .lb-boards .board table {
+            font-size: 0.875rem;
+        }
+
+        .lb-boards .board td,
+        .lb-boards .board th {
+            padding-left: 0.25rem;
+            padding-right: 0.25rem;
+        }
+
+        .lb-boards th.rank,
+        .lb-boards td.rank {
+            width: 2.25rem;
+            padding-right: 0.5rem;
+        }
+
+        .lb-boards th.score,
+        .lb-boards td.score {
+            width: 6.25rem;
+        }
+
+        .lb-boards .player-cell {
+            gap: 0.5rem;
+        }
+    }
+</style>
