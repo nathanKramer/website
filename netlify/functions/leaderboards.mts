@@ -93,20 +93,38 @@ function blocks(xml: string, tag: string): string[] {
   return [...xml.matchAll(new RegExp(`<${tag}>(.*?)</${tag}>`, "gs"))].map((m) => m[1]);
 }
 
-async function fetchText(url: string): Promise<string> {
+/**
+ * Scrubs the API key out of anything on its way to a log line. The profiles
+ * request carries the key as a query parameter, so an upstream error that
+ * echoes the URL would otherwise put it in Netlify's function logs.
+ */
+function redact(value: unknown): string {
+  const key = process.env.STEAM_WEB_API_KEY;
+  const text = value instanceof Error ? value.message : String(value);
+  return key ? text.replaceAll(key, "[redacted]") : text;
+}
+
+/**
+ * `label` rather than the URL is what appears in errors, so a request that
+ * authenticates via a query parameter can't leak it into a stack trace.
+ */
+async function fetchText(url: string, label: string): Promise<string> {
   const response = await fetch(url, {
     signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
     headers: { "User-Agent": "nathankramer.dev leaderboards" },
   });
   if (!response.ok) {
-    throw new Error(`${url} responded ${response.status}`);
+    throw new Error(`${label} responded ${response.status}`);
   }
   return response.text();
 }
 
 /** Lists the game's boards. This is the only call that must succeed. */
 async function fetchBoardIndex(): Promise<BoardMeta[]> {
-  const xml = await fetchText(`https://steamcommunity.com/stats/${APP_ID}/leaderboards/?xml=1`);
+  const xml = await fetchText(
+    `https://steamcommunity.com/stats/${APP_ID}/leaderboards/?xml=1`,
+    "board index",
+  );
 
   const boards: BoardMeta[] = [];
   for (const block of blocks(xml, "leaderboard")) {
@@ -137,6 +155,7 @@ async function fetchBoardIndex(): Promise<BoardMeta[]> {
 async function fetchEntries(board: BoardMeta): Promise<Entry[]> {
   const xml = await fetchText(
     `https://steamcommunity.com/stats/${APP_ID}/leaderboards/${board.lbid}/?xml=1&start=1&end=${TOP_N}`,
+    `board ${board.name}`,
   );
 
   const entries: Entry[] = [];
@@ -170,7 +189,7 @@ async function fetchProfiles(steamIds: string[]): Promise<Map<string, Profile>> 
     url.searchParams.set("steamids", chunk.join(","));
 
     try {
-      const payload = JSON.parse(await fetchText(url.toString()));
+      const payload = JSON.parse(await fetchText(url.toString(), "player summaries"));
       for (const player of payload?.response?.players ?? []) {
         if (!player?.steamid) continue;
         profiles.set(player.steamid, {
@@ -181,7 +200,7 @@ async function fetchProfiles(steamIds: string[]): Promise<Map<string, Profile>> 
       }
     } catch (error) {
       // Names are a nicety; the scores are the point. Log and carry on.
-      console.warn("leaderboards: player summaries lookup failed", error);
+      console.warn("leaderboards: player summaries lookup failed:", redact(error));
     }
   }
 
@@ -193,7 +212,7 @@ export default async (_req: Request, _context: Context) => {
   try {
     boards = await fetchBoardIndex();
   } catch (error) {
-    console.error("leaderboards: board index unavailable", error);
+    console.error("leaderboards: board index unavailable:", redact(error));
     return Response.json({ error: "Steam leaderboards are unavailable right now." }, { status: 502 });
   }
 
@@ -203,7 +222,7 @@ export default async (_req: Request, _context: Context) => {
         return { board, entries: await fetchEntries(board) };
       } catch (error) {
         // One flaky board shouldn't blank the whole page.
-        console.warn(`leaderboards: board ${board.name} unavailable`, error);
+        console.warn(`leaderboards: board ${board.name} unavailable:`, redact(error));
         return { board, entries: [] as Entry[] };
       }
     }),
