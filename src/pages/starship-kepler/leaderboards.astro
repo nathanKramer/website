@@ -26,7 +26,7 @@ import Layout from "../../layouts/Layout.astro";
                 </div>
             </div>
 
-            <div id="boards" class="boards" aria-live="polite" aria-busy="true">
+            <div id="boards" class="lb-boards" aria-live="polite" aria-busy="true">
                 <p class="status">Loading scores…</p>
             </div>
 
@@ -146,7 +146,11 @@ import Layout from "../../layouts/Layout.astro";
                 return `
                     <tr>
                         <td class="rank${medalClass(entry.rank)}">${entry.rank}</td>
-                        <td class="player">${avatar}<span class="player-name">${player}</span></td>
+                        <td class="player">
+                            <div class="player-cell">
+                                ${avatar}<span class="player-name">${player}</span>
+                            </div>
+                        </td>
                         <td class="score">${formatScore(entry.score, board.displayType)}</td>
                     </tr>`;
             })
@@ -255,118 +259,10 @@ import Layout from "../../layouts/Layout.astro";
         font-size: 1.05rem;
     }
 
-    .boards {
+    .lb-boards {
         display: flex;
         flex-direction: column;
         gap: 2.5rem;
-    }
-
-    .board h2 {
-        color: #f15125;
-        font-size: 1.1rem;
-        font-weight: 700;
-        margin: 0 0 0.75rem 0;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-    }
-
-    .board table {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 0.95rem;
-    }
-
-    .board th {
-        text-align: left;
-        font-size: 0.75rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        color: #666;
-        padding: 0 0.5rem 0.5rem 0.5rem;
-        border-bottom: 1px solid #222;
-    }
-
-    .board td {
-        padding: 0.5rem;
-        border-bottom: 1px solid #161616;
-    }
-
-    .board tbody tr:hover td {
-        background: rgba(241, 81, 37, 0.04);
-    }
-
-    th.rank,
-    td.rank {
-        width: 3rem;
-        text-align: right;
-        font-variant-numeric: tabular-nums;
-        color: #666;
-    }
-
-    td.rank.medal {
-        font-weight: 800;
-        color: #eeeeee;
-    }
-
-    td.rank.medal-1 {
-        color: #f15125;
-    }
-
-    td.player {
-        display: flex;
-        align-items: center;
-        gap: 0.6rem;
-        min-width: 0;
-    }
-
-    .avatar {
-        width: 32px;
-        height: 32px;
-        border-radius: 0.25rem;
-        flex-shrink: 0;
-        display: block;
-        background: #161616;
-    }
-
-    .avatar-blank {
-        border: 1px solid #222;
-    }
-
-    .player-name {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-
-    td.player a {
-        color: #eeeeee;
-        text-decoration: none;
-    }
-
-    td.player a:hover {
-        color: #f15125;
-        text-decoration: underline;
-    }
-
-    th.score,
-    td.score {
-        text-align: right;
-        font-variant-numeric: tabular-nums;
-        color: #eeeeee;
-        white-space: nowrap;
-    }
-
-    .status {
-        color: #666;
-        font-size: 0.95rem;
-        font-style: italic;
-        margin: 0;
-    }
-
-    .status-error {
-        color: #a05;
-        font-style: normal;
     }
 
     .updated {
@@ -424,6 +320,169 @@ import Layout from "../../layouts/Layout.astro";
             flex-direction: column;
             align-items: flex-start;
             gap: 1rem;
+        }
+    }
+</style>
+
+<!--
+  The table is built at runtime with innerHTML, so its elements never receive
+  Astro's `data-astro-cid` scoping attribute and scoped rules cannot reach them.
+  These rules are global for that reason, namespaced under .lb-boards so they
+  stay confined to this page.
+-->
+<style is:global>
+    .lb-boards .board h2 {
+        color: #f15125;
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin: 0 0 0.75rem 0;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    /*
+     * Fixed layout so the columns are driven by these widths rather than by
+     * whichever pilot happens to have the longest name: rank and score get
+     * exactly what they need, and the pilot column absorbs the rest.
+     */
+    .lb-boards .board table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+        font-size: 0.95rem;
+    }
+
+    .lb-boards .board th {
+        text-align: left;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #666;
+        padding: 0 0.5rem 0.5rem 0.5rem;
+        border-bottom: 1px solid #222;
+    }
+
+    .lb-boards .board td {
+        padding: 0.5rem;
+        border-bottom: 1px solid #161616;
+    }
+
+    .lb-boards .board tbody tr:hover td {
+        background: rgba(241, 81, 37, 0.04);
+    }
+
+    .lb-boards th.rank,
+    .lb-boards td.rank {
+        width: 3.5rem;
+        padding-right: 1rem;
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+        color: #666;
+    }
+
+    .lb-boards td.rank.medal {
+        font-weight: 800;
+        color: #eeeeee;
+    }
+
+    .lb-boards td.rank.medal-1 {
+        color: #f15125;
+    }
+
+    /*
+     * The flex lives on this wrapper, not on the <td>. A table cell set to
+     * `display: flex` stops being a table cell, which drops it out of the
+     * column sizing entirely and stacks the avatar above the name.
+     */
+    .lb-boards .player-cell {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        min-width: 0;
+    }
+
+    .lb-boards .avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 0.25rem;
+        flex-shrink: 0;
+        display: block;
+        background: #161616;
+    }
+
+    .lb-boards .avatar-blank {
+        border: 1px solid #222;
+    }
+
+    /* Long persona names ellipsize rather than pushing the score column away. */
+    .lb-boards .player-name {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .lb-boards td.player a {
+        color: #eeeeee;
+        text-decoration: none;
+    }
+
+    .lb-boards td.player a:hover {
+        color: #f15125;
+        text-decoration: underline;
+    }
+
+    /* Wide enough for the longest score a board can hold without wrapping. */
+    .lb-boards th.score,
+    .lb-boards td.score {
+        width: 8rem;
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+        color: #eeeeee;
+        white-space: nowrap;
+    }
+
+    .lb-boards .status {
+        color: #666;
+        font-size: 0.95rem;
+        font-style: italic;
+        margin: 0;
+    }
+
+    .lb-boards .status-error {
+        color: #a05;
+        font-style: normal;
+    }
+
+    /*
+     * On narrow screens the fixed rank and score columns are what squeeze the
+     * pilot name, so both give ground back before the name starts truncating.
+     */
+    @media (max-width: 640px) {
+        .lb-boards .board table {
+            font-size: 0.875rem;
+        }
+
+        .lb-boards .board td,
+        .lb-boards .board th {
+            padding-left: 0.25rem;
+            padding-right: 0.25rem;
+        }
+
+        .lb-boards th.rank,
+        .lb-boards td.rank {
+            width: 2.25rem;
+            padding-right: 0.5rem;
+        }
+
+        .lb-boards th.score,
+        .lb-boards td.score {
+            width: 6.25rem;
+        }
+
+        .lb-boards .player-cell {
+            gap: 0.5rem;
         }
     }
 </style>
