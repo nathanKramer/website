@@ -1,0 +1,429 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout
+    title="Starship Kepler — Leaderboards"
+    description="Global high scores from Starship Kepler on Steam. Free Play, Quick Play, and Labyrinth."
+    image="/images/starship-kepler-1232-706.png"
+>
+    <main>
+        <article>
+            <div class="page-header">
+                <img
+                    src="/images/starship-kepler-icon-256x256.png"
+                    alt="Starship Kepler icon"
+                    class="game-icon"
+                />
+                <div class="title-block">
+                    <p class="eyebrow">
+                        <a href="/starship-kepler">Starship Kepler</a>
+                    </p>
+                    <h1>Leaderboards</h1>
+                    <p class="tagline">
+                        The best runs on Steam, straight from the global boards.
+                    </p>
+                </div>
+            </div>
+
+            <div id="boards" class="boards" aria-live="polite" aria-busy="true">
+                <p class="status">Loading scores…</p>
+            </div>
+
+            <p class="updated" id="updated" hidden></p>
+
+            <section class="cta">
+                <p class="cta-heading">Think you can beat these?</p>
+                <a
+                    href="https://store.steampowered.com/app/2003100/Starship_Kepler"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="cta-btn"
+                >
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658c.545-.371 1.203-.59 1.912-.59.063 0 .125.004.188.006l2.861-4.142V8.91c0-2.495 2.028-4.523 4.524-4.523 2.494 0 4.524 2.031 4.524 4.527s-2.03 4.525-4.524 4.525h-.105l-4.076 2.911c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396-1.635 0-3.016-1.173-3.331-2.711L.436 16.476C1.862 20.868 6.598 24 11.979 24c6.627 0 11.999-5.373 11.999-12S18.606 0 11.979 0zM7.54 18.21l-1.473-.61c.262.543.714.999 1.314 1.25 1.297.539 2.793-.076 3.332-1.375.263-.63.264-1.319.005-1.949s-.75-1.121-1.377-1.383c-.624-.26-1.29-.249-1.878-.03l1.523.63c.956.4 1.409 1.5 1.009 2.455-.397.957-1.497 1.41-2.454 1.012H7.54zm11.415-9.303c0-1.662-1.353-3.015-3.015-3.015-1.665 0-3.015 1.353-3.015 3.015 0 1.665 1.35 3.015 3.015 3.015 1.662 0 3.015-1.35 3.015-3.015zm-5.273-.005c0-1.252 1.013-2.266 2.265-2.266 1.249 0 2.266 1.014 2.266 2.266 0 1.251-1.017 2.265-2.266 2.265-1.252 0-2.265-1.014-2.265-2.265z"/>
+                    </svg>
+                    Play on Steam
+                </a>
+            </section>
+        </article>
+    </main>
+</Layout>
+
+<script>
+    type Entry = {
+        rank: number;
+        score: number;
+        steamId: string;
+        name: string | null;
+        avatar: string | null;
+        profileUrl: string | null;
+    };
+
+    type Board = {
+        id: string;
+        name: string;
+        title: string;
+        displayType: "numeric" | "milliseconds" | "seconds";
+        totalEntries: number;
+        entries: Entry[];
+    };
+
+    /**
+     * Mirrors formatLabyrinthClock in the game (draw.go): milliseconds rounded
+     * to hundredths, rendered M:SS.cc, so the web board reads the same as the
+     * in-game one.
+     */
+    function formatClock(millis: number): string {
+        const centis = Math.floor((Math.max(0, millis) + 5) / 10);
+        const minutes = Math.floor(centis / 6000);
+        const seconds = Math.floor(centis / 100) % 60;
+        const hundredths = centis % 100;
+        return `${minutes}:${String(seconds).padStart(2, "0")}.${String(hundredths).padStart(2, "0")}`;
+    }
+
+    function formatScore(score: number, displayType: Board["displayType"]): string {
+        if (displayType === "milliseconds") return formatClock(score);
+        if (displayType === "seconds") return formatClock(score * 1000);
+        return score.toLocaleString("en-US");
+    }
+
+    /** Players with private profiles come back unresolved; they still placed. */
+    function displayName(entry: Entry): string {
+        return entry.name?.trim() || "Anonymous Pilot";
+    }
+
+    /**
+     * Persona names are player-controlled, and these rows are built as HTML, so
+     * everything interpolated below goes through here first.
+     */
+    function escapeHtml(value: string): string {
+        return value
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#39;");
+    }
+
+    /** Only let http(s) URLs from Steam through into href/src attributes. */
+    function safeUrl(url: string | null): string | null {
+        if (!url) return null;
+        try {
+            const parsed = new URL(url);
+            if (parsed.protocol !== "https:" && parsed.protocol !== "http:") return null;
+            return escapeHtml(parsed.href);
+        } catch {
+            return null;
+        }
+    }
+
+    function relativeTime(iso: string): string {
+        const seconds = Math.round((Date.now() - new Date(iso).getTime()) / 1000);
+        if (seconds < 90) return "just now";
+        const minutes = Math.round(seconds / 60);
+        if (minutes < 60) return `${minutes} minute${minutes === 1 ? "" : "s"} ago`;
+        const hours = Math.round(minutes / 60);
+        return `${hours} hour${hours === 1 ? "" : "s"} ago`;
+    }
+
+    function medalClass(rank: number): string {
+        return rank <= 3 ? ` medal medal-${rank}` : "";
+    }
+
+    function renderBoard(board: Board): string {
+        const rows = board.entries
+            .map((entry) => {
+                const name = escapeHtml(displayName(entry));
+                const avatarUrl = safeUrl(entry.avatar);
+                const profileUrl = safeUrl(entry.profileUrl);
+                const avatar = avatarUrl
+                    ? `<img class="avatar" src="${avatarUrl}" alt="" loading="lazy" width="32" height="32" />`
+                    : `<span class="avatar avatar-blank" aria-hidden="true"></span>`;
+                const player = profileUrl
+                    ? `<a href="${profileUrl}" target="_blank" rel="noopener noreferrer">${name}</a>`
+                    : name;
+                return `
+                    <tr>
+                        <td class="rank${medalClass(entry.rank)}">${entry.rank}</td>
+                        <td class="player">${avatar}<span class="player-name">${player}</span></td>
+                        <td class="score">${formatScore(entry.score, board.displayType)}</td>
+                    </tr>`;
+            })
+            .join("");
+
+        const body = board.entries.length
+            ? `<table>
+                   <thead>
+                       <tr><th class="rank">#</th><th class="player">Pilot</th><th class="score">${
+                           board.displayType === "numeric" ? "Score" : "Time"
+                       }</th></tr>
+                   </thead>
+                   <tbody>${rows}</tbody>
+               </table>`
+            : `<p class="status">No scores on this board yet. Be the first.</p>`;
+
+        return `
+            <section class="board">
+                <h2>${escapeHtml(board.title)}</h2>
+                ${body}
+            </section>`;
+    }
+
+    async function load() {
+        const container = document.getElementById("boards")!;
+        const updated = document.getElementById("updated")!;
+
+        try {
+            const response = await fetch("/api/leaderboards");
+            if (!response.ok) throw new Error(`api responded ${response.status}`);
+            const data: { updatedAt: string; boards: Board[] } = await response.json();
+
+            container.innerHTML = data.boards.map(renderBoard).join("");
+            updated.textContent = `Updated ${relativeTime(data.updatedAt)} · scores are cached for a few minutes`;
+            updated.hidden = false;
+        } catch (error) {
+            console.error("leaderboards: load failed", error);
+            container.innerHTML = `<p class="status status-error">
+                Couldn't reach the leaderboards right now. Steam might be having a moment — try again shortly.
+            </p>`;
+        } finally {
+            container.setAttribute("aria-busy", "false");
+        }
+    }
+
+    load();
+</script>
+
+<style>
+    main {
+        margin: auto;
+        padding: 1.5rem;
+        max-width: 70ch;
+        color: #aaaaaa;
+    }
+
+    main article {
+        font-family: "Open Sans", sans-serif;
+        font-size: 18px;
+        line-height: 1.5;
+    }
+
+    .page-header {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        margin-top: 2rem;
+        margin-bottom: 2.5rem;
+    }
+
+    .game-icon {
+        width: 80px;
+        height: 80px;
+        border-radius: 16px;
+        flex-shrink: 0;
+        image-rendering: pixelated;
+    }
+
+    .eyebrow {
+        margin: 0 0 0.15rem 0;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+    }
+
+    .eyebrow a {
+        color: #f15125;
+        text-decoration: none;
+    }
+
+    .eyebrow a:hover {
+        text-decoration: underline;
+    }
+
+    .title-block h1 {
+        margin: 0 0 0.25rem 0;
+        color: #eeeeee;
+        font-size: 2.25rem;
+        font-weight: 800;
+        line-height: 1.1;
+    }
+
+    .tagline {
+        color: #aaaaaa;
+        margin: 0;
+        font-size: 1.05rem;
+    }
+
+    .boards {
+        display: flex;
+        flex-direction: column;
+        gap: 2.5rem;
+    }
+
+    .board h2 {
+        color: #f15125;
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin: 0 0 0.75rem 0;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .board table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.95rem;
+    }
+
+    .board th {
+        text-align: left;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #666;
+        padding: 0 0.5rem 0.5rem 0.5rem;
+        border-bottom: 1px solid #222;
+    }
+
+    .board td {
+        padding: 0.5rem;
+        border-bottom: 1px solid #161616;
+    }
+
+    .board tbody tr:hover td {
+        background: rgba(241, 81, 37, 0.04);
+    }
+
+    th.rank,
+    td.rank {
+        width: 3rem;
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+        color: #666;
+    }
+
+    td.rank.medal {
+        font-weight: 800;
+        color: #eeeeee;
+    }
+
+    td.rank.medal-1 {
+        color: #f15125;
+    }
+
+    td.player {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        min-width: 0;
+    }
+
+    .avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 0.25rem;
+        flex-shrink: 0;
+        display: block;
+        background: #161616;
+    }
+
+    .avatar-blank {
+        border: 1px solid #222;
+    }
+
+    .player-name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    td.player a {
+        color: #eeeeee;
+        text-decoration: none;
+    }
+
+    td.player a:hover {
+        color: #f15125;
+        text-decoration: underline;
+    }
+
+    th.score,
+    td.score {
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+        color: #eeeeee;
+        white-space: nowrap;
+    }
+
+    .status {
+        color: #666;
+        font-size: 0.95rem;
+        font-style: italic;
+        margin: 0;
+    }
+
+    .status-error {
+        color: #a05;
+        font-style: normal;
+    }
+
+    .updated {
+        color: #555;
+        font-size: 0.8rem;
+        margin: 1.5rem 0 0 0;
+        text-align: right;
+    }
+
+    .cta {
+        text-align: center;
+        padding: 2rem 1.5rem;
+        margin-top: 3rem;
+        border: 1px solid #f15125;
+        border-radius: 0.75rem;
+        background: rgba(241, 81, 37, 0.05);
+    }
+
+    .cta-heading {
+        color: #eeeeee;
+        font-size: 1.25rem;
+        font-weight: 800;
+        margin: 0 0 1.25rem 0;
+    }
+
+    .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.75rem;
+        background: #f15125;
+        color: #fff;
+        font-size: 1rem;
+        font-weight: 700;
+        text-decoration: none;
+        border-radius: 0.5rem;
+        transition:
+            background-color 0.2s ease,
+            transform 0.1s ease;
+    }
+
+    .cta-btn:hover {
+        background: #d4431e;
+        transform: translateY(-1px);
+    }
+
+    .cta-btn svg {
+        width: 1.1rem;
+        height: 1.1rem;
+        flex-shrink: 0;
+    }
+
+    @media (max-width: 640px) {
+        .page-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+    }
+</style>
