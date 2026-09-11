@@ -125,7 +125,11 @@ import Layout from "../../layouts/Layout.astro";
         const minutes = Math.round(seconds / 60);
         if (minutes < 60) return `${minutes} minute${minutes === 1 ? "" : "s"} ago`;
         const hours = Math.round(minutes / 60);
-        return `${hours} hour${hours === 1 ? "" : "s"} ago`;
+        if (hours < 36) return `${hours} hour${hours === 1 ? "" : "s"} ago`;
+        // Only reachable when Steam has been refusing the function for a while
+        // and it's serving its last good snapshot — say so plainly.
+        const days = Math.round(hours / 24);
+        return `${days} day${days === 1 ? "" : "s"} ago`;
     }
 
     function medalClass(rank: number): string {
@@ -181,7 +185,7 @@ import Layout from "../../layouts/Layout.astro";
             const data: { updatedAt: string; boards: Board[] } = await response.json();
 
             container.innerHTML = data.boards.map(renderBoard).join("");
-            updated.textContent = `Updated ${relativeTime(data.updatedAt)} · scores are cached for a few minutes`;
+            updated.textContent = `Updated ${relativeTime(data.updatedAt)} · scores refresh about every half hour`;
             updated.hidden = false;
         } catch (error) {
             console.error("leaderboards: load failed", error);
