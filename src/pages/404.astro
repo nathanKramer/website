@@ -1,0 +1,48 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Page Not Found">
+  <main>
+    <article>
+      <h1>404</h1>
+      <p>There's nothing at this URL.</p>
+      <p><a href="/">Back to the home page</a></p>
+    </article>
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: auto;
+    padding: 1.5rem;
+    max-width: 90ch;
+    color: #aaaaaa;
+  }
+
+  main article {
+    font-family: "Open Sans", sans-serif;
+    font-size: 18px;
+    line-height: 1.5;
+  }
+
+  main article h1 {
+    color: #eeeeee;
+    font-size: 36px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+
+  main article p {
+    margin-bottom: 10px;
+  }
+
+  a {
+    color: #f15125;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+</style>
