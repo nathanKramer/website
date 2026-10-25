@@ -29,4 +29,4 @@ To me, learning about epistemology creates a sense of epistemic humility. It bec
 The fundamental mystery of subjective experience. To illustrate what I mean by consciousness - take a second to observe your visual field, all at once. Try to do so with a beginner's mind. What is it made of? To me this is a great mystery, up there with classics like "why is there something rather than nothing?"
 
 ### Humane Technology
-Technology that serves human flourishing rather than exploiting human vulnerabilities. Design that respects attention, supports autonomy, and strengthens rather than fractures community. A commitment to building tools that align with what we actually value.
+By humane technology I mean technology that serves human flourishing. I believe we should design software that respects attention, and strengthens rather than fractures community.
